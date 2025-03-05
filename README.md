@@ -1,6 +1,10 @@
 # vue-ontrack
 
-Vue / Vite / Tailwind CSS
+An application for tracking daily activity.
+
+Vue Composition API - Vite / Vue / Tailwind CSS. 
+
+Based on the [playlist (YouTube)](https://www.youtube.com/watch?v=t4NbbyXsgP8&list=PL-FhWbGlJPfaCm9Qx7G9wQqtt2_yBT92V&index=3).
 
 
 ## Project Setup
@@ -19,4 +23,34 @@ npm run dev
 
 ```sh
 npm run build
+```
+
+### Preview Production build
+
+```sh
+npm run preview
+```
+
+### Lint with ESLint
+
+```sh
+npm run eslint
+```
+
+### Lint with Stylelint
+
+```sh
+npm run stylelint
+```
+
+### Lint with ESLint & Stylelint
+
+```sh
+npm run lint
+```
+
+### Deploy to GitHub Pages
+
+```sh
+npm run deploy
 ```
