@@ -4,7 +4,7 @@ import tailwindcssConfigRules from 'stylelint-config-tailwindcss';
 export default {
 	ignoreFiles: ['**/node_modules/**', '**/dist/**'],
 
-	extends: ['stylelint-config-standard'],
+	extends: ['stylelint-config-standard', 'stylelint-config-standard-less'],
 
 	plugins: [
 		'stylelint-prettier',
@@ -22,6 +22,10 @@ export default {
 	ignoreDisables: true,
 
 	overrides: [
+		{
+			files: ['**/*.less'],
+			customSyntax: 'postcss-less',
+		},
 		{
 			files: ['**/*.vue'],
 			extends: ['stylelint-config-standard-vue'],

@@ -18,6 +18,7 @@
 	},
 	"dependencies": {
 		"@heroicons/vue": "2.2.0",
+		"normalize.css": "8.0.1",
 		"vue": "3.5.13"
 	},
 	"devDependencies": {
@@ -45,12 +46,15 @@
 		"eslint-plugin-vue": "10.0.0",
 		"globals": "16.0.0",
 		"husky": "9.1.7",
+		"less": "4.2.2",
 		"lint-staged": "15.4.3",
 		"postcss": "8.5.3",
+		"postcss-less": "6.0.0",
 		"prettier": "3.5.3",
 		"prettier-plugin-tailwindcss": "0.6.11",
 		"stylelint": "16.15.0",
 		"stylelint-config-standard": "37.0.0",
+		"stylelint-config-standard-less": "3.0.1",
 		"stylelint-config-standard-vue": "1.0.0",
 		"stylelint-config-tailwindcss": "1.0.0",
 		"stylelint-declaration-block-no-ignored-properties": "2.8.0",

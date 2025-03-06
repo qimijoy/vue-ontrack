@@ -2,7 +2,7 @@ import { createApp } from 'vue';
 import App from '@/App.vue';
 
 // STYLES
-import '@/assets/main.css';
+import '@/assets/styles/main.less';
 
 // APPLICATION
 const app = createApp(App);
