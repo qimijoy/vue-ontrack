@@ -6,7 +6,7 @@
 				:key="item.name"
 				:href="`#${item.name}`"
 				:class="{ 'pointer-events-none bg-gray-200': item.name === currentPage }"
-				@click="currentPage = item.name"
+				@click="emit('navigate', item.name)"
 			>
 				<component :is="item.icon" class="h-6 w-6" />
 				<span>{{ item.name }}</span>
@@ -16,12 +16,11 @@
 </template>
 
 <script setup lang="ts">
-	import { onMounted, ref } from 'vue';
 	import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
 
 	import NavItem from '@/components/common/Navigation/NavItem.vue';
 
-	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_DEFAULT } from '@/constants/pages';
+	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
 
 	const NAV_ITEMS = [
 		{ name: PAGE_TIMELINE, icon: ClockIcon },
@@ -29,25 +28,12 @@
 		{ name: PAGE_PROGRESS, icon: ChartBarIcon },
 	];
 
-	// HOOKS
-	onMounted(() => {
-		currentPage.value = normalizePageHash();
+	defineProps({
+		currentPage: {
+			type: String,
+			required: true,
+		},
 	});
 
-	// STATES
-	const currentPage = ref('');
-
-	// FUNCTIONS
-	const normalizePageHash = () => {
-		const pageHash = window.location.hash.slice(1);
-
-		if (NAV_ITEMS.some(({ name }) => name === pageHash)) {
-			return pageHash;
-		}
-
-		// If page is undefined, navigate to default page
-		window.location.hash = PAGE_DEFAULT;
-
-		return PAGE_DEFAULT;
-	};
+	const emit = defineEmits(['navigate']);
 </script>
