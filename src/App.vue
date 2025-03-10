@@ -1,11 +1,11 @@
 <template>
-	<TrackHeader />
-	<TrackContent />
-	<TrackNavigation />
+	<TheHeader />
+	<TheContent />
+	<TheNavigation />
 </template>
 
-<script setup>
-	import TrackHeader from '@/components/common/TrackHeader.vue';
-	import TrackContent from '@/components/common/TrackContent.vue';
-	import TrackNavigation from '@/components/common/TrackNavigation.vue';
+<script setup lang="ts">
+	import TheHeader from '@/components/common/Header/TheHeader.vue';
+	import TheContent from '@/components/common/TheContent.vue';
+	import TheNavigation from '@/components/common/Navigation/TheNavigation.vue';
 </script>
