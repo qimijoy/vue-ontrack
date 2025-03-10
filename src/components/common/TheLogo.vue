@@ -1,9 +1,9 @@
 <template>
-	<a :href="BASE_URL">
+	<a :href="`#${PAGE_DEFAULT}`">
 		<img src="@/assets/images/logo.png" alt="Logo" class="h-9" />
 	</a>
 </template>
 
 <script setup lang="ts">
-	import { BASE_URL } from '@config';
+	import { PAGE_DEFAULT } from '@/constants/pages';
 </script>

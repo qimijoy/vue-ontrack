@@ -1,7 +1,7 @@
 <template>
-	<TheHeader />
+	<TheHeader @go-to-home="goTo(PAGE_DEFAULT)" @go-to-progress="goTo(PAGE_PROGRESS)" />
 	<TheContent :current-page="currentPage" />
-	<TheNavigation :current-page="currentPage" @navigate="currentPage = $event" />
+	<TheNavigation :current-page="currentPage" @navigate="goTo($event)" />
 </template>
 
 <script setup lang="ts">
@@ -11,7 +11,8 @@
 	import TheContent from '@/components/common/TheContent.vue';
 	import TheNavigation from '@/components/common/Navigation/TheNavigation.vue';
 
-	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_DEFAULT } from '@/constants/pages';
+	import { PAGE_PROGRESS, PAGE_DEFAULT } from '@/constants/pages';
+	import { normalizePageHash } from '@/utils/normalizeHash';
 
 	// HOOKS
 	onMounted(() => {
@@ -22,16 +23,8 @@
 	const currentPage = ref('');
 
 	// FUNCTIONS
-	const normalizePageHash = () => {
-		const pageHash = window.location.hash.slice(1);
 
-		if ([PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS].includes(pageHash)) {
-			return pageHash;
-		}
-
-		// If page is undefined, navigate to default page
-		window.location.hash = PAGE_DEFAULT;
-
-		return PAGE_DEFAULT;
+	const goTo = (page: string) => {
+		currentPage.value = page;
 	};
 </script>

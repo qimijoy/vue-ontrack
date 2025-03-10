@@ -16,17 +16,9 @@
 </template>
 
 <script setup lang="ts">
-	import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
-
 	import NavItem from '@/components/common/Navigation/NavItem.vue';
 
-	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
-
-	const NAV_ITEMS = [
-		{ name: PAGE_TIMELINE, icon: ClockIcon },
-		{ name: PAGE_ACTIVITIES, icon: ListBulletIcon },
-		{ name: PAGE_PROGRESS, icon: ChartBarIcon },
-	];
+	import { NAV_ITEMS } from '@/constants/pages';
 
 	defineProps({
 		currentPage: {
