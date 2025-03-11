@@ -9,7 +9,7 @@
 <script setup lang="ts">
 	import TheActivities from '@/components/pages/TheActivities.vue';
 	import TheProgress from '@/components/pages/TheProgress.vue';
-	import TheTimeline from '@/components/pages/TheTimeline.vue';
+	import TheTimeline from '@/components/pages/Timeline/TheTimeline.vue';
 
 	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
 

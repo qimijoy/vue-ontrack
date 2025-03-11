@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-	import { onMounted, ref } from 'vue';
+	import { onMounted, ref, provide } from 'vue';
 
 	import TheHeader from '@/components/common/Header/TheHeader.vue';
 	import TheContent from '@/components/common/TheContent.vue';
@@ -13,6 +13,10 @@
 
 	import { PAGE_PROGRESS, PAGE_DEFAULT } from '@/constants/pages';
 	import { normalizePageHash } from '@/utils/normalizeHash';
+	import { generateTimelineItems } from '@/utils/time';
+
+	// CONSTANTS
+	const timelineItems = generateTimelineItems();
 
 	// HOOKS
 	onMounted(() => {
@@ -23,8 +27,10 @@
 	const currentPage = ref('');
 
 	// FUNCTIONS
-
 	const goTo = (page: string) => {
 		currentPage.value = page;
 	};
+
+	// PROVIDE
+	provide('timelineItems', timelineItems);
 </script>
