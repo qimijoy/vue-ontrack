@@ -6,13 +6,19 @@
 </template>
 
 <script setup lang="ts">
-	import BaseSelect from '@/components/Base/BaseSelect.vue';
+	import type { timelineItemType } from '@/types/timeline';
+	import type { selectItemType } from '@/types/select';
+
+	import BaseSelect from '@/components/base/BaseSelect.vue';
+
 	import { getCurrentHour } from '@/utils/time';
+	import { isTimelineItemValid } from '@/utils/validators';
 
 	const props = defineProps({
 		timelineItem: {
 			type: Object,
 			required: true,
+			validator: (timelineItem: timelineItemType) => isTimelineItemValid(timelineItem),
 		},
 	});
 
@@ -22,7 +28,7 @@
 		props.timelineItem.hour === getCurrentHour() ? 'bg-purple-900 font-black text-white' : 'bg-gray-100 text-gray-500',
 	];
 
-	const options = [
+	const options: selectItemType[] = [
 		{ value: 1, label: 'Coding' },
 		{ value: 2, label: 'Reading' },
 		{ value: 3, label: 'Training' },

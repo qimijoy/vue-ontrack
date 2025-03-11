@@ -1,9 +1,10 @@
-import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_DEFAULT } from '@/constants/pages';
+import { isPageValid } from '@/utils/validators';
+import { PAGE_DEFAULT } from '@/constants/pages';
 
 export const normalizePageHash = () => {
 	const pageHash = window.location.hash.slice(1);
 
-	if ([PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS].includes(pageHash)) {
+	if (isPageValid(pageHash)) {
 		return pageHash;
 	}
 

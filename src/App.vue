@@ -1,5 +1,5 @@
 <template>
-	<TheHeader @go-to-home="goTo(PAGE_DEFAULT)" @go-to-progress="goTo(PAGE_PROGRESS)" />
+	<TheHeader @navigate="goTo($event)" />
 
 	<main class="flex flex-grow flex-col">
 		<TheTimeline v-show="currentPage === PAGE_TIMELINE" :timeline-items="timelineItems" />
@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-	import { onMounted, ref } from 'vue';
+	import { ref } from 'vue';
 
 	import TheHeader from '@/components/common/Header/TheHeader.vue';
 	import TheTimeline from '@/components/pages/Timeline/TheTimeline.vue';
@@ -19,20 +19,15 @@
 	import TheProgress from '@/components/pages/TheProgress.vue';
 	import TheNavigation from '@/components/common/Navigation/TheNavigation.vue';
 
-	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_DEFAULT } from '@/constants/pages';
+	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
 	import { normalizePageHash } from '@/utils/normalizeHash';
 	import { generateTimelineItems } from '@/utils/time';
 
 	// CONSTANTS
 	const timelineItems = generateTimelineItems();
 
-	// HOOKS
-	onMounted(() => {
-		currentPage.value = normalizePageHash();
-	});
-
 	// STATES
-	const currentPage = ref('');
+	const currentPage = ref(normalizePageHash());
 
 	// FUNCTIONS
 	const goTo = (page: string) => {

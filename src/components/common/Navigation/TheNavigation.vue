@@ -19,13 +19,17 @@
 	import NavItem from '@/components/common/Navigation/NavItem.vue';
 
 	import { NAV_ITEMS } from '@/constants/pages';
+	import { isPageValid } from '@/utils/validators';
 
 	defineProps({
 		currentPage: {
 			type: String,
 			required: true,
+			validator: (currentPage: string) => isPageValid(currentPage),
 		},
 	});
 
-	const emit = defineEmits(['navigate']);
+	const emit = defineEmits({
+		navigate: isPageValid,
+	});
 </script>

@@ -7,12 +7,18 @@
 </template>
 
 <script setup lang="ts">
+	import type { PropType } from 'vue';
+	import type { timelineItemType } from '@/types/timeline';
+
+	import { isTimelineItemsValid } from '@/utils/validators';
+
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
 
 	defineProps({
 		timelineItems: {
-			type: Object,
+			type: Array as PropType<Array<timelineItemType>>,
 			required: true,
+			validator: (timelineItems: timelineItemType[]) => isTimelineItemsValid(timelineItems),
 		},
 	});
 </script>

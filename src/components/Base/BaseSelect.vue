@@ -15,9 +15,11 @@
 <script setup lang="ts">
 	import type { PropType } from 'vue';
 	import { XMarkIcon } from '@heroicons/vue/24/outline';
-	import BaseButton from '@/components/Base/BaseButton.vue';
+	import BaseButton from '@/components/base/BaseButton.vue';
 
 	import type { selectItemType } from '@/types/select';
+
+	import { isOptionsValid } from '@/utils/validators';
 
 	defineProps({
 		placeholder: {
@@ -27,6 +29,7 @@
 		options: {
 			type: Array as PropType<Array<selectItemType>>,
 			required: true,
+			validator: (options: selectItemType[]) => isOptionsValid(options),
 		},
 		selected: {
 			type: Number,
