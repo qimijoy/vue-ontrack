@@ -1,21 +1,12 @@
 <template>
 	<li class="relative flex flex-col gap-2 border-t border-gray-200 px-4 py-10">
 		<a href="#" :class="hourLinkClasses"> {{ timelineItem.hour }}:00 </a>
-		<div class="flex gap-2">
-			<button class="rounded bg-gray-100 p-3 enabled:hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-50">
-				<XMarkIcon class="h-8" />
-			</button>
-			<select id="" name="" class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl">
-				<option selected disabled value="">Rest</option>
-				<option v-for="{ value, label } of options" :key="value" :value="value">{{ label }}</option>
-			</select>
-		</div>
+		<BaseSelect :options="options" :placeholder="'Rest'" :selected="selectedActivityId" />
 	</li>
 </template>
 
 <script setup lang="ts">
-	import { XMarkIcon } from '@heroicons/vue/24/outline';
-
+	import BaseSelect from '@/components/Base/BaseSelect.vue';
 	import { getCurrentHour } from '@/utils/time';
 
 	const props = defineProps({
@@ -36,4 +27,6 @@
 		{ value: 2, label: 'Reading' },
 		{ value: 3, label: 'Training' },
 	];
+
+	const selectedActivityId = 2;
 </script>
