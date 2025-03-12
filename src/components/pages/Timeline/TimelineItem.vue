@@ -1,13 +1,20 @@
 <template>
 	<li class="relative flex flex-col gap-2 border-t border-gray-200 px-4 py-10">
 		<a href="#" :class="hourLinkClasses"> {{ timelineItem.hour }}:00 </a>
-		<BaseSelect :options="options" :placeholder="'Rest'" :selected="selectedActivityId" />
+		<BaseSelect
+			:options="options"
+			:placeholder="'Rest'"
+			:selected="selectedActivityId"
+			@select="selectedActivityId = $event"
+		/>
 	</li>
 </template>
 
 <script setup lang="ts">
 	import type { timelineItemType } from '@/types/timeline';
 	import type { selectItemType } from '@/types/select';
+
+	import { ref } from 'vue';
 
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 
@@ -34,5 +41,6 @@
 		{ value: 3, label: 'Training' },
 	];
 
-	const selectedActivityId = 2;
+	// STATES
+	const selectedActivityId = ref(1);
 </script>

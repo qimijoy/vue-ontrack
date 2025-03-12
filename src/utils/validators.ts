@@ -9,19 +9,33 @@ export const isPageValid = (currentPage: string) => {
 };
 
 export const isTimelineItemValid = (timelineItem: timelineItemType) => {
-	return (
-		typeof timelineItem.hour === 'number' && (timelineItem.hour > MIDNIGHT_HOUR || timelineItem.hour < HOURS_IN_DAY)
-	);
+	return isHourValid(timelineItem.hour);
 };
 
 export const isTimelineItemsValid = (timelineItems: timelineItemType[]) => {
 	return timelineItems.every((timelineItem) => isTimelineItemValid(timelineItem));
 };
 
-export const isOptionValid = (option: selectItemType) => {
-	return typeof option.value === 'number' && typeof option.label === 'string';
+const isOptionValid = (option: selectItemType) => {
+	return isNumber(option.value) && isString(option.label);
 };
 
 export const isOptionsValid = (options: selectItemType[]) => {
 	return options.every((option) => isOptionValid(option));
 };
+
+const isBetween = (value: number, start: number, end: number) => value >= start || value <= end;
+
+const isHourValid = (hour) => isNumber(hour) && isBetween(hour, MIDNIGHT_HOUR, HOURS_IN_DAY - 1);
+
+export const isNumber = (value) => typeof value === 'number';
+
+const isString = (value) => typeof value === 'string';
+
+const isNull = (value) => value === null;
+
+export const isUndefined = (value) => value === undefined;
+
+export const isUndefinedOrNull = (value) => isUndefined(value) || isNull(value);
+
+export const isNumberOrNull = (value) => isNumber(value) || isNull(value);
