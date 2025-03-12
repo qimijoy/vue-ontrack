@@ -3,7 +3,7 @@
 
 	<main class="flex flex-grow flex-col">
 		<TheTimeline v-show="currentPage === PAGE_TIMELINE" :timeline-items="timelineItems" />
-		<TheActivities v-show="currentPage === PAGE_ACTIVITIES" />
+		<TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
 
@@ -15,7 +15,7 @@
 
 	import TheHeader from '@/components/common/Header/TheHeader.vue';
 	import TheTimeline from '@/components/pages/Timeline/TheTimeline.vue';
-	import TheActivities from '@/components/pages/TheActivities.vue';
+	import TheActivities from '@/components/pages/Activities/TheActivities.vue';
 	import TheProgress from '@/components/pages/TheProgress.vue';
 	import TheNavigation from '@/components/common/Navigation/TheNavigation.vue';
 
@@ -25,6 +25,7 @@
 
 	// CONSTANTS
 	const timelineItems = generateTimelineItems();
+	const activities = ['Coding', 'Reading', 'Training'];
 
 	// STATES
 	const currentPage = ref(normalizePageHash());
