@@ -1,6 +1,6 @@
 <template>
 	<li class="relative flex flex-col gap-2 border-t border-gray-200 px-4 py-10">
-		<a href="#" :class="hourLinkClasses"> {{ timelineItem.hour }}:00 </a>
+		<TimelineHour :hour="timelineItem.hour" />
 		<BaseSelect
 			:options="options"
 			:placeholder="'Rest'"
@@ -17,11 +17,11 @@
 	import { ref } from 'vue';
 
 	import BaseSelect from '@/components/base/BaseSelect.vue';
+	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
 
-	import { getCurrentHour } from '@/utils/time';
 	import { isTimelineItemValid } from '@/utils/validators';
 
-	const props = defineProps({
+	defineProps({
 		timelineItem: {
 			type: Object,
 			required: true,
@@ -30,10 +30,6 @@
 	});
 
 	// CONSTANTS
-	const hourLinkClasses = [
-		'absolute -top-4 left-1/2 -translate-x-1/2 rounded px-2 font-mono text-lg',
-		props.timelineItem.hour === getCurrentHour() ? 'bg-purple-900 font-black text-white' : 'bg-gray-100 text-gray-500',
-	];
 
 	const options: selectItemType[] = [
 		{ value: 1, label: 'Coding' },

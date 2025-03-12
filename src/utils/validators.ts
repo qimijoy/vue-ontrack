@@ -26,7 +26,7 @@ export const isOptionsValid = (options: selectItemType[]) => {
 
 const isBetween = (value: number, start: number, end: number) => value >= start || value <= end;
 
-const isHourValid = (hour) => isNumber(hour) && isBetween(hour, MIDNIGHT_HOUR, HOURS_IN_DAY - 1);
+export const isHourValid = (hour) => isNumber(hour) && isBetween(hour, MIDNIGHT_HOUR, HOURS_IN_DAY - 1);
 
 export const isNumber = (value) => typeof value === 'number';
 
