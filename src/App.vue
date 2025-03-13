@@ -2,7 +2,11 @@
 	<TheHeader @navigate="goTo($event)" />
 
 	<main class="flex flex-grow flex-col">
-		<TheTimeline v-show="currentPage === PAGE_TIMELINE" :timeline-items="timelineItems" />
+		<TheTimeline
+			v-show="currentPage === PAGE_TIMELINE"
+			:timeline-items="timelineItems"
+			:activity-select-options="activitySelectOptions"
+		/>
 		<TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
@@ -21,11 +25,13 @@
 
 	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
 	import { normalizePageHash } from '@/utils/normalizeHash';
-	import { generateTimelineItems } from '@/utils/time';
+	import { generateTimelineItems } from '@/utils/timelines';
+	import { generateActivitySelectOptions } from '@/utils/activities';
 
 	// CONSTANTS
 	const timelineItems = generateTimelineItems();
 	const activities = ['Coding', 'Reading', 'Training'];
+	const activitySelectOptions = generateActivitySelectOptions(activities);
 
 	// STATES
 	const currentPage = ref(normalizePageHash());

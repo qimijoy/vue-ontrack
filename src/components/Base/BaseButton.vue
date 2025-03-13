@@ -5,7 +5,6 @@
 </template>
 
 <script setup lang="ts">
-	import { BUTTON_TYPE_DANGER, BUTTON_TYPE_NEUTRAL } from '@/constants/buttons';
 	import { isButtonTypeValid } from '@/utils/validators';
 
 	defineProps({
@@ -15,6 +14,11 @@
 			validator: (value) => isButtonTypeValid(value),
 		},
 	});
+</script>
+
+<script lang="ts">
+	// This logic is executed once
+	import { BUTTON_TYPE_DANGER, BUTTON_TYPE_NEUTRAL } from '@/constants/buttons';
 
 	// CONSTANTS
 	const typeClasses = {

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-	import { getCurrentHour } from '@/utils/time';
+	import { getCurrentHour } from '@/utils/timelines';
 	import { isHourValid } from '@/utils/validators';
 
 	const props = defineProps({

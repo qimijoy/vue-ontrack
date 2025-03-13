@@ -2,7 +2,7 @@
 	<li class="relative flex flex-col gap-2 border-t border-gray-200 px-4 py-10">
 		<TimelineHour :hour="timelineItem.hour" />
 		<BaseSelect
-			:options="options"
+			:options="activitySelectOptions"
 			:placeholder="'Rest'"
 			:selected="selectedActivityId"
 			@select="selectedActivityId = $event"
@@ -13,13 +13,14 @@
 <script setup lang="ts">
 	import type { timelineItemType } from '@/types/timeline';
 	import type { selectItemType } from '@/types/select';
+	import type { PropType } from 'vue';
 
 	import { ref } from 'vue';
 
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
 
-	import { isTimelineItemValid } from '@/utils/validators';
+	import { isTimelineItemValid, isOptionsValid } from '@/utils/validators';
 
 	defineProps({
 		timelineItem: {
@@ -27,16 +28,13 @@
 			required: true,
 			validator: (timelineItem: timelineItemType) => isTimelineItemValid(timelineItem),
 		},
+		activitySelectOptions: {
+			type: Array as PropType<selectItemType[]>,
+			required: true,
+			validator: (value: selectItemType[]) => isOptionsValid(value),
+		},
 	});
 
-	// CONSTANTS
-
-	const options: selectItemType[] = [
-		{ value: 1, label: 'Coding' },
-		{ value: 2, label: 'Reading' },
-		{ value: 3, label: 'Training' },
-	];
-
 	// STATES
-	const selectedActivityId = ref(1);
+	const selectedActivityId = ref(0);
 </script>

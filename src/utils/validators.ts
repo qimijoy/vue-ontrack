@@ -30,7 +30,7 @@ export const validateActivities = (activities) => {
 
 // COMPONENTS
 const isOptionValid = (option: selectItemType) => {
-	return isNumber(option.value) && isString(option.label);
+	return isNumber(option.value) && isNotEmptyString(option.label);
 };
 
 export const isOptionsValid = (options: selectItemType[]) => {
