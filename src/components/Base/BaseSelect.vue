@@ -1,9 +1,12 @@
 <template>
 	<div class="flex gap-2">
-		<BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="emit('select', null)">
+		<BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="select(null)">
 			<XMarkIcon class="h-8" />
 		</BaseButton>
-		<select class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl" @change="handleSelect">
+		<select
+			class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl"
+			@change="select(($event.target as HTMLInputElement).value)"
+		>
 			<option :selected="isNotSelected" disabled value="">{{ placeholder }}</option>
 			<option v-for="{ value, label } of options" :key="value" :value="value" :selected="selected === value">
 				{{ label }}
@@ -21,7 +24,8 @@
 	import { XMarkIcon } from '@heroicons/vue/24/outline';
 	import BaseButton from '@/components/base/BaseButton.vue';
 
-	import { isOptionsValid, isUndefinedOrNull, isNumberOrNull } from '@/utils/validators';
+	import { isOptionsValid, isUndefinedOrNull, isSelectValueValid } from '@/utils/validators';
+	import { normalizeSelectValue } from '@/utils/normalizeSelectValue';
 	import { BUTTON_TYPE_NEUTRAL } from '@/constants/buttons';
 
 	const props = defineProps({
@@ -35,22 +39,20 @@
 			validator: (options: selectItemType[]) => isOptionsValid(options),
 		},
 		selected: {
-			type: Number,
+			type: [Number, String],
 			default: null,
 		},
 	});
 
 	const emit = defineEmits({
-		select: (value) => isNumberOrNull(value),
+		select: (value) => isSelectValueValid(value),
 	});
 
 	// COMPUTED
 	const isNotSelected = computed(() => isUndefinedOrNull(props.selected));
 
 	// FUNCTIONS
-	const handleSelect = (event: Event) => {
-		const target = event.target as HTMLSelectElement;
-
-		emit('select', Number(target.value));
+	const select = (value) => {
+		emit('select', normalizeSelectValue(value));
 	};
 </script>

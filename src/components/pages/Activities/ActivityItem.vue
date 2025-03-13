@@ -4,7 +4,7 @@
 			<BaseButton :type="BUTTON_TYPE_DANGER" @click="emit('delete')">
 				<TrashIcon class="h-8" />
 			</BaseButton>
-			<span class="truncatey text-xl">{{ activity }}</span>
+			<span class="truncatey text-xl">{{ activity.name }}</span>
 		</div>
 		<div>
 			<BaseSelect
@@ -19,7 +19,11 @@
 </template>
 
 <script setup lang="ts">
+	import type { ActivityItemType } from '@/types/activity';
+	import type { PropType } from 'vue';
+
 	import { ref } from 'vue';
+
 	import { TrashIcon } from '@heroicons/vue/24/outline';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
@@ -31,9 +35,9 @@
 
 	defineProps({
 		activity: {
-			type: String,
+			type: Object as PropType<ActivityItemType>,
 			required: true,
-			validator: (value) => isActivityValid(value),
+			validator: (value: ActivityItemType) => isActivityValid(value),
 		},
 	});
 
@@ -42,5 +46,5 @@
 	});
 
 	// STATES
-	const secondsToComplete = ref(null);
+	const secondsToComplete = ref(0);
 </script>

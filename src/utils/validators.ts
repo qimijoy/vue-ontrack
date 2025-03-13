@@ -20,8 +20,8 @@ export const isTimelineItemsValid = (timelineItems: timelineItemType[]) => {
 };
 
 // ACTIVITIES
-export const isActivityValid = (activity) => {
-	return isNotEmptyString(activity);
+export const isActivityValid = ({ id, name, secondsToComplete }) => {
+	return isNotEmptyString(id) && isNotEmptyString(name) && isNumber(secondsToComplete);
 };
 
 export const validateActivities = (activities) => {
@@ -30,7 +30,7 @@ export const validateActivities = (activities) => {
 
 // COMPONENTS
 const isOptionValid = (option: selectItemType) => {
-	return isNumber(option.value) && isNotEmptyString(option.label);
+	return isNumber(option.value) || (isNotEmptyString(option.value) && isNotEmptyString(option.label));
 };
 
 export const isOptionsValid = (options: selectItemType[]) => {
@@ -39,6 +39,10 @@ export const isOptionsValid = (options: selectItemType[]) => {
 
 export const isButtonTypeValid = (type) => BUTTON_TYPES.includes(type);
 
+export const isSelectValueValid = (value) => {
+	return isNotEmptyString(value) || isNumberOrNull(value);
+};
+
 // COMMON
 const isBetween = (value: number, start: number, end: number) => value >= start || value <= end;
 
@@ -46,11 +50,11 @@ export const isHourValid = (hour) => isNumber(hour) && isBetween(hour, MIDNIGHT_
 
 export const isNumber = (value) => typeof value === 'number';
 
-const isString = (value) => typeof value === 'string';
+export const isString = (value) => typeof value === 'string';
 
 const isNotEmptyString = (value) => isString(value) && value.length > 0;
 
-const isNull = (value) => value === null;
+export const isNull = (value) => value === null;
 
 export const isUndefined = (value?) => value === undefined;
 

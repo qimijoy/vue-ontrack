@@ -10,8 +10,8 @@
 		<TheActivities
 			v-show="currentPage === PAGE_ACTIVITIES"
 			:activities="activities"
-			@delete-activity="deleteActivity"
-			@create-activity="createActivity"
+			@delete-activity="deleteActivity($event)"
+			@create-activity="createActivity($event)"
 		/>
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
@@ -20,7 +20,9 @@
 </template>
 
 <script setup lang="ts">
-	import { ref } from 'vue';
+	import type { ActivityItemType } from '@/types/activity';
+
+	import { ref, computed } from 'vue';
 
 	import TheHeader from '@/components/common/Header/TheHeader.vue';
 	import TheTimeline from '@/components/pages/Timeline/TheTimeline.vue';
@@ -31,26 +33,29 @@
 	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
 	import { normalizePageHash } from '@/utils/normalizeHash';
 	import { generateTimelineItems } from '@/utils/timelines';
-	import { generateActivitySelectOptions } from '@/utils/activities';
+	import { generateActivities, generateActivitySelectOptions } from '@/utils/activities';
 
 	// CONSTANTS
 	const timelineItems = generateTimelineItems();
-	const activities = ref(['Coding', 'Reading', 'Training']);
-	const activitySelectOptions = generateActivitySelectOptions(activities.value);
 
 	// STATES
 	const currentPage = ref(normalizePageHash());
+	const activities = ref(generateActivities());
+
+	// COMPUTED
+	const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value));
 
 	// FUNCTIONS
 	const goTo = (page: string) => {
 		currentPage.value = page;
 	};
 
-	const deleteActivity = (activity: string) => {
-		activities.value.splice(activities.value.indexOf(activity), 1);
+	const deleteActivity = (activityId: string) => {
+		const index = activities.value.findIndex(({ id }) => id === activityId);
+		activities.value.splice(index, 1);
 	};
 
-	const createActivity = (activity: string) => {
-		activities.value.push(activity);
+	const createActivity = (activityItem: ActivityItemType) => {
+		activities.value.push(activityItem);
 	};
 </script>
