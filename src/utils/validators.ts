@@ -3,6 +3,7 @@ import type { selectItemType } from '@/types/select';
 
 import { NAV_ITEMS } from '@/constants/pages';
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants/time';
+import { BUTTON_TYPES } from '@/constants/buttons';
 
 // PAGES
 export const isPageValid = (currentPage: string) => {
@@ -35,6 +36,8 @@ const isOptionValid = (option: selectItemType) => {
 export const isOptionsValid = (options: selectItemType[]) => {
 	return options.every((option) => isOptionValid(option));
 };
+
+export const isButtonTypeValid = (type) => BUTTON_TYPES.includes(type);
 
 // COMMON
 const isBetween = (value: number, start: number, end: number) => value >= start || value <= end;
