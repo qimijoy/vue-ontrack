@@ -11,6 +11,7 @@
 			v-show="currentPage === PAGE_ACTIVITIES"
 			:activities="activities"
 			@delete-activity="deleteActivity"
+			@create-activity="createActivity"
 		/>
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
@@ -47,5 +48,9 @@
 
 	const deleteActivity = (activity: string) => {
 		activities.value.splice(activities.value.indexOf(activity), 1);
+	};
+
+	const createActivity = (activity: string) => {
+		activities.value.push(activity);
 	};
 </script>

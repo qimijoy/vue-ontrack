@@ -8,6 +8,8 @@
 				@delete="emit('deleteActivity', activity)"
 			/>
 		</ul>
+
+		<TheActivityForm @submit="emit('createActivity', $event)" />
 	</div>
 </template>
 
@@ -15,6 +17,7 @@
 	import type { PropType } from 'vue';
 
 	import ActivityItem from '@/components/pages/Activities/ActivityItem.vue';
+	import TheActivityForm from '@/components/pages/Activities/TheActivityForm.vue';
 
 	import { validateActivities, isActivityValid } from '@/utils/validators';
 
@@ -28,5 +31,6 @@
 
 	const emit = defineEmits({
 		deleteActivity: (value) => isActivityValid(value),
+		createActivity: (value) => isActivityValid(value),
 	});
 </script>

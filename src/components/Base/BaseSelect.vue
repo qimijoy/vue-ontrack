@@ -1,6 +1,6 @@
 <template>
 	<div class="flex gap-2">
-		<BaseButton @click="emit('select', null)">
+		<BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="emit('select', null)">
 			<XMarkIcon class="h-8" />
 		</BaseButton>
 		<select class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl" @change="handleSelect">
@@ -22,6 +22,7 @@
 	import BaseButton from '@/components/base/BaseButton.vue';
 
 	import { isOptionsValid, isUndefinedOrNull, isNumberOrNull } from '@/utils/validators';
+	import { BUTTON_TYPE_NEUTRAL } from '@/constants/buttons';
 
 	const props = defineProps({
 		placeholder: {
