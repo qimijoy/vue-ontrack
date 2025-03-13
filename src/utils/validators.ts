@@ -52,7 +52,7 @@ const isNotEmptyString = (value) => isString(value) && value.length > 0;
 
 const isNull = (value) => value === null;
 
-export const isUndefined = (value) => value === undefined;
+export const isUndefined = (value?) => value === undefined;
 
 export const isUndefinedOrNull = (value) => isUndefined(value) || isNull(value);
 

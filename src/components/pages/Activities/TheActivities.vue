@@ -1,7 +1,12 @@
 <template>
 	<div>
 		<ul class="divide-y">
-			<ActivityItem v-for="activity of activities" :key="activity" :activity="activity" />
+			<ActivityItem
+				v-for="activity of activities"
+				:key="activity"
+				:activity="activity"
+				@delete="emit('deleteActivity', activity)"
+			/>
 		</ul>
 	</div>
 </template>
@@ -11,7 +16,7 @@
 
 	import ActivityItem from '@/components/pages/Activities/ActivityItem.vue';
 
-	import { validateActivities } from '@/utils/validators';
+	import { validateActivities, isActivityValid } from '@/utils/validators';
 
 	defineProps({
 		activities: {
@@ -19,5 +24,9 @@
 			required: true,
 			validator: (value) => validateActivities(value),
 		},
+	});
+
+	const emit = defineEmits({
+		deleteActivity: (value) => isActivityValid(value),
 	});
 </script>
