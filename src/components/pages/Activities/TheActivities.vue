@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<ul class="divide-y">
+	<div class="flex grow flex-col">
+		<ul v-if="activities.length > 0" class="grow divide-y">
 			<ActivityItem
 				v-for="activity of activities"
 				:key="activity"
@@ -8,6 +8,8 @@
 				@delete="emit('deleteActivity', activity)"
 			/>
 		</ul>
+
+		<TheActivitiesEmptyState v-else />
 
 		<TheActivityForm @submit="emit('createActivity', $event)" />
 	</div>
@@ -17,6 +19,7 @@
 	import type { PropType } from 'vue';
 
 	import ActivityItem from '@/components/pages/Activities/ActivityItem.vue';
+	import TheActivitiesEmptyState from '@/components/pages/Activities/TheActivitiesEmptyState.vue';
 	import TheActivityForm from '@/components/pages/Activities/TheActivityForm.vue';
 
 	import { validateActivities, isActivityValid } from '@/utils/validators';

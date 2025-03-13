@@ -1,7 +1,7 @@
 <template>
 	<nav class="sticky bottom-0 z-10 bg-white">
 		<ul class="flex items-center justify-around border-t">
-			<NavItem
+			<NavigationItem
 				v-for="item of NAV_ITEMS"
 				:key="item.name"
 				:href="`#${item.name}`"
@@ -10,13 +10,13 @@
 			>
 				<component :is="item.icon" class="h-6 w-6" />
 				<span>{{ item.name }}</span>
-			</NavItem>
+			</NavigationItem>
 		</ul>
 	</nav>
 </template>
 
 <script setup lang="ts">
-	import NavItem from '@/components/common/Navigation/NavItem.vue';
+	import NavigationItem from '@/components/common/Navigation/NavigationItem.vue';
 
 	import { NAV_ITEMS } from '@/constants/pages';
 	import { isPageValid } from '@/utils/validators';
