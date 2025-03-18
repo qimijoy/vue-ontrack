@@ -5,7 +5,9 @@
 		<TheTimeline
 			v-show="currentPage === PAGE_TIMELINE"
 			:timeline-items="timelineItems"
+			:activities="activities"
 			:activity-select-options="activitySelectOptions"
+			@set-timeline-item-activity="setTimelineItemActivity"
 		/>
 		<TheActivities
 			v-show="currentPage === PAGE_ACTIVITIES"
@@ -21,6 +23,7 @@
 
 <script setup lang="ts">
 	import type { ActivityItemType } from '@/types/activity';
+	import type { timelineItemType } from '@/types/timeline';
 
 	import { ref, computed } from 'vue';
 
@@ -35,12 +38,10 @@
 	import { generateTimelineItems } from '@/utils/timelines';
 	import { generateActivities, generateActivitySelectOptions } from '@/utils/activities';
 
-	// CONSTANTS
-	const timelineItems = generateTimelineItems();
-
 	// STATES
 	const currentPage = ref(normalizePageHash());
 	const activities = ref(generateActivities());
+	const timelineItems = ref(generateTimelineItems());
 
 	// COMPUTED
 	const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value));
@@ -51,11 +52,27 @@
 	};
 
 	const deleteActivity = (activityId: string) => {
+		timelineItems.value.forEach((timelineItem) => {
+			if (timelineItem.activityId === activityId) {
+				timelineItem.activityId = null;
+			}
+		});
+
 		const index = activities.value.findIndex(({ id }) => id === activityId);
 		activities.value.splice(index, 1);
 	};
 
 	const createActivity = (activityItem: ActivityItemType) => {
 		activities.value.push(activityItem);
+	};
+
+	const setTimelineItemActivity = ({
+		timelineItem,
+		activity,
+	}: {
+		timelineItem: timelineItemType;
+		activity: ActivityItemType;
+	}) => {
+		timelineItem.activityId = activity?.id || null;
 	};
 </script>

@@ -4,29 +4,33 @@
 		<BaseSelect
 			:options="activitySelectOptions"
 			:placeholder="'Rest'"
-			:selected="selectedActivityId"
-			@select="selectedActivityId = $event"
+			:selected="timelineItem.activityId"
+			@select="selectActivity($event)"
 		/>
 	</li>
 </template>
 
 <script setup lang="ts">
-	import type { timelineItemType } from '@/types/timeline';
-	import type { selectItemType } from '@/types/select';
 	import type { PropType } from 'vue';
-
-	import { ref } from 'vue';
+	import type { timelineItemType } from '@/types/timeline';
+	import type { ActivityItemType } from '@/types/activity';
+	import type { selectItemType } from '@/types/select';
 
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
 
-	import { isTimelineItemValid, isOptionsValid } from '@/utils/validators';
+	import { isTimelineItemValid, isOptionsValid, isActivityValid, validateActivities, isNull } from '@/utils/validators';
 
-	defineProps({
+	const props = defineProps({
 		timelineItem: {
 			type: Object,
 			required: true,
 			validator: (timelineItem: timelineItemType) => isTimelineItemValid(timelineItem),
+		},
+		activities: {
+			type: Array as PropType<ActivityItemType[]>,
+			required: true,
+			validator: (value: ActivityItemType) => validateActivities(value),
 		},
 		activitySelectOptions: {
 			type: Array as PropType<selectItemType[]>,
@@ -35,6 +39,14 @@
 		},
 	});
 
-	// STATES
-	const selectedActivityId = ref(null);
+	const emit = defineEmits({
+		selectActivity: (value) => isActivityValid(value) || isNull(value),
+	});
+
+	// FUNCTIONS
+	const selectActivity = (id: string) => {
+		const findActivity = props.activities.find((activity) => activity.id === id) || null;
+
+		emit('selectActivity', findActivity);
+	};
 </script>
