@@ -1,18 +1,14 @@
 import type { timelineItemType } from '@/types/timeline';
-import { HOURS_IN_DAY, MIDNIGHT_HOUR, MILLISECONDS_IN_SECOND } from '@/constants/time';
+import type { ActivityItemType } from '@/types/activity';
 
-export const generateTimelineItems = (): timelineItemType[] => {
-	const timelineItems = [];
+import { HOURS_IN_DAY, MILLISECONDS_IN_SECOND, SECONDS_IN_HOUR, SECONDS_IN_MINUTE } from '@/constants/time';
 
-	for (let hour = MIDNIGHT_HOUR; hour < HOURS_IN_DAY; hour++) {
-		timelineItems.push({
-			hour,
-			activityId: null,
-			activitySeconds: 0,
-		});
-	}
-
-	return timelineItems;
+export const generateTimelineItems = (activities: ActivityItemType[]): timelineItemType[] => {
+	return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
+		hour,
+		activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
+		activitySeconds: hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
+	}));
 };
 
 export const getCurrentHour = () => {

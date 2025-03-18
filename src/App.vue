@@ -41,8 +41,8 @@
 
 	// STATES
 	const currentPage = ref(normalizePageHash());
-	const timelineItems = ref(generateTimelineItems());
 	const activities = ref(generateActivities());
+	const timelineItems = ref(generateTimelineItems(activities.value));
 
 	// COMPUTED
 	const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value));
@@ -56,6 +56,7 @@
 		timelineItems.value.forEach((timelineItem) => {
 			if (timelineItem.activityId === activity.id) {
 				timelineItem.activityId = null;
+				timelineItem.activitySeconds = 0;
 			}
 		});
 

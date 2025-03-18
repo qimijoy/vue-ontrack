@@ -1,7 +1,7 @@
 import type { selectItemType } from '@/types/select';
 import type { ActivityItemType } from '@/types/activity';
 
-import { SECONDS_IN_HOUR, SECONDS_IN_MINUTES, MINUTES_IN_HOUR } from '@/constants/time';
+import { SECONDS_IN_HOUR, SECONDS_IN_MINUTE, MINUTES_IN_HOUR } from '@/constants/time';
 import { id } from '@/utils/generators';
 import { NULLABLE_ACTIVITY } from '@/constants/activities';
 
@@ -50,7 +50,7 @@ function generatePeriodSelectOptionsLabel(periodInMinutes: number) {
  */
 export function generatePeriodSelectOptions(periodsInMinutes: number[]): selectItemType[] {
 	return periodsInMinutes.map((periodInMinutes) => ({
-		value: periodInMinutes * SECONDS_IN_MINUTES,
+		value: periodInMinutes * SECONDS_IN_MINUTE,
 		label: generatePeriodSelectOptionsLabel(periodInMinutes),
 	}));
 }
