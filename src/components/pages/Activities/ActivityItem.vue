@@ -9,10 +9,10 @@
 		<div>
 			<BaseSelect
 				class="font-mono"
-				placeholder="h:mm"
+				placeholder="hh:mm"
 				:options="PERIOD_SELECT_OPTIONS"
-				:selected="secondsToComplete"
-				@select="secondsToComplete = $event"
+				:selected="activity.secondsToComplete || null"
+				@select="emit('setSecondsToComplete', $event || 0)"
 			/>
 		</div>
 	</li>
@@ -22,8 +22,6 @@
 	import type { ActivityItemType } from '@/types/activity';
 	import type { PropType } from 'vue';
 
-	import { ref } from 'vue';
-
 	import { TrashIcon } from '@heroicons/vue/24/outline';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
@@ -31,7 +29,7 @@
 
 	import { PERIOD_SELECT_OPTIONS } from '@/constants/activities';
 	import { BUTTON_TYPE_DANGER } from '@/constants/buttons';
-	import { isActivityValid, isUndefined } from '@/utils/validators';
+	import { isActivityValid, isUndefined, isNumber, isNull } from '@/utils/validators';
 
 	defineProps({
 		activity: {
@@ -43,8 +41,6 @@
 
 	const emit = defineEmits({
 		delete: isUndefined,
+		setSecondsToComplete: (value) => isNumber(value) || isNull(value),
 	});
-
-	// STATES
-	const secondsToComplete = ref(0);
 </script>

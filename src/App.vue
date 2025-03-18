@@ -12,8 +12,9 @@
 		<TheActivities
 			v-show="currentPage === PAGE_ACTIVITIES"
 			:activities="activities"
-			@delete-activity="deleteActivity($event)"
 			@create-activity="createActivity($event)"
+			@delete-activity="deleteActivity($event)"
+			@set-activity-seconds-to-complete="setActivitySecondsToComplete"
 		/>
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
@@ -40,8 +41,8 @@
 
 	// STATES
 	const currentPage = ref(normalizePageHash());
-	const activities = ref(generateActivities());
 	const timelineItems = ref(generateTimelineItems());
+	const activities = ref(generateActivities());
 
 	// COMPUTED
 	const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value));
@@ -51,28 +52,26 @@
 		currentPage.value = page;
 	};
 
-	const deleteActivity = (activityId: string) => {
+	const deleteActivity = (activity: ActivityItemType) => {
 		timelineItems.value.forEach((timelineItem) => {
-			if (timelineItem.activityId === activityId) {
+			if (timelineItem.activityId === activity.id) {
 				timelineItem.activityId = null;
 			}
 		});
 
-		const index = activities.value.findIndex(({ id }) => id === activityId);
+		const index = activities.value.findIndex(({ id }) => id === activity.id);
 		activities.value.splice(index, 1);
 	};
 
-	const createActivity = (activityItem: ActivityItemType) => {
-		activities.value.push(activityItem);
+	const createActivity = (activity: ActivityItemType) => {
+		activities.value.push(activity);
 	};
 
-	const setTimelineItemActivity = ({
-		timelineItem,
-		activity,
-	}: {
-		timelineItem: timelineItemType;
-		activity: ActivityItemType;
-	}) => {
-		timelineItem.activityId = activity?.id || null;
+	const setTimelineItemActivity = (timelineItem: timelineItemType, activity: ActivityItemType) => {
+		timelineItem.activityId = activity.id;
+	};
+
+	const setActivitySecondsToComplete = (activity: ActivityItemType, secondsToComplete: number) => {
+		activity.secondsToComplete = secondsToComplete;
 	};
 </script>

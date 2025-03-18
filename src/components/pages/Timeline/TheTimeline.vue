@@ -7,7 +7,7 @@
 				:timeline-item="timelineItem"
 				:activities="activities"
 				:activity-select-options="activitySelectOptions"
-				@select-activity="emit('setTimelineItemActivity', { timelineItem, activity: $event })"
+				@select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
 			/>
 		</ul>
 	</div>
@@ -25,7 +25,6 @@
 		isOptionsValid,
 		validateActivities,
 		isActivityValid,
-		isNull,
 	} from '@/utils/validators';
 
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
@@ -49,12 +48,7 @@
 	});
 
 	const emit = defineEmits({
-		setTimelineItemActivity: ({
-			timelineItem,
-			activity,
-		}: {
-			timelineItem: timelineItemType;
-			activity: ActivityItemType;
-		}) => isTimelineItemValid(timelineItem) && (isActivityValid(activity) || isNull(activity)),
+		setTimelineItemActivity: (timelineItem: timelineItemType, activity: ActivityItemType) =>
+			isTimelineItemValid(timelineItem) && isActivityValid(activity),
 	});
 </script>

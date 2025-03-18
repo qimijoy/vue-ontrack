@@ -5,7 +5,8 @@
 				v-for="activity of activities"
 				:key="activity.id"
 				:activity="activity"
-				@delete="emit('deleteActivity', activity.id)"
+				@delete="emit('deleteActivity', activity)"
+				@set-seconds-to-complete="setSecondsToComplete(activity, $event)"
 			/>
 		</ul>
 
@@ -23,7 +24,7 @@
 	import TheActivitiesEmptyState from '@/components/pages/Activities/TheActivitiesEmptyState.vue';
 	import TheActivityForm from '@/components/pages/Activities/TheActivityForm.vue';
 
-	import { validateActivities, isActivityValid, isString } from '@/utils/validators';
+	import { validateActivities, isActivityValid, isNumber } from '@/utils/validators';
 
 	defineProps({
 		activities: {
@@ -34,7 +35,14 @@
 	});
 
 	const emit = defineEmits({
-		deleteActivity: (value) => isString(value),
-		createActivity: (value: ActivityItemType) => isActivityValid(value),
+		deleteActivity: (value) => isActivityValid(value),
+		createActivity: (value) => isActivityValid(value),
+		setActivitySecondsToComplete: (activity, secondsToComplete) =>
+			isActivityValid(activity) && isNumber(secondsToComplete),
 	});
+
+	// FUNCTIONS
+	const setSecondsToComplete = (activity: ActivityItemType, secondsToComplete: number) => {
+		emit('setActivitySecondsToComplete', activity, secondsToComplete);
+	};
 </script>

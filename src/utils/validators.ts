@@ -21,6 +21,10 @@ export const isTimelineItemsValid = (timelineItems: timelineItemType[]) => {
 
 // ACTIVITIES
 export const isActivityValid = ({ id, name, secondsToComplete }) => {
+	if (isNull(id)) {
+		return true;
+	}
+
 	return isNotEmptyString(id) && isNotEmptyString(name) && isNumber(secondsToComplete);
 };
 
