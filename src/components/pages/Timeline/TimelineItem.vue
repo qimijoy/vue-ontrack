@@ -7,6 +7,7 @@
 			:selected="timelineItem.activityId"
 			@select="selectActivity($event)"
 		/>
+		<TimelineStopwatch :seconds="timelineItem.activitySeconds" />
 	</li>
 </template>
 
@@ -18,6 +19,7 @@
 
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
+	import TimelineStopwatch from '@/components/pages/Timeline/TimelineStopwatch.vue';
 
 	import { isTimelineItemValid, isOptionsValid, isActivityValid, validateActivities } from '@/utils/validators';
 	import { findActivityById } from '@/utils/activities';
