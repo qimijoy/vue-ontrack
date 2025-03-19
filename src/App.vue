@@ -10,10 +10,12 @@
 			:activity-select-options="activitySelectOptions"
 			:current-page="currentPage"
 			@set-timeline-item-activity="setTimelineItemActivity"
+			@update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
 		/>
 		<TheActivities
 			v-show="currentPage === PAGE_ACTIVITIES"
 			:activities="activities"
+			:timeline-items="timelineItems"
 			@create-activity="createActivity($event)"
 			@delete-activity="deleteActivity($event)"
 			@set-activity-seconds-to-complete="setActivitySecondsToComplete"
@@ -87,5 +89,9 @@
 
 	const setActivitySecondsToComplete = (activity: ActivityItemType, secondsToComplete: number) => {
 		activity.secondsToComplete = secondsToComplete;
+	};
+
+	const updateTimelineItemActivitySeconds = (timelineItem: timelineItemType, activitySeconds: number) => {
+		timelineItem.activitySeconds += activitySeconds;
 	};
 </script>

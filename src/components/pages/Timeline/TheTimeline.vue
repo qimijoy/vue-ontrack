@@ -10,6 +10,7 @@
 				:activity-select-options="activitySelectOptions"
 				@scroll-to-hour="scrollToHour($event)"
 				@select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
+				@update-activity-seconds="emit('updateTimelineItemActivitySeconds', timelineItem, $event)"
 			/>
 		</ul>
 	</div>
@@ -32,6 +33,7 @@
 		validateActivities,
 		isActivityValid,
 		isPageValid,
+		isNumber,
 	} from '@/utils/validators';
 	import { MIDNIGHT_HOUR } from '@/constants/time';
 	import { PAGE_TIMELINE } from '@/constants/pages';
@@ -62,6 +64,8 @@
 	const emit = defineEmits({
 		setTimelineItemActivity: (timelineItem: timelineItemType, activity: ActivityItemType) =>
 			isTimelineItemValid(timelineItem) && isActivityValid(activity),
+		updateTimelineItemActivitySeconds: (timelineItem, activitySeconds) =>
+			isTimelineItemValid(timelineItem) && isNumber(activitySeconds),
 	});
 
 	// STATES

@@ -39,6 +39,10 @@
 		},
 	});
 
+	const emit = defineEmits({
+		updateSeconds: (value) => isNumber(value),
+	});
+
 	// CONSTANTS
 	const isStartButtonDisabled = props.hour !== new Date().getHours();
 
@@ -49,6 +53,7 @@
 	// FUNCTIONS
 	const start = () => {
 		isRunning.value = setInterval(() => {
+			emit('updateSeconds', 1);
 			seconds.value++;
 		}, MILLISECONDS_IN_SECOND);
 	};
@@ -60,6 +65,7 @@
 
 	const reset = () => {
 		stop();
+		emit('updateSeconds', -seconds.value);
 
 		seconds.value = 0;
 	};

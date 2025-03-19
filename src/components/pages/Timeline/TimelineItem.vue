@@ -7,7 +7,11 @@
 			:selected="timelineItem.activityId"
 			@select="selectActivity($event)"
 		/>
-		<TimelineStopwatch :seconds="timelineItem.activitySeconds" :hour="timelineItem.hour" />
+		<TimelineStopwatch
+			:seconds="timelineItem.activitySeconds"
+			:hour="timelineItem.hour"
+			@update-seconds="emit('updateActivitySeconds', $event)"
+		/>
 	</li>
 </template>
 
@@ -27,6 +31,7 @@
 		isActivityValid,
 		validateActivities,
 		isHourValid,
+		isNumber,
 	} from '@/utils/validators';
 	import { findActivityById } from '@/utils/activities';
 
@@ -51,6 +56,7 @@
 	const emit = defineEmits({
 		selectActivity: (value) => isActivityValid(value),
 		scrollToHour: (value) => isHourValid(value),
+		updateActivitySeconds: (value) => isNumber(value),
 	});
 
 	// FUNCTIONS
