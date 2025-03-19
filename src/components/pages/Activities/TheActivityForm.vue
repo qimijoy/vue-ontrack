@@ -18,6 +18,7 @@
 	import { isActivityValid } from '@/utils/validators';
 	import { id } from '@/utils/generators';
 
+	// EMIT
 	const emit = defineEmits({
 		submit: (value: ActivityItemType) => isActivityValid(value),
 	});

@@ -12,6 +12,7 @@
 	import { PAGE_DEFAULT, PAGE_PROGRESS } from '@/constants/pages';
 	import { isPageValid } from '@/utils/validators';
 
+	// EMIT
 	const emit = defineEmits({
 		navigate: isPageValid,
 	});

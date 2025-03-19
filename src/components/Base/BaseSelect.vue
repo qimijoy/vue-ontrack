@@ -44,6 +44,7 @@
 		},
 	});
 
+	// EMIT
 	const emit = defineEmits({
 		select: (value) => isSelectValueValid(value),
 	});

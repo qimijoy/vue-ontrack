@@ -6,16 +6,12 @@
 			v-show="currentPage === PAGE_TIMELINE"
 			ref="timeline"
 			:timeline-items="timelineItems"
-			:activities="activities"
-			:activity-select-options="activitySelectOptions"
 			:current-page="currentPage"
 			@set-timeline-item-activity="setTimelineItemActivity"
-			@update-timeline-item-activity-seconds="updateTimelineItemActivitySeconds"
 		/>
 		<TheActivities
 			v-show="currentPage === PAGE_ACTIVITIES"
 			:activities="activities"
-			:timeline-items="timelineItems"
 			@create-activity="createActivity($event)"
 			@delete-activity="deleteActivity($event)"
 			@set-activity-seconds-to-complete="setActivitySecondsToComplete"
@@ -30,7 +26,7 @@
 	import type { ActivityItemType } from '@/types/activity';
 	import type { timelineItemType } from '@/types/timeline';
 
-	import { ref, computed } from 'vue';
+	import { ref, computed, provide } from 'vue';
 
 	import TheHeader from '@/components/common/Header/TheHeader.vue';
 	import TheTimeline from '@/components/pages/Timeline/TheTimeline.vue';
@@ -41,7 +37,7 @@
 	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
 	import { normalizePageHash } from '@/utils/normalizeHash';
 	import { generateTimelineItems } from '@/utils/timelines';
-	import { generateActivities, generateActivitySelectOptions } from '@/utils/activities';
+	import { generateActivities, generateActivitySelectOptions, generatePeriodSelectOptions } from '@/utils/activities';
 
 	// STATES
 	const currentPage = ref(normalizePageHash());
@@ -94,4 +90,11 @@
 	const updateTimelineItemActivitySeconds = (timelineItem: timelineItemType, activitySeconds: number) => {
 		timelineItem.activitySeconds += activitySeconds;
 	};
+
+	// PROVIDE
+	provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds);
+	provide('timelineItems', timelineItems.value);
+	provide('activities', activities.value);
+	provide('activitySelectOptions', activitySelectOptions.value);
+	provide('periodSelectOptions', generatePeriodSelectOptions());
 </script>

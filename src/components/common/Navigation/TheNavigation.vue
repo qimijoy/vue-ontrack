@@ -29,6 +29,7 @@
 		},
 	});
 
+	// EMIT
 	const emit = defineEmits({
 		navigate: isPageValid,
 	});

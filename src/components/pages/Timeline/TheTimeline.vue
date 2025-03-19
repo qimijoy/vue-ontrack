@@ -6,11 +6,8 @@
 				:key="timelineItem.hour"
 				ref="timelineItemRefs"
 				:timeline-item="timelineItem"
-				:activities="activities"
-				:activity-select-options="activitySelectOptions"
 				@scroll-to-hour="scrollToHour($event)"
 				@select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
-				@update-activity-seconds="emit('updateTimelineItemActivitySeconds', timelineItem, $event)"
 			/>
 		</ul>
 	</div>
@@ -22,19 +19,10 @@
 	import type { PropType } from 'vue';
 	import type { timelineItemType } from '@/types/timeline';
 	import type { ActivityItemType } from '@/types/activity';
-	import type { selectItemType } from '@/types/select';
 
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
 
-	import {
-		isTimelineItemValid,
-		isTimelineItemsValid,
-		isOptionsValid,
-		validateActivities,
-		isActivityValid,
-		isPageValid,
-		isNumber,
-	} from '@/utils/validators';
+	import { isTimelineItemValid, isTimelineItemsValid, isActivityValid, isPageValid } from '@/utils/validators';
 	import { MIDNIGHT_HOUR } from '@/constants/time';
 	import { PAGE_TIMELINE } from '@/constants/pages';
 
@@ -44,16 +32,6 @@
 			required: true,
 			validator: (timelineItems: timelineItemType[]) => isTimelineItemsValid(timelineItems),
 		},
-		activities: {
-			type: Array as PropType<ActivityItemType[]>,
-			required: true,
-			validator: (value: ActivityItemType) => validateActivities(value),
-		},
-		activitySelectOptions: {
-			type: Array as PropType<selectItemType[]>,
-			required: true,
-			validator: (value: selectItemType[]) => isOptionsValid(value),
-		},
 		currentPage: {
 			type: String,
 			required: true,
@@ -61,11 +39,10 @@
 		},
 	});
 
+	// EMIT
 	const emit = defineEmits({
 		setTimelineItemActivity: (timelineItem: timelineItemType, activity: ActivityItemType) =>
 			isTimelineItemValid(timelineItem) && isActivityValid(activity),
-		updateTimelineItemActivitySeconds: (timelineItem, activitySeconds) =>
-			isTimelineItemValid(timelineItem) && isNumber(activitySeconds),
 	});
 
 	// STATES

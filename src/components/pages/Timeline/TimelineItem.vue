@@ -7,60 +7,44 @@
 			:selected="timelineItem.activityId"
 			@select="selectActivity($event)"
 		/>
-		<TimelineStopwatch
-			:seconds="timelineItem.activitySeconds"
-			:hour="timelineItem.hour"
-			@update-seconds="emit('updateActivitySeconds', $event)"
-		/>
+		<TimelineStopwatch :timeline-item="timelineItem" />
 	</li>
 </template>
 
 <script setup lang="ts">
-	import type { PropType } from 'vue';
 	import type { timelineItemType } from '@/types/timeline';
 	import type { ActivityItemType } from '@/types/activity';
 	import type { selectItemType } from '@/types/select';
+
+	import { inject } from 'vue';
 
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
 	import TimelineStopwatch from '@/components/pages/Timeline/TimelineStopwatch.vue';
 
-	import {
-		isTimelineItemValid,
-		isOptionsValid,
-		isActivityValid,
-		validateActivities,
-		isHourValid,
-		isNumber,
-	} from '@/utils/validators';
+	import { isTimelineItemValid, isActivityValid, isHourValid } from '@/utils/validators';
 	import { findActivityById } from '@/utils/activities';
 
-	const props = defineProps({
+	defineProps({
 		timelineItem: {
 			type: Object,
 			required: true,
 			validator: (timelineItem: timelineItemType) => isTimelineItemValid(timelineItem),
 		},
-		activities: {
-			type: Array as PropType<ActivityItemType[]>,
-			required: true,
-			validator: (value: ActivityItemType) => validateActivities(value),
-		},
-		activitySelectOptions: {
-			type: Array as PropType<selectItemType[]>,
-			required: true,
-			validator: (value: selectItemType[]) => isOptionsValid(value),
-		},
 	});
 
+	// INJECT
+	const activities = inject<ActivityItemType[]>('activities');
+	const activitySelectOptions = inject<selectItemType[]>('activitySelectOptions');
+
+	// EMIT
 	const emit = defineEmits({
 		selectActivity: (value) => isActivityValid(value),
 		scrollToHour: (value) => isHourValid(value),
-		updateActivitySeconds: (value) => isNumber(value),
 	});
 
 	// FUNCTIONS
 	const selectActivity = (id: string) => {
-		emit('selectActivity', findActivityById(props.activities, id));
+		emit('selectActivity', findActivityById(activities, id));
 	};
 </script>

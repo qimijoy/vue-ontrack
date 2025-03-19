@@ -10,15 +10,11 @@
 			<BaseSelect
 				class="grow font-mono"
 				placeholder="hh:mm"
-				:options="PERIOD_SELECT_OPTIONS"
+				:options="periodSelectOptions"
 				:selected="activity.secondsToComplete || null"
 				@select="emit('setSecondsToComplete', $event || 0)"
 			/>
-			<ActivitySecondsToComplete
-				v-if="activity.secondsToComplete > 0"
-				:activity="activity"
-				:timeline-items="timelineItems"
-			/>
+			<ActivitySecondsToComplete v-if="activity.secondsToComplete > 0" :activity="activity" />
 		</div>
 	</li>
 </template>
@@ -26,17 +22,17 @@
 <script setup lang="ts">
 	import type { PropType } from 'vue';
 	import type { ActivityItemType } from '@/types/activity';
-	import type { timelineItemType } from '@/types/timeline';
+	import type { selectItemType } from '@/types/select';
 
+	import { inject } from 'vue';
 	import { TrashIcon } from '@heroicons/vue/24/outline';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 	import ActivitySecondsToComplete from '@/components/pages/Activities/ActivitySecondsToComplete.vue';
 
-	import { PERIOD_SELECT_OPTIONS } from '@/constants/activities';
 	import { BUTTON_TYPE_DANGER } from '@/constants/buttons';
-	import { isActivityValid, isUndefined, isNumber, isNull, isTimelineItemsValid } from '@/utils/validators';
+	import { isActivityValid, isUndefined, isNumber, isNull } from '@/utils/validators';
 
 	defineProps({
 		activity: {
@@ -44,13 +40,12 @@
 			required: true,
 			validator: (value: ActivityItemType) => isActivityValid(value),
 		},
-		timelineItems: {
-			type: Array as PropType<Array<timelineItemType>>,
-			required: true,
-			validator: (timelineItems: timelineItemType[]) => isTimelineItemsValid(timelineItems),
-		},
 	});
 
+	// INJECT
+	const periodSelectOptions = inject<selectItemType[]>('periodSelectOptions');
+
+	// EMIT
 	const emit = defineEmits({
 		delete: isUndefined,
 		setSecondsToComplete: (value) => isNumber(value) || isNull(value),
