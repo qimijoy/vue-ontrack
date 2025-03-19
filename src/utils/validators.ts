@@ -7,7 +7,11 @@ import { BUTTON_TYPES } from '@/constants/buttons';
 
 // PAGES
 export const isPageValid = (currentPage: string) => {
-	return NAV_ITEMS.map(({ name }) => name).includes(currentPage);
+	return NAV_ITEMS.some(({ page }) => page === currentPage);
+};
+
+export const isNavItemValid = (navItem) => {
+	return NAV_ITEMS.includes(navItem);
 };
 
 // TIMELINES
