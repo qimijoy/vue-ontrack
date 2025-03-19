@@ -7,7 +7,6 @@
 				ref="timelineItemRefs"
 				:timeline-item="timelineItem"
 				@scroll-to-hour="scrollToHour($event)"
-				@select-activity="emit('setTimelineItemActivity', timelineItem, $event)"
 			/>
 		</ul>
 	</div>
@@ -18,11 +17,10 @@
 
 	import type { PropType } from 'vue';
 	import type { timelineItemType } from '@/types/timeline';
-	import type { ActivityItemType } from '@/types/activity';
 
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
 
-	import { isTimelineItemValid, isTimelineItemsValid, isActivityValid, isPageValid } from '@/utils/validators';
+	import { isTimelineItemsValid, isPageValid } from '@/utils/validators';
 	import { MIDNIGHT_HOUR } from '@/constants/time';
 	import { PAGE_TIMELINE } from '@/constants/pages';
 
@@ -37,12 +35,6 @@
 			required: true,
 			validator: (value: string) => isPageValid(value),
 		},
-	});
-
-	// EMIT
-	const emit = defineEmits({
-		setTimelineItemActivity: (timelineItem: timelineItemType, activity: ActivityItemType) =>
-			isTimelineItemValid(timelineItem) && isActivityValid(activity),
 	});
 
 	// STATES

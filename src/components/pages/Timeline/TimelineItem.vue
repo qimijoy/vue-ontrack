@@ -5,7 +5,7 @@
 			:options="activitySelectOptions"
 			:placeholder="'Rest'"
 			:selected="timelineItem.activityId"
-			@select="selectActivity($event)"
+			@select="setTimelineItemActivity(timelineItem, $event)"
 		/>
 		<TimelineStopwatch :timeline-item="timelineItem" />
 	</li>
@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 	import type { timelineItemType } from '@/types/timeline';
-	import type { ActivityItemType } from '@/types/activity';
 	import type { selectItemType } from '@/types/select';
 
 	import { inject } from 'vue';
@@ -22,8 +21,7 @@
 	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
 	import TimelineStopwatch from '@/components/pages/Timeline/TimelineStopwatch.vue';
 
-	import { isTimelineItemValid, isActivityValid, isHourValid } from '@/utils/validators';
-	import { findActivityById } from '@/utils/activities';
+	import { isTimelineItemValid, isHourValid } from '@/utils/validators';
 
 	defineProps({
 		timelineItem: {
@@ -34,17 +32,11 @@
 	});
 
 	// INJECT
-	const activities = inject<ActivityItemType[]>('activities');
 	const activitySelectOptions = inject<selectItemType[]>('activitySelectOptions');
+	const setTimelineItemActivity = inject('setTimelineItemActivity');
 
 	// EMIT
 	const emit = defineEmits({
-		selectActivity: (value) => isActivityValid(value),
 		scrollToHour: (value) => isHourValid(value),
 	});
-
-	// FUNCTIONS
-	const selectActivity = (id: string) => {
-		emit('selectActivity', findActivityById(activities, id));
-	};
 </script>

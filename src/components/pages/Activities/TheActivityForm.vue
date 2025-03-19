@@ -8,27 +8,22 @@
 </template>
 
 <script setup lang="ts">
-	import type { ActivityItemType } from '@/types/activity';
-
-	import { ref, nextTick } from 'vue';
+	import { ref, nextTick, inject } from 'vue';
 	import { PlusIcon } from '@heroicons/vue/24/outline';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
 
-	import { isActivityValid } from '@/utils/validators';
 	import { id } from '@/utils/generators';
 
-	// EMIT
-	const emit = defineEmits({
-		submit: (value: ActivityItemType) => isActivityValid(value),
-	});
+	// INJECT
+	const createActivity = inject('createActivity');
 
 	// STATES
 	const name = ref('');
 
 	// FUNCTIONS
 	const submit = async () => {
-		emit('submit', {
+		createActivity({
 			id: id(),
 			name: name.value,
 			secondsToComplete: 0,

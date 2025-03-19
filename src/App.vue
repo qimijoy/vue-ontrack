@@ -7,15 +7,8 @@
 			ref="timeline"
 			:timeline-items="timelineItems"
 			:current-page="currentPage"
-			@set-timeline-item-activity="setTimelineItemActivity"
 		/>
-		<TheActivities
-			v-show="currentPage === PAGE_ACTIVITIES"
-			:activities="activities"
-			@create-activity="createActivity($event)"
-			@delete-activity="deleteActivity($event)"
-			@set-activity-seconds-to-complete="setActivitySecondsToComplete"
-		/>
+		<TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
 
@@ -79,8 +72,8 @@
 		activities.value.push(activity);
 	};
 
-	const setTimelineItemActivity = (timelineItem: timelineItemType, activity: ActivityItemType) => {
-		timelineItem.activityId = activity.id;
+	const setTimelineItemActivity = (timelineItem: timelineItemType, activityId: string) => {
+		timelineItem.activityId = activityId;
 	};
 
 	const setActivitySecondsToComplete = (activity: ActivityItemType, secondsToComplete: number) => {
@@ -92,9 +85,13 @@
 	};
 
 	// PROVIDE
-	provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds);
 	provide('timelineItems', timelineItems.value);
-	provide('activities', activities.value);
 	provide('activitySelectOptions', activitySelectOptions.value);
 	provide('periodSelectOptions', generatePeriodSelectOptions());
+
+	provide('deleteActivity', deleteActivity);
+	provide('createActivity', createActivity);
+	provide('setTimelineItemActivity', setTimelineItemActivity);
+	provide('setActivitySecondsToComplete', setActivitySecondsToComplete);
+	provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds);
 </script>
