@@ -1,9 +1,10 @@
 <template>
-	<a :href="`#${PAGE_DEFAULT}`">
+	<a :href="`#${PAGE_DEFAULT}`" @click="navigate(PAGE_DEFAULT)">
 		<img src="@/assets/images/logo.png" alt="Logo" class="h-9" />
 	</a>
 </template>
 
 <script setup lang="ts">
+	import { navigate } from '@/router';
 	import { PAGE_DEFAULT } from '@/constants/pages';
 </script>

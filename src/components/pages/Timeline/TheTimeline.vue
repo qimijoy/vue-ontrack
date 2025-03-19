@@ -20,20 +20,16 @@
 
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
 
-	import { isTimelineItemsValid, isPageValid } from '@/utils/validators';
+	import { isTimelineItemsValid } from '@/utils/validators';
 	import { MIDNIGHT_HOUR } from '@/constants/time';
 	import { PAGE_TIMELINE } from '@/constants/pages';
+	import { currentPage } from '@/router';
 
-	const props = defineProps({
+	defineProps({
 		timelineItems: {
 			type: Array as PropType<Array<timelineItemType>>,
 			required: true,
 			validator: (timelineItems: timelineItemType[]) => isTimelineItemsValid(timelineItems),
-		},
-		currentPage: {
-			type: String,
-			required: true,
-			validator: (value: string) => isPageValid(value),
 		},
 	});
 
@@ -46,13 +42,11 @@
 			hour = new Date().getHours();
 		}
 
-		const options = { behavior: isSmooth ? 'smooth' : 'instant' };
+		const el = hour === MIDNIGHT_HOUR ? document.body : timelineItemRefs.value[hour - 1].$el;
 
-		if (hour === MIDNIGHT_HOUR) {
-			document.body.scrollIntoView(options);
-		} else {
-			timelineItemRefs.value[hour - 1].$el.scrollIntoView(options);
-		}
+		el.scrollIntoView({
+			behavior: isSmooth ? 'smooth' : 'instant',
+		});
 	};
 
 	// EXPOSE
@@ -60,7 +54,7 @@
 
 	// WATCHERS
 	watchPostEffect(async () => {
-		if (props.currentPage !== PAGE_TIMELINE) {
+		if (currentPage.value !== PAGE_TIMELINE) {
 			return;
 		}
 

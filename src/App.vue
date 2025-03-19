@@ -1,18 +1,13 @@
 <template>
-	<TheHeader @navigate="goTo($event)" />
+	<TheHeader />
 
 	<main class="flex flex-grow flex-col">
-		<TheTimeline
-			v-show="currentPage === PAGE_TIMELINE"
-			ref="timeline"
-			:timeline-items="timelineItems"
-			:current-page="currentPage"
-		/>
+		<TheTimeline v-show="currentPage === PAGE_TIMELINE" ref="timelineRef" :timeline-items="timelineItems" />
 		<TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
 
-	<TheNavigation :current-page="currentPage" @navigate="goTo($event)" />
+	<TheNavigation />
 </template>
 
 <script setup lang="ts">
@@ -28,34 +23,18 @@
 	import TheNavigation from '@/components/common/Navigation/TheNavigation.vue';
 
 	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
-	import { normalizePageHash } from '@/utils/normalizeHash';
 	import { generateTimelineItems } from '@/utils/timelines';
 	import { generateActivities, generateActivitySelectOptions, generatePeriodSelectOptions } from '@/utils/activities';
+	import { currentPage, timelineRef } from '@/router';
 
 	// STATES
-	const currentPage = ref(normalizePageHash());
 	const activities = ref(generateActivities());
 	const timelineItems = ref(generateTimelineItems(activities.value));
-	const timeline = ref();
 
 	// COMPUTED
 	const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value));
 
 	// FUNCTIONS
-	const goTo = (page: string) => {
-		// Click on Logo
-		if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
-			timeline.value.scrollToHour();
-		}
-
-		// Scroll to top on Activities & Progress pages
-		if (page !== PAGE_TIMELINE) {
-			document.body.scrollIntoView();
-		}
-
-		currentPage.value = page;
-	};
-
 	const deleteActivity = (activity: ActivityItemType) => {
 		timelineItems.value.forEach((timelineItem) => {
 			if (timelineItem.activityId === activity.id) {

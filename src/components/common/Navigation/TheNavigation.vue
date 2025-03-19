@@ -6,7 +6,7 @@
 				:key="item.name"
 				:href="`#${item.name}`"
 				:class="{ 'pointer-events-none bg-gray-200': item.name === currentPage }"
-				@click="emit('navigate', item.name)"
+				@click="navigate(item.name)"
 			>
 				<component :is="item.icon" class="h-6 w-6" />
 				<span>{{ item.name }}</span>
@@ -19,18 +19,5 @@
 	import NavigationItem from '@/components/common/Navigation/NavigationItem.vue';
 
 	import { NAV_ITEMS } from '@/constants/pages';
-	import { isPageValid } from '@/utils/validators';
-
-	defineProps({
-		currentPage: {
-			type: String,
-			required: true,
-			validator: (currentPage: string) => isPageValid(currentPage),
-		},
-	});
-
-	// EMIT
-	const emit = defineEmits({
-		navigate: isPageValid,
-	});
+	import { navigate, currentPage } from '@/router';
 </script>
