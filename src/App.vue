@@ -4,9 +4,11 @@
 	<main class="flex flex-grow flex-col">
 		<TheTimeline
 			v-show="currentPage === PAGE_TIMELINE"
+			ref="timeline"
 			:timeline-items="timelineItems"
 			:activities="activities"
 			:activity-select-options="activitySelectOptions"
+			:current-page="currentPage"
 			@set-timeline-item-activity="setTimelineItemActivity"
 		/>
 		<TheActivities
@@ -43,12 +45,23 @@
 	const currentPage = ref(normalizePageHash());
 	const activities = ref(generateActivities());
 	const timelineItems = ref(generateTimelineItems(activities.value));
+	const timeline = ref();
 
 	// COMPUTED
 	const activitySelectOptions = computed(() => generateActivitySelectOptions(activities.value));
 
 	// FUNCTIONS
 	const goTo = (page: string) => {
+		// Click on Logo
+		if (currentPage.value === PAGE_TIMELINE && page === PAGE_TIMELINE) {
+			timeline.value.scrollToHour();
+		}
+
+		// Scroll to top on Activities & Progress pages
+		if (page !== PAGE_TIMELINE) {
+			document.body.scrollIntoView();
+		}
+
 		currentPage.value = page;
 	};
 
