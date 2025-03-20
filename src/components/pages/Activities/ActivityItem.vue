@@ -12,7 +12,7 @@
 				placeholder="hh:mm"
 				:options="periodSelectOptions"
 				:selected="activity.secondsToComplete || null"
-				@select="setActivitySecondsToComplete(activity, $event || 0)"
+				@select="setActivitySecondsToComplete(activity, $event)"
 			/>
 			<ActivitySecondsToComplete v-if="activity.secondsToComplete > 0" :activity="activity" />
 		</div>

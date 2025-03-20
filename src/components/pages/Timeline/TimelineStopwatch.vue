@@ -26,6 +26,7 @@
 	import { BUTTON_TYPE_DANGER, BUTTON_TYPE_SUCCESS, BUTTON_TYPE_WARNING } from '@/constants/buttons';
 	import { MILLISECONDS_IN_SECOND } from '@/constants/time';
 	import { isTimelineItemValid } from '@/utils/validators';
+	import { getCurrentHour } from '@/utils/timelines';
 	import { formatSeconds } from '@/utils/timelines';
 
 	import { updateTimelineItemActivitySecondsKey } from '@/keys';
@@ -42,7 +43,7 @@
 	const updateTimelineItemActivitySeconds = inject(updateTimelineItemActivitySecondsKey);
 
 	// CONSTANTS
-	const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
+	const isStartButtonDisabled = props.timelineItem.hour !== getCurrentHour();
 
 	// STATES
 	const seconds = ref(props.timelineItem.activitySeconds);

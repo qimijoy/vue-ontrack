@@ -1,5 +1,5 @@
 <template>
-	<button :class="`${typeClasses[type]} cursor-pointer rounded p-3 disabled:cursor-not-allowed disabled:opacity-50`">
+	<button :class="classes">
 		<slot />
 	</button>
 </template>
@@ -7,13 +7,16 @@
 <script setup lang="ts">
 	import { isButtonTypeValid } from '@/utils/validators';
 
-	defineProps({
+	const props = defineProps({
 		type: {
 			type: String,
 			default: BUTTON_TYPE_PRIMARY,
 			validator: (value) => isButtonTypeValid(value),
 		},
 	});
+
+	// CONSTANTS
+	const classes = `${typeClasses[props.type]} cursor-pointer rounded p-3 disabled:cursor-not-allowed disabled:opacity-50`;
 </script>
 
 <script lang="ts">

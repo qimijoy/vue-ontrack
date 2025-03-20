@@ -19,7 +19,7 @@ export const generateTimelineItems = (activities: ActivityItemType[]): timelineI
 	}));
 };
 
-export const getCurrentHour = () => {
+export const getCurrentHour = (): number => {
 	return new Date().getHours();
 };
 

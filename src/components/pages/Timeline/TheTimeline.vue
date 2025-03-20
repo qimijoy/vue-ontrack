@@ -6,7 +6,7 @@
 				:key="timelineItem.hour"
 				ref="timelineItemRefs"
 				:timeline-item="timelineItem"
-				@scroll-to-hour="scrollToHour($event)"
+				@scroll-to-hour="scrollToHour(timelineItem.hour)"
 			/>
 		</ul>
 	</div>
@@ -21,6 +21,7 @@
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
 
 	import { isTimelineItemsValid } from '@/utils/validators';
+	import { getCurrentHour } from '@/utils/timelines';
 	import { MIDNIGHT_HOUR } from '@/constants/time';
 	import { PAGE_TIMELINE } from '@/constants/pages';
 	import { currentPage } from '@/router';
@@ -39,7 +40,7 @@
 	// FUNCTIONS
 	const scrollToHour = (hour: number = null, isSmooth: boolean = true) => {
 		if (hour === null) {
-			hour = new Date().getHours();
+			hour = getCurrentHour();
 		}
 
 		const el = hour === MIDNIGHT_HOUR ? document.body : timelineItemRefs.value[hour - 1].$el;

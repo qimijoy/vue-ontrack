@@ -58,7 +58,7 @@
 	};
 
 	const setActivitySecondsToComplete = (activity: ActivityItemType, secondsToComplete: number) => {
-		activity.secondsToComplete = secondsToComplete;
+		activity.secondsToComplete = secondsToComplete || 0;
 	};
 
 	const updateTimelineItemActivitySeconds = (timelineItem: timelineItemType, activitySeconds: number) => {
