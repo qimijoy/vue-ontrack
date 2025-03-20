@@ -2,8 +2,8 @@
 	<TheHeader />
 
 	<main class="flex flex-grow flex-col">
-		<TheTimeline v-show="currentPage === PAGE_TIMELINE" ref="timelineRef" :timeline-items="timelineItems" />
-		<TheActivities v-show="currentPage === PAGE_ACTIVITIES" :activities="activities" />
+		<TheTimeline v-show="currentPage === PAGE_TIMELINE" ref="timelineRef" />
+		<TheActivities v-show="currentPage === PAGE_ACTIVITIES" />
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
 
@@ -24,12 +24,11 @@
 	import { generatePeriodSelectOptions } from '@/utils/activities';
 	import { currentPage, timelineRef } from '@/composables/router';
 	import {
-		timelineItems,
 		setTimelineItemActivity,
 		updateTimelineItemActivitySeconds,
+		resetTimelineItemActivities,
 	} from '@/composables/timelineItems';
 	import {
-		activities,
 		activitySelectOptions,
 		createActivity,
 		deleteActivity,
@@ -40,12 +39,14 @@
 
 	// PROVIDE
 	// Readonly
-	provide(keys.timelineItemsKey, readonly(timelineItems.value));
 	provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions));
 	provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()));
 
 	provide(keys.createActivityKey, createActivity);
-	provide(keys.deleteActivityKey, deleteActivity);
+	provide(keys.deleteActivityKey, (activity) => {
+		resetTimelineItemActivities(activity);
+		deleteActivity(activity);
+	});
 	provide(keys.setTimelineItemActivityKey, setTimelineItemActivity);
 	provide(keys.setActivitySecondsToCompleteKey, setActivitySecondsToComplete);
 	provide(keys.updateTimelineItemActivitySecondsKey, updateTimelineItemActivitySeconds);

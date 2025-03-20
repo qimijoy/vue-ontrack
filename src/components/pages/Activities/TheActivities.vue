@@ -11,20 +11,9 @@
 </template>
 
 <script setup lang="ts">
-	import type { PropType } from 'vue';
-	import type { ActivityItemType } from '@/types/activity';
-
 	import ActivityItem from '@/components/pages/Activities/ActivityItem.vue';
 	import TheActivitiesEmptyState from '@/components/pages/Activities/TheActivitiesEmptyState.vue';
 	import TheActivityForm from '@/components/pages/Activities/TheActivityForm.vue';
 
-	import { validateActivities } from '@/utils/validators';
-
-	defineProps({
-		activities: {
-			type: Array as PropType<ActivityItemType[]>,
-			required: true,
-			validator: (value) => validateActivities(value),
-		},
-	});
+	import { activities } from '@/composables/activities';
 </script>

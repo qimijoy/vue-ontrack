@@ -1,4 +1,3 @@
-export const timelineItemsKey: symbol = Symbol();
 export const activitySelectOptionsKey: symbol = Symbol();
 export const periodSelectOptionsKey: symbol = Symbol();
 

@@ -7,15 +7,12 @@
 <script setup lang="ts">
 	import type { PropType } from 'vue';
 	import type { ActivityItemType } from '@/types/activity';
-	import type { timelineItemType } from '@/types/timeline';
 
-	import { computed, inject } from 'vue';
+	import { computed } from 'vue';
 
 	import { formatSeconds } from '@/utils/timelines';
 	import { isActivityValid } from '@/utils/validators';
-	import { getTotalActivitySeconds } from '@/utils/timelines';
-
-	import { timelineItemsKey } from '@/keys';
+	import { getTotalActivitySeconds } from '@/composables/timelineItems';
 
 	const props = defineProps({
 		activity: {
@@ -25,13 +22,8 @@
 		},
 	});
 
-	// INJECT
-	const timelineItems = inject<timelineItemType[]>(timelineItemsKey);
-
 	// COMPUTED
-	const secondsDifference = computed(
-		() => getTotalActivitySeconds(props.activity, timelineItems) - props.activity.secondsToComplete,
-	);
+	const secondsDifference = computed(() => getTotalActivitySeconds(props.activity) - props.activity.secondsToComplete);
 	const sign = computed(() => (secondsDifference.value >= 0 ? '+' : '-'));
 	const seconds = computed(() => `${sign.value}${formatSeconds(secondsDifference.value)}`);
 	const colorClasses = computed(() =>

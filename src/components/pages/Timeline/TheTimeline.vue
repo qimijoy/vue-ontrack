@@ -15,24 +15,13 @@
 <script setup lang="ts">
 	import { ref, watchPostEffect } from 'vue';
 
-	import type { PropType } from 'vue';
-	import type { timelineItemType } from '@/types/timeline';
-
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
 
-	import { isTimelineItemsValid } from '@/utils/validators';
+	import { timelineItems } from '@/composables/timelineItems';
 	import { getCurrentHour } from '@/utils/timelines';
 	import { MIDNIGHT_HOUR } from '@/constants/time';
 	import { PAGE_TIMELINE } from '@/constants/pages';
 	import { currentPage } from '@/composables/router';
-
-	defineProps({
-		timelineItems: {
-			type: Array as PropType<Array<timelineItemType>>,
-			required: true,
-			validator: (timelineItems: timelineItemType[]) => isTimelineItemsValid(timelineItems),
-		},
-	});
 
 	// STATES
 	const timelineItemRefs = ref([]);
