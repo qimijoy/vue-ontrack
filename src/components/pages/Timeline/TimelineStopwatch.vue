@@ -19,7 +19,7 @@
 	import type { PropType } from 'vue';
 	import type { timelineItemType } from '@/types/timeline';
 
-	import { ref } from 'vue';
+	import { ref, watch } from 'vue';
 	import { ArrowPathIcon, PauseIcon, PlayIcon } from '@heroicons/vue/24/outline';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
@@ -30,7 +30,7 @@
 	import { getCurrentHour } from '@/utils/timelines';
 	import { formatSeconds } from '@/utils/timelines';
 
-	import { updateTimelineItemActivitySeconds } from '@/composables/timelineItems';
+	import { updateTimelineItem } from '@/composables/timelineItems';
 
 	const props = defineProps({
 		timelineItem: {
@@ -47,10 +47,18 @@
 	const seconds = ref(props.timelineItem.activitySeconds);
 	const isRunning = ref();
 
+	// WATCHERS
+	watch(
+		() => props.timelineItem.activityId,
+		() => {
+			updateTimelineItem(props.timelineItem, { activitySeconds: seconds.value });
+		},
+	);
+
 	// FUNCTIONS
 	const start = () => {
 		isRunning.value = setInterval(() => {
-			updateTimelineItemActivitySeconds(props.timelineItem, 1);
+			updateTimelineItem(props.timelineItem, { activitySeconds: props.timelineItem.activitySeconds + 1 });
 			seconds.value++;
 		}, MILLISECONDS_IN_SECOND);
 	};
@@ -62,7 +70,7 @@
 
 	const reset = () => {
 		stop();
-		updateTimelineItemActivitySeconds(props.timelineItem, -seconds.value);
+		updateTimelineItem(props.timelineItem, { activitySeconds: props.timelineItem.activitySeconds - seconds.value });
 
 		seconds.value = 0;
 	};

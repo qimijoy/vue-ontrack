@@ -41,11 +41,11 @@ export const createActivity = (activity: ActivityItemType) => {
 	activities.value.push(activity);
 };
 
+export const updateActivity = (activity: ActivityItemType, fields) => {
+	return Object.assign(activity, fields);
+};
+
 export const deleteActivity = (activity: ActivityItemType) => {
 	const index = activities.value.findIndex(({ id }) => id === activity.id);
 	activities.value.splice(index, 1);
-};
-
-export const setActivitySecondsToComplete = (activity: ActivityItemType, secondsToComplete: number) => {
-	activity.secondsToComplete = secondsToComplete || 0;
 };

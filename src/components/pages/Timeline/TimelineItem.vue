@@ -5,7 +5,7 @@
 			:options="activitySelectOptions"
 			:placeholder="'Rest'"
 			:selected="timelineItem.activityId"
-			@select="setTimelineItemActivity(timelineItem, $event)"
+			@select="updateTimelineItem(timelineItem, { activityId: $event })"
 		/>
 		<TimelineStopwatch :timeline-item="timelineItem" />
 	</li>
@@ -21,7 +21,7 @@
 
 	import { isTimelineItemValid, isUndefined } from '@/utils/validators';
 
-	import { setTimelineItemActivity } from '@/composables/timelineItems';
+	import { updateTimelineItem } from '@/composables/timelineItems';
 	import { activitySelectOptions } from '@/composables/activities';
 
 	defineProps({

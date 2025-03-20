@@ -12,7 +12,7 @@
 				placeholder="hh:mm"
 				:options="PERIOD_SELECT_OPTIONS"
 				:selected="activity.secondsToComplete || null"
-				@select="setActivitySecondsToComplete(activity, $event)"
+				@select="updateActivity(activity, { secondsToComplete: $event || 0 })"
 			/>
 			<ActivitySecondsToComplete v-if="activity.secondsToComplete > 0" :activity="activity" />
 		</div>
@@ -32,7 +32,7 @@
 	import { BUTTON_TYPE_DANGER } from '@/constants/buttons';
 	import { PERIOD_SELECT_OPTIONS } from '@/constants/time';
 	import { isActivityValid } from '@/utils/validators';
-	import { deleteActivity, setActivitySecondsToComplete } from '@/composables/activities';
+	import { deleteActivity, updateActivity } from '@/composables/activities';
 	import { resetTimelineItemActivities } from '@/composables/timelineItems';
 
 	defineProps({

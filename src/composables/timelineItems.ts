@@ -20,25 +20,22 @@ const generateTimelineItems = (activities: ActivityItemType[]): timelineItemType
 export const timelineItems = ref(generateTimelineItems(activities.value));
 
 // FUNCTIONS
-export const setTimelineItemActivity = (timelineItem: timelineItemType, activityId: string) => {
-	timelineItem.activityId = activityId;
+export const updateTimelineItem = (timelineItem: timelineItemType, fields) => {
+	Object.assign(timelineItem, fields);
 };
 
-export const updateTimelineItemActivitySeconds = (timelineItem: timelineItemType, activitySeconds: number) => {
-	timelineItem.activitySeconds += activitySeconds;
+const hasActivity = (timelineItem: timelineItemType, activity: ActivityItemType) => {
+	return timelineItem.activityId === activity.id;
 };
 
 export const resetTimelineItemActivities = (activity: ActivityItemType) => {
-	timelineItems.value.forEach((timelineItem) => {
-		if (timelineItem.activityId === activity.id) {
-			timelineItem.activityId = null;
-			timelineItem.activitySeconds = 0;
-		}
-	});
+	timelineItems.value
+		.filter((timelineItem) => hasActivity(timelineItem, activity))
+		.forEach((timelineItem) => updateTimelineItem(timelineItem, { activityId: null, timelineItem: 0 }));
 };
 
 export const getTotalActivitySeconds = (activity: ActivityItemType) => {
 	return timelineItems.value
-		.filter(({ activityId }) => activityId === activity.id)
+		.filter((timelineItem) => hasActivity(timelineItem, activity))
 		.reduce((totalSeconds, timelineItem) => Math.round(timelineItem.activitySeconds + totalSeconds), 0);
 };
