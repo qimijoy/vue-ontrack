@@ -10,7 +10,7 @@
 <script setup lang="ts">
 	import { computed } from 'vue';
 
-	import { navigate, currentPage } from '@/router';
+	import { navigate, currentPage } from '@/composables/router';
 	import { isNavItemValid } from '@/utils/validators';
 
 	const props = defineProps({

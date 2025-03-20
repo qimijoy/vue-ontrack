@@ -15,6 +15,6 @@
 <script setup lang="ts">
 	import { CheckCircleIcon } from '@heroicons/vue/24/solid';
 
-	import { navigate } from '@/router';
+	import { navigate } from '@/composables/router';
 	import { PAGE_PROGRESS } from '@/constants/pages';
 </script>

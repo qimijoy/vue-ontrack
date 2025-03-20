@@ -28,21 +28,14 @@ export const generateActivitySelectOptions = (activities: ActivityItemType[]): s
 	return activities.map((activity) => ({ label: activity.name, value: activity.id }));
 };
 
-/**
- * @param periodInMinutes period im minutes
- * @returns period select option label
- */
-function generatePeriodSelectOptionsLabel(periodInMinutes: number) {
+const generatePeriodSelectOptionsLabel = (periodInMinutes: number) => {
 	const hours = String(Math.floor(periodInMinutes / MINUTES_IN_HOUR)).padStart(2, '0');
 	const minutes = String(periodInMinutes % MINUTES_IN_HOUR).padStart(2, '0');
 
 	return `${hours}:${minutes}`;
-}
+};
 
-/**
- * @returns period select options
- */
-export function generatePeriodSelectOptions(): selectItemType[] {
+export const generatePeriodSelectOptions = (): selectItemType[] => {
 	const periodsInMinutes: number[] = [
 		15, 30, 45, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330, 360, 390, 420, 450, 480,
 	];
@@ -51,4 +44,4 @@ export function generatePeriodSelectOptions(): selectItemType[] {
 		value: periodInMinutes * SECONDS_IN_MINUTE,
 		label: generatePeriodSelectOptionsLabel(periodInMinutes),
 	}));
-}
+};

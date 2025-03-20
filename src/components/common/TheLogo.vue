@@ -5,6 +5,6 @@
 </template>
 
 <script setup lang="ts">
-	import { navigate } from '@/router';
+	import { navigate } from '@/composables/router';
 	import { PAGE_DEFAULT } from '@/constants/pages';
 </script>

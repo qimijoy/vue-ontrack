@@ -24,7 +24,7 @@
 	import { getCurrentHour } from '@/utils/timelines';
 	import { MIDNIGHT_HOUR } from '@/constants/time';
 	import { PAGE_TIMELINE } from '@/constants/pages';
-	import { currentPage } from '@/router';
+	import { currentPage } from '@/composables/router';
 
 	defineProps({
 		timelineItems: {
