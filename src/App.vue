@@ -14,7 +14,7 @@
 	import type { ActivityItemType } from '@/types/activity';
 	import type { timelineItemType } from '@/types/timeline';
 
-	import { ref, computed, provide } from 'vue';
+	import { ref, computed, provide, readonly } from 'vue';
 
 	import TheHeader from '@/components/common/Header/TheHeader.vue';
 	import TheTimeline from '@/components/pages/Timeline/TheTimeline.vue';
@@ -26,6 +26,8 @@
 	import { generateTimelineItems } from '@/utils/timelines';
 	import { generateActivities, generateActivitySelectOptions, generatePeriodSelectOptions } from '@/utils/activities';
 	import { currentPage, timelineRef } from '@/router';
+
+	import * as keys from '@/keys';
 
 	// STATES
 	const activities = ref(generateActivities());
@@ -64,13 +66,14 @@
 	};
 
 	// PROVIDE
-	provide('timelineItems', timelineItems.value);
-	provide('activitySelectOptions', activitySelectOptions.value);
-	provide('periodSelectOptions', generatePeriodSelectOptions());
+	// Readonly
+	provide(keys.timelineItemsKey, readonly(timelineItems.value));
+	provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions.value));
+	provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()));
 
-	provide('deleteActivity', deleteActivity);
-	provide('createActivity', createActivity);
-	provide('setTimelineItemActivity', setTimelineItemActivity);
-	provide('setActivitySecondsToComplete', setActivitySecondsToComplete);
-	provide('updateTimelineItemActivitySeconds', updateTimelineItemActivitySeconds);
+	provide(keys.deleteActivityKey, deleteActivity);
+	provide(keys.createActivityKey, createActivity);
+	provide(keys.setTimelineItemActivityKey, setTimelineItemActivity);
+	provide(keys.setActivitySecondsToCompleteKey, setActivitySecondsToComplete);
+	provide(keys.updateTimelineItemActivitySecondsKey, updateTimelineItemActivitySeconds);
 </script>

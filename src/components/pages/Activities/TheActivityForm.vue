@@ -15,8 +15,10 @@
 
 	import { id } from '@/utils/generators';
 
+	import { createActivityKey } from '@/keys';
+
 	// INJECT
-	const createActivity = inject('createActivity');
+	const createActivity = inject(createActivityKey);
 
 	// STATES
 	const name = ref('');

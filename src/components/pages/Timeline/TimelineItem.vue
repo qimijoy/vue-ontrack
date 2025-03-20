@@ -23,6 +23,8 @@
 
 	import { isTimelineItemValid, isHourValid } from '@/utils/validators';
 
+	import { activitySelectOptionsKey, setTimelineItemActivityKey } from '@/keys';
+
 	defineProps({
 		timelineItem: {
 			type: Object,
@@ -32,8 +34,8 @@
 	});
 
 	// INJECT
-	const activitySelectOptions = inject<selectItemType[]>('activitySelectOptions');
-	const setTimelineItemActivity = inject('setTimelineItemActivity');
+	const activitySelectOptions = inject<selectItemType[]>(activitySelectOptionsKey);
+	const setTimelineItemActivity = inject(setTimelineItemActivityKey);
 
 	// EMIT
 	const emit = defineEmits({

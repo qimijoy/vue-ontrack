@@ -15,6 +15,8 @@
 	import { isActivityValid } from '@/utils/validators';
 	import { getTotalActivitySeconds } from '@/utils/timelines';
 
+	import { timelineItemsKey } from '@/keys';
+
 	const props = defineProps({
 		activity: {
 			type: Object as PropType<ActivityItemType>,
@@ -24,7 +26,7 @@
 	});
 
 	// INJECT
-	const timelineItems = inject<timelineItemType[]>('timelineItems');
+	const timelineItems = inject<timelineItemType[]>(timelineItemsKey);
 
 	// COMPUTED
 	const secondsDifference = computed(

@@ -34,6 +34,8 @@
 	import { BUTTON_TYPE_DANGER } from '@/constants/buttons';
 	import { isActivityValid } from '@/utils/validators';
 
+	import { periodSelectOptionsKey, setActivitySecondsToCompleteKey, deleteActivityKey } from '@/keys';
+
 	defineProps({
 		activity: {
 			type: Object as PropType<ActivityItemType>,
@@ -43,7 +45,7 @@
 	});
 
 	// INJECT
-	const periodSelectOptions = inject<selectItemType[]>('periodSelectOptions');
-	const setActivitySecondsToComplete = inject('setActivitySecondsToComplete');
-	const deleteActivity = inject('deleteActivity');
+	const periodSelectOptions = inject<selectItemType[]>(periodSelectOptionsKey);
+	const setActivitySecondsToComplete = inject(setActivitySecondsToCompleteKey);
+	const deleteActivity = inject(deleteActivityKey);
 </script>

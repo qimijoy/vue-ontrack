@@ -28,6 +28,8 @@
 	import { isTimelineItemValid } from '@/utils/validators';
 	import { formatSeconds } from '@/utils/timelines';
 
+	import { updateTimelineItemActivitySecondsKey } from '@/keys';
+
 	const props = defineProps({
 		timelineItem: {
 			type: Object,
@@ -37,7 +39,7 @@
 	});
 
 	// INJECT
-	const updateTimelineItemActivitySeconds = inject('updateTimelineItemActivitySeconds');
+	const updateTimelineItemActivitySeconds = inject(updateTimelineItemActivitySecondsKey);
 
 	// CONSTANTS
 	const isStartButtonDisabled = props.timelineItem.hour !== new Date().getHours();
