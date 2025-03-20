@@ -8,17 +8,13 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, nextTick, inject } from 'vue';
+	import { ref, nextTick } from 'vue';
 	import { PlusIcon } from '@heroicons/vue/24/outline';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
 
 	import { id } from '@/utils/generators';
-
-	import { createActivityKey } from '@/keys';
-
-	// INJECT
-	const createActivity = inject(createActivityKey);
+	import { createActivity } from '@/composables/activities';
 
 	// STATES
 	const name = ref('');

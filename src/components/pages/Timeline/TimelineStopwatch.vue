@@ -16,9 +16,10 @@
 </template>
 
 <script setup lang="ts">
+	import type { PropType } from 'vue';
 	import type { timelineItemType } from '@/types/timeline';
 
-	import { ref, inject } from 'vue';
+	import { ref } from 'vue';
 	import { ArrowPathIcon, PauseIcon, PlayIcon } from '@heroicons/vue/24/outline';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
@@ -29,18 +30,15 @@
 	import { getCurrentHour } from '@/utils/timelines';
 	import { formatSeconds } from '@/utils/timelines';
 
-	import { updateTimelineItemActivitySecondsKey } from '@/keys';
+	import { updateTimelineItemActivitySeconds } from '@/composables/timelineItems';
 
 	const props = defineProps({
 		timelineItem: {
-			type: Object,
+			type: Object as PropType<timelineItemType>,
 			required: true,
 			validator: (timelineItem: timelineItemType) => isTimelineItemValid(timelineItem),
 		},
 	});
-
-	// INJECT
-	const updateTimelineItemActivitySeconds = inject(updateTimelineItemActivitySecondsKey);
 
 	// CONSTANTS
 	const isStartButtonDisabled = props.timelineItem.hour !== getCurrentHour();

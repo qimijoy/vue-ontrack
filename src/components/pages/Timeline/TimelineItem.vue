@@ -12,10 +12,8 @@
 </template>
 
 <script setup lang="ts">
+	import type { PropType } from 'vue';
 	import type { timelineItemType } from '@/types/timeline';
-	import type { selectItemType } from '@/types/select';
-
-	import { inject } from 'vue';
 
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
@@ -23,19 +21,16 @@
 
 	import { isTimelineItemValid, isUndefined } from '@/utils/validators';
 
-	import { activitySelectOptionsKey, setTimelineItemActivityKey } from '@/keys';
+	import { setTimelineItemActivity } from '@/composables/timelineItems';
+	import { activitySelectOptions } from '@/composables/activities';
 
 	defineProps({
 		timelineItem: {
-			type: Object,
+			type: Object as PropType<timelineItemType>,
 			required: true,
 			validator: (timelineItem: timelineItemType) => isTimelineItemValid(timelineItem),
 		},
 	});
-
-	// INJECT
-	const activitySelectOptions = inject<selectItemType[]>(activitySelectOptionsKey);
-	const setTimelineItemActivity = inject(setTimelineItemActivityKey);
 
 	// EMIT
 	const emit = defineEmits({
