@@ -2,7 +2,7 @@
 	<TheHeader />
 
 	<main class="flex flex-grow flex-col">
-		<TheTimeline v-show="currentPage === PAGE_TIMELINE" ref="timelineRef" />
+		<TheTimeline v-show="currentPage === PAGE_TIMELINE" />
 		<TheActivities v-show="currentPage === PAGE_ACTIVITIES" />
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
@@ -17,7 +17,6 @@
 	import TheProgress from '@/components/pages/TheProgress.vue';
 	import TheNavigation from '@/components/common/Navigation/TheNavigation.vue';
 
+	import { currentPage } from '@/composables/router';
 	import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
-
-	import { currentPage, timelineRef } from '@/composables/router';
 </script>

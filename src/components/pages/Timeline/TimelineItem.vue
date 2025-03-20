@@ -1,6 +1,6 @@
 <template>
 	<li class="relative flex flex-col gap-2 border-t border-gray-200 px-4 py-10">
-		<TimelineHour :hour="timelineItem.hour" @click.prevent="emit('scrollToHour', $event)" />
+		<TimelineHour :hour="timelineItem.hour" @click.prevent="emit('scrollToHour')" />
 		<BaseSelect
 			:options="activitySelectOptions"
 			:placeholder="'Rest'"
@@ -34,6 +34,6 @@
 
 	// EMIT
 	const emit = defineEmits({
-		scrollToHour: (value) => isUndefined(value),
+		scrollToHour: isUndefined,
 	});
 </script>

@@ -1,10 +1,14 @@
 <template>
-	<a :href="`#${PAGE_DEFAULT}`" @click="navigate(PAGE_DEFAULT)">
+	<a :href="`#${PAGE_DEFAULT}`" @click="handleClick">
 		<img src="@/assets/images/logo.png" alt="Logo" class="h-9" />
 	</a>
 </template>
 
 <script setup lang="ts">
-	import { navigate } from '@/composables/router';
-	import { PAGE_DEFAULT } from '@/constants/pages';
+	import { currentPage, navigate } from '@/composables/router';
+	import { scrollToCurrentHour } from '@/composables/timelineItems';
+	import { PAGE_DEFAULT, PAGE_TIMELINE } from '@/constants/pages';
+
+	// FUNCTIONS
+	const handleClick = () => (currentPage.value === PAGE_TIMELINE ? scrollToCurrentHour() : navigate(PAGE_DEFAULT));
 </script>
