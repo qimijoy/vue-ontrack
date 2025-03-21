@@ -1,7 +1,17 @@
 import { ref } from 'vue';
 
-import { PAGE_DEFAULT } from '@/constants/pages';
+import TheTimeline from '@/components/pages/Timeline/TheTimeline.vue';
+import TheActivities from '@/components/pages/Activities/TheActivities.vue';
+import TheProgress from '@/components/pages/TheProgress.vue';
+
+import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_DEFAULT } from '@/constants/pages';
 import { isPageValid } from '@/utils/validators';
+
+export const routes = {
+	[PAGE_TIMELINE]: TheTimeline,
+	[PAGE_ACTIVITIES]: TheActivities,
+	[PAGE_PROGRESS]: TheProgress,
+};
 
 export const normalizePageHash = () => {
 	const pageHash = window.location.hash.slice(1);
