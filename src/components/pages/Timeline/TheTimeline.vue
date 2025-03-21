@@ -13,20 +13,13 @@
 </template>
 
 <script setup lang="ts">
-	import { watchPostEffect } from 'vue';
+	import { onActivated } from 'vue';
 
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
 
 	import { timelineItemRefs, timelineItems, scrollToHour, scrollToCurrentHour } from '@/composables/timelineItems';
-	import { PAGE_TIMELINE } from '@/constants/pages';
-	import { currentPage } from '@/composables/router';
 
-	// WATCHERS
-	watchPostEffect(async () => {
-		if (currentPage.value !== PAGE_TIMELINE) {
-			return;
-		}
-
-		setTimeout(() => scrollToCurrentHour(false), 50);
+	onActivated(() => {
+		scrollToCurrentHour(false);
 	});
 </script>
