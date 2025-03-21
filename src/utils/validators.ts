@@ -4,6 +4,7 @@ import type { selectItemType } from '@/types/select';
 import { NAV_ITEMS } from '@/constants/pages';
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants/time';
 import { BUTTON_TYPES } from '@/constants/buttons';
+import { ICONS } from '@/composables/icons';
 
 // PAGES
 export const isPageValid = (currentPage: string) => {
@@ -51,6 +52,10 @@ export const isSelectValueValid = (value) => {
 	return isNotEmptyString(value) || isNumberOrNull(value);
 };
 
+export const isIconValid = (name: string) => {
+	return Object.keys(ICONS).includes(name);
+};
+
 // COMMON
 const isBetween = (value: number, start: number, end: number) => value >= start || value <= end;
 
@@ -60,7 +65,7 @@ export const isNumber = (value) => typeof value === 'number';
 
 export const isString = (value) => typeof value === 'string';
 
-const isNotEmptyString = (value) => isString(value) && value.length > 0;
+export const isNotEmptyString = (value) => isString(value) && value.length > 0;
 
 export const isNull = (value) => value === null;
 

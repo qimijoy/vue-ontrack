@@ -2,7 +2,7 @@
 	<li class="flex flex-col gap-2 p-4">
 		<div class="flex items-center gap-2">
 			<BaseButton :type="BUTTON_TYPE_DANGER" @click="deleteAndResetActivity(activity)">
-				<TrashIcon class="h-8" />
+				<BaseIcon :name="ICON_TRASH" />
 			</BaseButton>
 			<span class="truncatey text-xl">{{ activity.name }}</span>
 		</div>
@@ -23,10 +23,9 @@
 	import type { PropType } from 'vue';
 	import type { ActivityItemType } from '@/types/activity';
 
-	import { TrashIcon } from '@heroicons/vue/24/outline';
-
 	import BaseButton from '@/components/base/BaseButton.vue';
 	import BaseSelect from '@/components/base/BaseSelect.vue';
+	import BaseIcon from '@/components/base/BaseIcon.vue';
 	import ActivitySecondsToComplete from '@/components/pages/Activities/ActivitySecondsToComplete.vue';
 
 	import { BUTTON_TYPE_DANGER } from '@/constants/buttons';
@@ -34,6 +33,7 @@
 	import { isActivityValid } from '@/utils/validators';
 	import { deleteActivity, updateActivity } from '@/composables/activities';
 	import { resetTimelineItemActivities } from '@/composables/timelineItems';
+	import { ICON_TRASH } from '@/composables/icons';
 
 	defineProps({
 		activity: {

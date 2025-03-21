@@ -1,4 +1,4 @@
-import { ClockIcon, ListBulletIcon, ChartBarIcon } from '@heroicons/vue/24/outline';
+import { ICON_CHART_BAR, ICON_CLOCK, ICON_LIST_BULLET } from '@/composables/icons';
 
 // PAGES
 export const PAGE_TIMELINE: string = 'timeline';
@@ -8,7 +8,7 @@ export const PAGE_DEFAULT: string = PAGE_TIMELINE;
 
 // NAVIGATION ITEMS
 export const NAV_ITEMS = [
-	{ page: PAGE_TIMELINE, icon: ClockIcon },
-	{ page: PAGE_ACTIVITIES, icon: ListBulletIcon },
-	{ page: PAGE_PROGRESS, icon: ChartBarIcon },
+	{ page: PAGE_TIMELINE, icon: ICON_CLOCK },
+	{ page: PAGE_ACTIVITIES, icon: ICON_LIST_BULLET },
+	{ page: PAGE_PROGRESS, icon: ICON_CHART_BAR },
 ];
