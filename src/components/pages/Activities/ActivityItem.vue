@@ -14,7 +14,7 @@
 				:selected="activity.secondsToComplete || null"
 				@select="updateActivity(activity, { secondsToComplete: $event || 0 })"
 			/>
-			<ActivitySecondsToComplete v-if="activity.secondsToComplete > 0" :activity="activity" />
+			<RemainingActivitySeconds v-if="activity.secondsToComplete > 0" :activity="activity" />
 		</div>
 	</li>
 </template>
@@ -26,7 +26,7 @@
 	import BaseButton from '@/components/base/BaseButton.vue';
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 	import BaseIcon from '@/components/base/BaseIcon.vue';
-	import ActivitySecondsToComplete from '@/components/pages/Activities/ActivitySecondsToComplete.vue';
+	import RemainingActivitySeconds from '@/components/pages/Activities/RemainingActivitySeconds.vue';
 
 	import { BUTTON_TYPE_DANGER } from '@/constants/buttons';
 	import { PERIOD_SELECT_OPTIONS } from '@/constants/time';

@@ -13,3 +13,7 @@ export const formatSeconds = (seconds) => {
 
 	return utc.substring(utc.indexOf(':') - 2, utc.indexOf(':') + 6);
 };
+
+export const formatSecondsWithSign = (seconds) => {
+	return `${seconds.value >= 0 ? '+' : '-'}${formatSeconds(seconds)}`;
+};
