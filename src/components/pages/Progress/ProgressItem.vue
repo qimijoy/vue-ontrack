@@ -2,12 +2,12 @@
 	<li class="flex flex-col gap-1 p-4">
 		<div class="truncate text-xl">{{ activity.name }}</div>
 		<div class="flex h-5 overflow-hidden rounded bg-neutral-200">
-			<div :class="getProgressColorClass(progress)" :style="`width: ${progress}%`"></div>
+			<div :class="getProgressColorClass(percentage)" :style="`width: ${percentage}%`"></div>
 		</div>
 		<div class="flex justify-between font-mono text-sm">
-			<span>{{ progress }}%</span>
+			<span>{{ percentage }}%</span>
 			<span>
-				{{ formatSeconds(getTotalActivitySeconds(activity)) }} /
+				{{ formatSeconds(trackedActivitySeconds) }} /
 				{{ formatSeconds(activity.secondsToComplete) }}
 			</span>
 		</div>
@@ -22,9 +22,10 @@
 
 	import { isActivityValid } from '@/utils/validators';
 	import { formatSeconds } from '@/utils/timelines';
-	import { getActivityProgress } from '@/composables/activities';
+
+	import { calculateActivityCompletionPercentage } from '@/composables/activities';
 	import { getProgressColorClass } from '@/composables/progress';
-	import { getTotalActivitySeconds } from '@/composables/timelineItems';
+	import { timelineItems, calculateTrackedActivitySeconds } from '@/composables/timelineItems';
 
 	const props = defineProps({
 		activity: {
@@ -35,5 +36,9 @@
 	});
 
 	// COMPUTED
-	const progress = computed(() => getActivityProgress(props.activity));
+	const trackedActivitySeconds = computed(() => calculateTrackedActivitySeconds(timelineItems.value, props.activity));
+
+	const percentage = computed(() =>
+		calculateActivityCompletionPercentage(props.activity, trackedActivitySeconds.value),
+	);
 </script>

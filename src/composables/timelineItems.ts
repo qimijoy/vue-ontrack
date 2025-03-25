@@ -25,20 +25,20 @@ export const updateTimelineItem = (timelineItem: timelineItemType, fields) => {
 	Object.assign(timelineItem, fields);
 };
 
-const hasActivity = (timelineItem: timelineItemType, activity: ActivityItemType) => {
-	return timelineItem.activityId === activity.id;
+const filterTimelineItemsByActivity = (timelineItems: timelineItemType[], { id }: ActivityItemType) => {
+	return timelineItems.filter(({ activityId }) => activityId === id);
 };
 
-export const resetTimelineItemActivities = (activity: ActivityItemType) => {
-	timelineItems.value
-		.filter((timelineItem) => hasActivity(timelineItem, activity))
-		.forEach((timelineItem) => updateTimelineItem(timelineItem, { activityId: null, timelineItem: 0 }));
+export const resetTimelineItemActivities = (timelineItems: timelineItemType[], activity: ActivityItemType) => {
+	filterTimelineItemsByActivity(timelineItems, activity).forEach((timelineItem) =>
+		updateTimelineItem(timelineItem, { activityId: null, timelineItem: 0 }),
+	);
 };
 
-export const getTotalActivitySeconds = (activity: ActivityItemType) => {
-	return timelineItems.value
-		.filter((timelineItem) => hasActivity(timelineItem, activity))
-		.reduce((totalSeconds, timelineItem) => Math.round(timelineItem.activitySeconds + totalSeconds), 0);
+export const calculateTrackedActivitySeconds = (timelineItems: timelineItemType[], activity: ActivityItemType) => {
+	return filterTimelineItemsByActivity(timelineItems, activity)
+		.map(({ activitySeconds }) => activitySeconds)
+		.reduce((total, seconds) => Math.round(total + seconds), 0);
 };
 
 export const scrollToCurrentHour = (isSmooth: boolean = true) => {

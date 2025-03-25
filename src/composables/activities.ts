@@ -4,7 +4,6 @@ import { ref, computed } from 'vue';
 
 import { HUNDRED_PERCENT } from '@/constants/percentages';
 import { id } from '@/utils/generators';
-import { getTotalActivitySeconds } from '@/composables/timelineItems';
 
 const generateActivities = (): ActivityItemType[] => {
 	return ['Coding', 'Reading', 'Training'].map((name) => ({
@@ -43,6 +42,9 @@ export const deleteActivity = (activity: ActivityItemType) => {
 	activities.value.splice(index, 1);
 };
 
-export const getActivityProgress = (activity: ActivityItemType) => {
-	return Math.floor((getTotalActivitySeconds(activity) * HUNDRED_PERCENT) / activity.secondsToComplete);
+export const calculateActivityCompletionPercentage = (
+	{ secondsToComplete }: ActivityItemType,
+	trackedSeconds: number,
+) => {
+	return Math.floor((trackedSeconds * HUNDRED_PERCENT) / secondsToComplete);
 };

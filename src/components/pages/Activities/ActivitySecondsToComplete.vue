@@ -12,7 +12,7 @@
 
 	import { formatSeconds } from '@/utils/timelines';
 	import { isActivityValid } from '@/utils/validators';
-	import { getTotalActivitySeconds } from '@/composables/timelineItems';
+	import { timelineItems, calculateTrackedActivitySeconds } from '@/composables/timelineItems';
 
 	const props = defineProps({
 		activity: {
@@ -23,7 +23,9 @@
 	});
 
 	// COMPUTED
-	const secondsDifference = computed(() => getTotalActivitySeconds(props.activity) - props.activity.secondsToComplete);
+	const secondsDifference = computed(
+		() => calculateTrackedActivitySeconds(timelineItems.value, props.activity) - props.activity.secondsToComplete,
+	);
 	const sign = computed(() => (secondsDifference.value >= 0 ? '+' : '-'));
 	const seconds = computed(() => `${sign.value}${formatSeconds(secondsDifference.value)}`);
 	const colorClasses = computed(() =>

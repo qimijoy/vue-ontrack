@@ -32,7 +32,7 @@
 	import { PERIOD_SELECT_OPTIONS } from '@/constants/time';
 	import { isActivityValid } from '@/utils/validators';
 	import { deleteActivity, updateActivity } from '@/composables/activities';
-	import { resetTimelineItemActivities } from '@/composables/timelineItems';
+	import { timelineItems, resetTimelineItemActivities } from '@/composables/timelineItems';
 	import { ICON_TRASH } from '@/composables/icons';
 
 	defineProps({
@@ -45,7 +45,7 @@
 
 	// FUNCTIONS
 	const deleteAndResetActivity = (activity: ActivityItemType) => {
-		resetTimelineItemActivities(activity);
+		resetTimelineItemActivities(timelineItems.value, activity);
 		deleteActivity(activity);
 	};
 </script>
