@@ -65,7 +65,7 @@ export const isNumber = (value) => typeof value === 'number';
 
 export const isString = (value) => typeof value === 'string';
 
-export const isNotEmptyString = (value) => isString(value) && value.length > 0;
+const isNotEmptyString = (value) => isString(value) && value.length > 0;
 
 export const isNull = (value) => value === null;
 

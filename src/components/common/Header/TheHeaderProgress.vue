@@ -2,7 +2,7 @@
 	<a :href="`#${PAGE_PROGRESS}`" class="text-sm" @click="navigate(PAGE_PROGRESS)">
 		<span v-if="true" class="flex items-center gap-1">
 			Day complete!
-			<BaseIcon :name="ICON_CHECK_CIRCLE" classes="h-7 text-green-500" />
+			<BaseIcon :name="ICON_CHECK_CIRCLE" class="h-7 text-green-500" />
 		</span>
 		<span v-else class="flex items-center gap-1">
 			Progress:

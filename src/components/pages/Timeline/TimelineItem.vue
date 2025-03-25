@@ -1,6 +1,6 @@
 <template>
 	<li class="relative flex flex-col gap-2 border-t border-gray-200 px-4 py-10">
-		<TimelineHour :hour="timelineItem.hour" @click.prevent="emit('scrollToHour')" />
+		<TimelineHour :hour="timelineItem.hour" />
 		<BaseSelect
 			:options="activitySelectOptions"
 			:placeholder="'Rest'"
@@ -19,7 +19,7 @@
 	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
 	import TimelineStopwatch from '@/components/pages/Timeline/TimelineStopwatch.vue';
 
-	import { isTimelineItemValid, isUndefined } from '@/utils/validators';
+	import { isTimelineItemValid } from '@/utils/validators';
 
 	import { updateTimelineItem } from '@/composables/timelineItems';
 	import { activitySelectOptions } from '@/composables/activities';
@@ -30,10 +30,5 @@
 			required: true,
 			validator: (timelineItem: timelineItemType) => isTimelineItemValid(timelineItem),
 		},
-	});
-
-	// EMIT
-	const emit = defineEmits({
-		scrollToHour: isUndefined,
 	});
 </script>

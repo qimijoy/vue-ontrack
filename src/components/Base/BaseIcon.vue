@@ -1,9 +1,9 @@
 <template>
-	<component :is="ICONS[name]" :class="classes" />
+	<component :is="ICONS[name]" :class="$attrs.class || 'h-8'" />
 </template>
 
 <script setup lang="ts">
-	import { isIconValid, isNotEmptyString } from '@/utils/validators';
+	import { isIconValid } from '@/utils/validators';
 
 	import { ICONS } from '@/composables/icons';
 
@@ -12,11 +12,6 @@
 			type: String,
 			required: true,
 			validator: (value: string) => isIconValid(value),
-		},
-		classes: {
-			type: String,
-			default: 'h-8',
-			validator: (value) => isNotEmptyString(value),
 		},
 	});
 </script>

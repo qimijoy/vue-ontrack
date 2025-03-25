@@ -43,6 +43,7 @@
 
 	// CONSTANTS
 	const isStartButtonDisabled = props.timelineItem.hour !== getCurrentHour();
+	const temp = 120;
 
 	// STATES
 	const seconds = ref(props.timelineItem.activitySeconds);
@@ -59,8 +60,11 @@
 	// FUNCTIONS
 	const start = () => {
 		isRunning.value = setInterval(() => {
-			updateTimelineItem(props.timelineItem, { activitySeconds: props.timelineItem.activitySeconds + 1 });
-			seconds.value++;
+			updateTimelineItem(props.timelineItem, {
+				activitySeconds: props.timelineItem.activitySeconds + temp,
+			});
+
+			seconds.value += temp;
 		}, MILLISECONDS_IN_SECOND);
 	};
 
@@ -71,7 +75,9 @@
 
 	const reset = () => {
 		stop();
-		updateTimelineItem(props.timelineItem, { activitySeconds: props.timelineItem.activitySeconds - seconds.value });
+		updateTimelineItem(props.timelineItem, {
+			activitySeconds: props.timelineItem.activitySeconds - seconds.value,
+		});
 
 		seconds.value = 0;
 	};

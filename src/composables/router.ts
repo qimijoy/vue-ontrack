@@ -2,7 +2,7 @@ import { ref } from 'vue';
 
 import TheTimeline from '@/components/pages/Timeline/TheTimeline.vue';
 import TheActivities from '@/components/pages/Activities/TheActivities.vue';
-import TheProgress from '@/components/pages/TheProgress.vue';
+import TheProgress from '@/components/pages/Progress/TheProgress.vue';
 
 import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_DEFAULT } from '@/constants/pages';
 import { isPageValid } from '@/utils/validators';
