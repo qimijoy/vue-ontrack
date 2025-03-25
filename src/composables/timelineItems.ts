@@ -31,7 +31,10 @@ const filterTimelineItemsByActivity = (timelineItems: timelineItemType[], { id }
 
 export const resetTimelineItemActivities = (timelineItems: timelineItemType[], activity: ActivityItemType) => {
 	filterTimelineItemsByActivity(timelineItems, activity).forEach((timelineItem) =>
-		updateTimelineItem(timelineItem, { activityId: null, timelineItem: 0 }),
+		updateTimelineItem(timelineItem, {
+			activityId: null,
+			timelineItem: timelineItem.hour === getCurrentHour() ? timelineItem.activitySeconds : 0,
+		}),
 	);
 };
 
