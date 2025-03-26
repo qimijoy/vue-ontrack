@@ -24,6 +24,12 @@ export const activitySelectOptions = computed(() =>
 	})),
 );
 
+const totalActivitySecondsToComplete = computed(() => {
+	return trackedActivities.value
+		.map(({ secondsToComplete }) => secondsToComplete)
+		.reduce((total, seconds) => total + seconds, 0);
+});
+
 export const trackedActivities = computed(() => {
 	return activities.value.filter(({ secondsToComplete }) => secondsToComplete !== 0);
 });
@@ -47,4 +53,8 @@ export const calculateActivityCompletionPercentage = (
 	trackedSeconds: number,
 ) => {
 	return Math.floor((trackedSeconds * HUNDRED_PERCENT) / secondsToComplete);
+};
+
+export const calculateCompletionPercentage = (totalTrackedSeconds: number) => {
+	return Math.floor((totalTrackedSeconds * HUNDRED_PERCENT) / totalActivitySecondsToComplete.value);
 };

@@ -10,18 +10,18 @@ import { LOW_PERCENT, MEDIUM_PERCENT, HUNDRED_PERCENT } from '@/constants/percen
 export const useProgress = (activity: ActivityItemType) => {
 	const colorClass = computed(() => getProgressColorClass(percentage.value));
 
-	const percentage = computed(() => calculateActivityCompletionPercentage(activity, trackedSeconds.value));
+	const percentage = computed(() => calculateActivityCompletionPercentage(activity, trackedActivitySeconds.value));
 
-	const trackedSeconds = computed(() => calculateTrackedActivitySeconds(timelineItems.value, activity));
+	const trackedActivitySeconds = computed(() => calculateTrackedActivitySeconds(timelineItems.value, activity));
 
 	return {
-		trackedSeconds,
+		trackedActivitySeconds,
 		percentage,
 		colorClass,
 	};
 };
 
-const getProgressColorClass = (percentage: number) => {
+export const getProgressColorClass = (percentage: number) => {
 	if (percentage < LOW_PERCENT) {
 		return 'bg-red-500';
 	}
