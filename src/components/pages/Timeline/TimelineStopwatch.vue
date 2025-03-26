@@ -30,7 +30,7 @@
 	import { formatSeconds } from '@/utils/timelines';
 
 	import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from '@/modules/icons';
-	import { updateTimelineItem } from '@/modules/timelineItems';
+	import { updateTimelineItem } from '@/modules/timeline-items';
 	import { useStopwatch } from '@/composables/stopwatch';
 	import { now } from '@/modules/time';
 

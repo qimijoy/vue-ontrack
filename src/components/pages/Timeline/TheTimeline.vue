@@ -18,13 +18,21 @@
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
 	import TheTimelineIndicator from '@/components/pages/Timeline/TheTimelineIndicator.vue';
 
-	import { timelineItemRefs, timelineItems, scrollToCurrentHour } from '@/modules/timelineItems';
-	import { startTimer, stopTimer } from '@/modules/time';
+	import {
+		timelineItems,
+		timelineItemRefs,
+		scrollToCurrentHour,
+		stopTimelineItemTimer,
+	} from '@/modules/timeline-items';
+	import { startCurrentDateTimer, stopCurrentDateTimer } from '@/modules/time';
+
+	stopTimelineItemTimer();
 
 	onActivated(() => {
 		scrollToCurrentHour(false);
-		startTimer();
+
+		startCurrentDateTimer();
 	});
 
-	onDeactivated(() => stopTimer());
+	onDeactivated(() => stopCurrentDateTimer());
 </script>

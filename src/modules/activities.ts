@@ -3,18 +3,9 @@ import type { ActivityItemType } from '@/types/activity';
 import { ref, computed } from 'vue';
 
 import { HUNDRED_PERCENT } from '@/constants/percentages';
-import { id } from '@/utils/generators';
-
-const generateActivities = (): ActivityItemType[] => {
-	return ['Coding', 'Reading', 'Training'].map((name) => ({
-		id: id(),
-		name,
-		secondsToComplete: 15 * 60,
-	}));
-};
 
 // STATES
-export const activities = ref(generateActivities());
+export const activities = ref([]);
 
 // COMPUTED
 export const activitySelectOptions = computed(() =>

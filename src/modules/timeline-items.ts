@@ -3,16 +3,14 @@ import type { ActivityItemType } from '@/types/activity';
 
 import { ref } from 'vue';
 
-import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants/time';
+import { HOURS_IN_DAY, MIDNIGHT_HOUR, MILLISECONDS_IN_SECOND } from '@/constants/time';
 import { now } from '@/modules/time';
 
 const generateTimelineItems = (): timelineItemType[] => {
 	return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
 		hour,
-		// activityId: hour % 4 === 0 ? null : activities[hour % 2].id,
-		// activitySeconds: hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
-		activityId: null, // [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
-		activitySeconds: 0, // [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
+		activityId: null,
+		activitySeconds: 0,
 		isActive: false,
 	}));
 };
@@ -55,4 +53,22 @@ export const scrollToHour = (hour: number, isSmooth: boolean = true) => {
 	el.scrollIntoView({
 		behavior: isSmooth ? 'smooth' : 'instant',
 	});
+};
+
+let timelineItemTimer = null;
+
+export const startTimelineItemTimer = (activeTimelineItem) => {
+	timelineItemTimer = setInterval(() => {
+		updateTimelineItem(activeTimelineItem, {
+			activitySeconds: activeTimelineItem.activitySeconds + 1,
+		});
+	}, MILLISECONDS_IN_SECOND);
+};
+
+export const stopTimelineItemTimer = () => {
+	clearInterval(timelineItemTimer);
+};
+
+export const findActiveTimelineItem = () => {
+	return timelineItems.value.find(({ isActive }) => isActive);
 };

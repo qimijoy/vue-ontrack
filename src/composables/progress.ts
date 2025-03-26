@@ -3,7 +3,7 @@ import type { ActivityItemType } from '@/types/activity';
 import { computed } from 'vue';
 
 import { calculateActivityCompletionPercentage } from '@/modules/activities';
-import { timelineItems, calculateTrackedActivitySeconds } from '@/modules/timelineItems';
+import { timelineItems, calculateTrackedActivitySeconds } from '@/modules/timeline-items';
 
 import { LOW_PERCENT, MEDIUM_PERCENT, HUNDRED_PERCENT } from '@/constants/percentages';
 

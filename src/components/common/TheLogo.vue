@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 	import { currentPage, navigate } from '@/modules/router';
-	import { scrollToCurrentHour } from '@/modules/timelineItems';
+	import { scrollToCurrentHour } from '@/modules/timeline-items';
 	import { PAGE_DEFAULT, PAGE_TIMELINE } from '@/constants/pages';
 
 	// FUNCTIONS

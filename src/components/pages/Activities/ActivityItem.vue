@@ -32,7 +32,7 @@
 	import { PERIOD_SELECT_OPTIONS } from '@/constants/time';
 	import { isActivityValid } from '@/utils/validators';
 	import { deleteActivity, updateActivity } from '@/modules/activities';
-	import { timelineItems, resetTimelineItemActivities } from '@/modules/timelineItems';
+	import { timelineItems, resetTimelineItemActivities } from '@/modules/timeline-items';
 	import { ICON_TRASH } from '@/modules/icons';
 
 	defineProps({

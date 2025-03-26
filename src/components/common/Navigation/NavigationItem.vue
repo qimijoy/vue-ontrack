@@ -13,7 +13,7 @@
 	import BaseIcon from '@/components/base/BaseIcon.vue';
 
 	import { navigate, currentPage } from '@/modules/router';
-	import { scrollToCurrentHour } from '@/modules/timelineItems';
+	import { scrollToCurrentHour } from '@/modules/timeline-items';
 	import { isNavItemValid } from '@/utils/validators';
 	import { PAGE_TIMELINE } from '@/constants/pages';
 
@@ -28,7 +28,7 @@
 	// COMPUTED
 	const classes = computed(() => [
 		'flex flex-col items-center p-2 text-xs capitalize',
-		{ 'bg-gray-200': props.navItem.page === currentPage.value },
+		props.navItem.page === currentPage.value ? 'bg-gray-200' : 'hover:bg-gray-100',
 	]);
 
 	// FUNCTIONS
