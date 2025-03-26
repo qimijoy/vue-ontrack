@@ -2,9 +2,9 @@
 
 An application for tracking daily activity.
 
-Vue Composition API - Vite / Vue / Tailwind CSS. 
+Vue Composition API - Vite / Vue / Tailwind CSS.
 
-Based on the [playlist (YouTube)](https://www.youtube.com/watch?v=t4NbbyXsgP8&list=PL-FhWbGlJPfaCm9Qx7G9wQqtt2_yBT92V&index=3).
+Based on the [playlist (YouTube)](https://www.youtube.com/watch?v=t4NbbyXsgP8&list=PL-FhWbGlJPfaCm9Qx7G9wQqtt2_yBT92V).
 
 
 ## Project Setup
