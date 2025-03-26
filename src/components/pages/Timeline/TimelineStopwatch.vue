@@ -19,7 +19,7 @@
 	import type { PropType } from 'vue';
 	import type { timelineItemType } from '@/types/timeline';
 
-	import { watchEffect } from 'vue';
+	import { watch, watchEffect, onMounted } from 'vue';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
 	import BaseIcon from '@/components/base/BaseIcon.vue';
@@ -40,6 +40,12 @@
 			required: true,
 			validator: (timelineItem: timelineItemType) => isTimelineItemValid(timelineItem),
 		},
+	});
+
+	onMounted(() => {
+		if (props.timelineItem.isActive) {
+			start();
+		}
 	});
 
 	const {
@@ -65,4 +71,10 @@
 			stop();
 		}
 	});
+
+	watch(isRunning, () =>
+		updateTimelineItem(props.timelineItem, {
+			isActive: Boolean(isRunning.value),
+		}),
+	);
 </script>

@@ -13,6 +13,7 @@ const generateTimelineItems = (): timelineItemType[] => {
 		// activitySeconds: hour % 4 === 0 ? 0 : (15 * SECONDS_IN_MINUTE * hour) % SECONDS_IN_HOUR,
 		activityId: null, // [0, 1, 2, 3, 4].includes(hour) ? activities[hour % 3].id : null,
 		activitySeconds: 0, // [0, 1, 2, 3, 4].includes(hour) ? hour * 600 : 0,
+		isActive: false,
 	}));
 };
 

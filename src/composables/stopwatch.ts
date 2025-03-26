@@ -4,7 +4,7 @@ import { MILLISECONDS_IN_SECOND } from '@/constants/time';
 
 export const useStopwatch = (initialSeconds: number) => {
 	// CONSTANTS
-	const temp = 120;
+	const temp = 1;
 
 	// STATES
 	const seconds = ref(initialSeconds);
