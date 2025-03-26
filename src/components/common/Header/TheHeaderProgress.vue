@@ -15,8 +15,8 @@
 <script setup lang="ts">
 	import BaseIcon from '@/components/base/BaseIcon.vue';
 
-	import { navigate } from '@/composables/router';
-	import { ICON_CHECK_CIRCLE } from '@/composables/icons';
+	import { navigate } from '@/modules/router';
+	import { ICON_CHECK_CIRCLE } from '@/modules/icons';
 	import { useTotalProgress } from '@/composables/total-progress';
 	import { PAGE_PROGRESS } from '@/constants/pages';
 	import { HUNDRED_PERCENT } from '@/constants/percentages';

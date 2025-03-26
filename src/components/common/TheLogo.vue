@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-	import { currentPage, navigate } from '@/composables/router';
-	import { scrollToCurrentHour } from '@/composables/timelineItems';
+	import { currentPage, navigate } from '@/modules/router';
+	import { scrollToCurrentHour } from '@/modules/timelineItems';
 	import { PAGE_DEFAULT, PAGE_TIMELINE } from '@/constants/pages';
 
 	// FUNCTIONS

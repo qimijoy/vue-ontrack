@@ -31,9 +31,9 @@
 	import { BUTTON_TYPE_DANGER } from '@/constants/buttons';
 	import { PERIOD_SELECT_OPTIONS } from '@/constants/time';
 	import { isActivityValid } from '@/utils/validators';
-	import { deleteActivity, updateActivity } from '@/composables/activities';
-	import { timelineItems, resetTimelineItemActivities } from '@/composables/timelineItems';
-	import { ICON_TRASH } from '@/composables/icons';
+	import { deleteActivity, updateActivity } from '@/modules/activities';
+	import { timelineItems, resetTimelineItemActivities } from '@/modules/timelineItems';
+	import { ICON_TRASH } from '@/modules/icons';
 
 	defineProps({
 		activity: {

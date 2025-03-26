@@ -4,7 +4,7 @@ import type { selectItemType } from '@/types/select';
 import { NAV_ITEMS } from '@/constants/pages';
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants/time';
 import { BUTTON_TYPES } from '@/constants/buttons';
-import { ICONS } from '@/composables/icons';
+import { ICONS } from '@/modules/icons';
 
 // PAGES
 export const isPageValid = (currentPage: string) => {

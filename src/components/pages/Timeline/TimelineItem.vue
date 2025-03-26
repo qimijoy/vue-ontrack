@@ -21,8 +21,8 @@
 
 	import { isTimelineItemValid } from '@/utils/validators';
 
-	import { updateTimelineItem } from '@/composables/timelineItems';
-	import { activitySelectOptions } from '@/composables/activities';
+	import { updateTimelineItem } from '@/modules/timelineItems';
+	import { activitySelectOptions } from '@/modules/activities';
 
 	defineProps({
 		timelineItem: {

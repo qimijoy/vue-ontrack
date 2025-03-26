@@ -9,7 +9,7 @@
 <script setup lang="ts">
 	import { ref, computed } from 'vue';
 	import { HUNDRED_PERCENT } from '@/constants/percentages';
-	import { secondsSinceMidnightInPercentage } from '@/composables/time';
+	import { secondsSinceMidnightInPercentage } from '@/modules/time';
 
 	const getTimelineHeight = () => {
 		return indicatorRef.value?.parentNode.getBoundingClientRect().height;

@@ -9,5 +9,5 @@
 	import ProgressItem from '@/components/pages/Progress/ProgressItem.vue';
 	import TheProgressEmptyState from '@/components/pages/Progress/TheProgressEmptyState.vue';
 
-	import { trackedActivities } from '@/composables/activities';
+	import { trackedActivities } from '@/modules/activities';
 </script>

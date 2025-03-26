@@ -4,7 +4,7 @@ import type { ActivityItemType } from '@/types/activity';
 import { ref } from 'vue';
 
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants/time';
-import { now } from '@/composables/time';
+import { now } from '@/modules/time';
 
 const generateTimelineItems = (): timelineItemType[] => {
 	return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({

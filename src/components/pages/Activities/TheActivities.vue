@@ -15,5 +15,5 @@
 	import TheActivitiesEmptyState from '@/components/pages/Activities/TheActivitiesEmptyState.vue';
 	import TheActivityForm from '@/components/pages/Activities/TheActivityForm.vue';
 
-	import { activities } from '@/composables/activities';
+	import { activities } from '@/modules/activities';
 </script>

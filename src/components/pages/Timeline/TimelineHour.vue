@@ -6,8 +6,8 @@
 	import { computed } from 'vue';
 
 	import { isHourValid } from '@/utils/validators';
-	import { scrollToHour } from '@/composables/timelineItems';
-	import { now } from '@/composables/time';
+	import { scrollToHour } from '@/modules/timelineItems';
+	import { now } from '@/modules/time';
 
 	const props = defineProps({
 		hour: {

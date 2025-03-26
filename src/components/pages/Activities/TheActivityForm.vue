@@ -14,8 +14,8 @@
 	import BaseIcon from '@/components/base/BaseIcon.vue';
 
 	import { id } from '@/utils/generators';
-	import { createActivity } from '@/composables/activities';
-	import { ICON_PLUS } from '@/composables/icons';
+	import { createActivity } from '@/modules/activities';
+	import { ICON_PLUS } from '@/modules/icons';
 
 	// STATES
 	const name = ref('');

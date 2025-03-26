@@ -1,4 +1,4 @@
-import { ICON_CHART_BAR, ICON_CLOCK, ICON_LIST_BULLET } from '@/composables/icons';
+import { ICON_CHART_BAR, ICON_CLOCK, ICON_LIST_BULLET } from '@/modules/icons';
 
 // PAGES
 export const PAGE_TIMELINE: string = 'timeline';

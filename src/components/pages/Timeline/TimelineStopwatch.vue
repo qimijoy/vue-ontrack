@@ -29,10 +29,10 @@
 	import { isTimelineItemValid } from '@/utils/validators';
 	import { formatSeconds } from '@/utils/timelines';
 
-	import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from '@/composables/icons';
-	import { updateTimelineItem } from '@/composables/timelineItems';
+	import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from '@/modules/icons';
+	import { updateTimelineItem } from '@/modules/timelineItems';
 	import { useStopwatch } from '@/composables/stopwatch';
-	import { now } from '@/composables/time';
+	import { now } from '@/modules/time';
 
 	const props = defineProps({
 		timelineItem: {

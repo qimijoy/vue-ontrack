@@ -12,8 +12,8 @@
 
 	import BaseIcon from '@/components/base/BaseIcon.vue';
 
-	import { navigate, currentPage } from '@/composables/router';
-	import { scrollToCurrentHour } from '@/composables/timelineItems';
+	import { navigate, currentPage } from '@/modules/router';
+	import { scrollToCurrentHour } from '@/modules/timelineItems';
 	import { isNavItemValid } from '@/utils/validators';
 	import { PAGE_TIMELINE } from '@/constants/pages';
 

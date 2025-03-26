@@ -5,7 +5,7 @@
 <script setup lang="ts">
 	import { isIconValid } from '@/utils/validators';
 
-	import { ICONS } from '@/composables/icons';
+	import { ICONS } from '@/modules/icons';
 
 	defineProps({
 		name: {

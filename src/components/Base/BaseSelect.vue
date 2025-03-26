@@ -27,7 +27,7 @@
 	import { isOptionsValid, isUndefinedOrNull, isSelectValueValid } from '@/utils/validators';
 	import { normalizeSelectValue } from '@/utils/normalizeSelectValue';
 	import { BUTTON_TYPE_NEUTRAL } from '@/constants/buttons';
-	import { ICON_X_MARK } from '@/composables/icons';
+	import { ICON_X_MARK } from '@/modules/icons';
 
 	const props = defineProps({
 		placeholder: {

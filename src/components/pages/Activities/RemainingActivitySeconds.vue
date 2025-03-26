@@ -12,7 +12,7 @@
 
 	import { formatSecondsWithSign } from '@/utils/timelines';
 	import { isActivityValid } from '@/utils/validators';
-	import { timelineItems, calculateTrackedActivitySeconds } from '@/composables/timelineItems';
+	import { timelineItems, calculateTrackedActivitySeconds } from '@/modules/timelineItems';
 
 	const props = defineProps({
 		activity: {

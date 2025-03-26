@@ -14,5 +14,5 @@
 	import TheHeader from '@/components/common/Header/TheHeader.vue';
 	import TheNavigation from '@/components/common/Navigation/TheNavigation.vue';
 
-	import { routes, currentPage } from '@/composables/router';
+	import { routes, currentPage } from '@/modules/router';
 </script>
