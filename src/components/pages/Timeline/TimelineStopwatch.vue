@@ -10,11 +10,7 @@
 		<div class="flex flex-grow items-center rounded bg-gray-100 px-2 font-mono text-3xl">
 			{{ formatSeconds(timelineItem.activitySeconds) }}
 		</div>
-		<BaseButton
-			v-if="timelineItemTimer && timelineItem.hour === now.getHours()"
-			:type="BUTTON_TYPE_WARNING"
-			@click="stopTimelineItemTimer(timelineItem)"
-		>
+		<BaseButton v-if="timelineItem === activeTimelineItem" :type="BUTTON_TYPE_WARNING" @click="stopTimelineItemTimer">
 			<BaseIcon :name="ICON_PAUSE" />
 		</BaseButton>
 		<BaseButton
@@ -41,12 +37,8 @@
 	import { formatSeconds } from '@/utils/timelines';
 
 	import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from '@/modules/icons';
-	import {
-		timelineItemTimer,
-		startTimelineItemTimer,
-		stopTimelineItemTimer,
-		resetTimelineItemTimer,
-	} from '@/modules/timeline-item-timer';
+	import { activeTimelineItem } from '@/modules/timeline-items';
+	import { startTimelineItemTimer, stopTimelineItemTimer, resetTimelineItemTimer } from '@/modules/timeline-item-timer';
 	import { now } from '@/modules/time';
 
 	defineProps({

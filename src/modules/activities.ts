@@ -26,6 +26,10 @@ export const trackedActivities = computed(() => {
 });
 
 // FUNCTIONS
+export const initializeActivities = (state) => {
+	activities.value = state.activities || [];
+};
+
 export const createActivity = (activity: ActivityItemType) => {
 	activities.value.push(activity);
 };

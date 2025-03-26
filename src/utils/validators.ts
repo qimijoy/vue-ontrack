@@ -20,10 +20,6 @@ export const isTimelineItemValid = (timelineItem: timelineItemType) => {
 	return isHourValid(timelineItem.hour);
 };
 
-export const isTimelineItemsValid = (timelineItems: timelineItemType[]) => {
-	return timelineItems.every((timelineItem) => isTimelineItemValid(timelineItem));
-};
-
 // ACTIVITIES
 export const isActivityValid = ({ id, name, secondsToComplete }) => {
 	if (isNull(id)) {
@@ -31,10 +27,6 @@ export const isActivityValid = ({ id, name, secondsToComplete }) => {
 	}
 
 	return isNotEmptyString(id) && isNotEmptyString(name) && isNumber(secondsToComplete);
-};
-
-export const validateActivities = (activities) => {
-	return activities.every((activity) => isActivityValid(activity));
 };
 
 // COMPONENTS
@@ -61,7 +53,7 @@ const isBetween = (value: number, start: number, end: number) => value >= start 
 
 export const isHourValid = (hour) => isNumber(hour) && isBetween(hour, MIDNIGHT_HOUR, HOURS_IN_DAY - 1);
 
-export const isNumber = (value) => typeof value === 'number';
+const isNumber = (value) => typeof value === 'number';
 
 export const isString = (value) => typeof value === 'string';
 
@@ -69,8 +61,8 @@ const isNotEmptyString = (value) => isString(value) && value.length > 0;
 
 export const isNull = (value) => value === null;
 
-export const isUndefined = (value?) => value === undefined;
+const isUndefined = (value?) => value === undefined;
 
 export const isUndefinedOrNull = (value) => isUndefined(value) || isNull(value);
 
-export const isNumberOrNull = (value) => isNumber(value) || isNull(value);
+const isNumberOrNull = (value) => isNumber(value) || isNull(value);

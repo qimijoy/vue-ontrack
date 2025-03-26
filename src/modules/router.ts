@@ -14,10 +14,10 @@ export const routes = {
 };
 
 export const normalizePageHash = () => {
-	const pageHash = window.location.hash.slice(1);
+	const page = window.location.hash.slice(1);
 
-	if (isPageValid(pageHash)) {
-		return pageHash;
+	if (isPageValid(page)) {
+		return page;
 	}
 
 	// If page is undefined, navigate to default page
@@ -28,6 +28,7 @@ export const normalizePageHash = () => {
 
 export const navigate = (page: string) => {
 	document.body.scrollIntoView();
+
 	currentPage.value = page;
 };
 
