@@ -18,15 +18,8 @@
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
 	import TheTimelineIndicator from '@/components/pages/Timeline/TheTimelineIndicator.vue';
 
-	import {
-		timelineItems,
-		timelineItemRefs,
-		scrollToCurrentHour,
-		stopTimelineItemTimer,
-	} from '@/modules/timeline-items';
+	import { timelineItems, timelineItemRefs, scrollToCurrentHour } from '@/modules/timeline-items';
 	import { startCurrentDateTimer, stopCurrentDateTimer } from '@/modules/time';
-
-	stopTimelineItemTimer();
 
 	onActivated(() => {
 		scrollToCurrentHour(false);

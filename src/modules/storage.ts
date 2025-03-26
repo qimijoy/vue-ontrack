@@ -2,8 +2,25 @@ import type { timelineItemType } from '@/types/timeline';
 
 import { APP_NAME } from '@/constants/application';
 import { activities } from '@/modules/activities';
-import { timelineItems } from '@/modules/timeline-items';
 import { today, isToday, endOfHour, toSeconds } from '@/modules/time';
+import { activeTimelineItem, timelineItems } from '@/modules/timeline-items';
+import { startTimelineItemTimer, stopTimelineItemTimer } from '@/modules/timeline-item-timer';
+
+export const syncState = (shouldLoad = true) => {
+	if (shouldLoad) {
+		loadState();
+	} else {
+		saveState();
+	}
+
+	if (activeTimelineItem.value) {
+		if (shouldLoad) {
+			startTimelineItemTimer(activeTimelineItem.value);
+		} else {
+			stopTimelineItemTimer(activeTimelineItem.value);
+		}
+	}
+};
 
 export const loadState = () => {
 	const serializedState = localStorage.getItem(APP_NAME);

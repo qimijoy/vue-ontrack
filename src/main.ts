@@ -1,28 +1,17 @@
 import { createApp } from 'vue';
 import App from '@/App.vue';
 
-import { loadState, saveState } from '@/modules/storage';
-import { startTimelineItemTimer, findActiveTimelineItem } from '@/modules/timeline-items';
+import { syncState } from '@/modules/storage';
 
 // STYLES
 import '@/assets/styles/main.less';
 
 // APPLICATION STATE
-loadState();
-
-const activeTimelineItem = findActiveTimelineItem();
-
-if (activeTimelineItem) {
-	startTimelineItemTimer(activeTimelineItem);
-}
+syncState();
 
 // Unactive tab or closing the apllication
 document.addEventListener('visibilitychange', () => {
-	if (document.visibilityState === 'visible') {
-		loadState();
-	} else {
-		saveState();
-	}
+	syncState(document.visibilityState === 'visible');
 });
 
 // APPLICATION
