@@ -1,5 +1,6 @@
 <template>
-	<div class="mt-7">
+	<div class="relative mt-7">
+		<TheTimelineIndicator />
 		<ul>
 			<TimelineItem
 				v-for="timelineItem of timelineItems"
@@ -15,6 +16,7 @@
 	import { onActivated } from 'vue';
 
 	import TimelineItem from '@/components/pages/Timeline/TimelineItem.vue';
+	import TheTimelineIndicator from '@/components/pages/Timeline/TheTimelineIndicator.vue';
 
 	import { timelineItemRefs, timelineItems, scrollToCurrentHour } from '@/composables/timelineItems';
 
