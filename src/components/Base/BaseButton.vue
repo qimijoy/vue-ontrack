@@ -16,7 +16,10 @@
 	});
 
 	// CONSTANTS
-	const classes = `${typeClasses[props.type]} cursor-pointer rounded p-3 disabled:cursor-not-allowed disabled:opacity-50`;
+	const classes = [
+		'cursor-pointer rounded p-3 disabled:cursor-not-allowed disabled:opacity-50',
+		typeClasses[props.type],
+	];
 </script>
 
 <script lang="ts">
