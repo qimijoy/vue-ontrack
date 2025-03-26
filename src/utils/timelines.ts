@@ -1,9 +1,5 @@
 import { MILLISECONDS_IN_SECOND } from '@/constants/time';
 
-export const getCurrentHour = (): number => {
-	return new Date().getHours();
-};
-
 export const formatSeconds = (seconds) => {
 	const date = new Date();
 

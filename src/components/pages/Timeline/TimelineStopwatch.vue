@@ -9,7 +9,7 @@
 		<BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="stop">
 			<BaseIcon :name="ICON_PAUSE" />
 		</BaseButton>
-		<BaseButton v-else :type="BUTTON_TYPE_SUCCESS" :disabled="timelineItem.hour !== getCurrentHour()" @click="start">
+		<BaseButton v-else :type="BUTTON_TYPE_SUCCESS" :disabled="timelineItem.hour !== now.getHours()" @click="start">
 			<BaseIcon :name="ICON_PLAY" />
 		</BaseButton>
 	</div>
@@ -27,12 +27,12 @@
 	import { BUTTON_TYPE_DANGER, BUTTON_TYPE_SUCCESS, BUTTON_TYPE_WARNING } from '@/constants/buttons';
 
 	import { isTimelineItemValid } from '@/utils/validators';
-	import { getCurrentHour } from '@/utils/timelines';
 	import { formatSeconds } from '@/utils/timelines';
 
 	import { ICON_ARROW_PATH, ICON_PAUSE, ICON_PLAY } from '@/composables/icons';
 	import { updateTimelineItem } from '@/composables/timelineItems';
 	import { useStopwatch } from '@/composables/stopwatch';
+	import { now } from '@/composables/time';
 
 	const props = defineProps({
 		timelineItem: {
@@ -58,5 +58,11 @@
 		updateTimelineItem(props.timelineItem, {
 			activitySeconds: seconds.value,
 		});
+	});
+
+	watchEffect(() => {
+		if (props.timelineItem.hour !== now.value.getHours() && isRunning.value) {
+			stop();
+		}
 	});
 </script>

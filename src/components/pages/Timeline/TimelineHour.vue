@@ -3,9 +3,11 @@
 </template>
 
 <script setup lang="ts">
-	import { getCurrentHour } from '@/utils/timelines';
+	import { computed } from 'vue';
+
 	import { isHourValid } from '@/utils/validators';
 	import { scrollToHour } from '@/composables/timelineItems';
+	import { now } from '@/composables/time';
 
 	const props = defineProps({
 		hour: {
@@ -16,10 +18,10 @@
 	});
 
 	// CONSTANTS
-	const classes = [
+	const classes = computed(() => [
 		'absolute -top-4 left-1/2 -translate-x-1/2 rounded px-2 font-mono text-lg',
-		props.hour === getCurrentHour() ? 'bg-purple-900 font-black text-white' : 'bg-gray-100 text-gray-500',
-	];
+		props.hour === now.value.getHours() ? 'bg-purple-900 font-black text-white' : 'bg-gray-100 text-gray-500',
+	]);
 
 	const formattedHour = `${String(props.hour).padStart(2, '0')}:00`;
 </script>

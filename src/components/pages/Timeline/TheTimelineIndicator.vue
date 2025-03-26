@@ -7,18 +7,20 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed } from 'vue';
+	import { ref, computed, onActivated, onDeactivated } from 'vue';
 	import { HUNDRED_PERCENT } from '@/constants/percentages';
-	import { useSecondsSinceMidnight } from '@/composables/seconds-since-midnight';
+	import { secondsSinceMidnightInPercentage, startTimer, stopTimer } from '@/composables/time';
 
 	const getTimelineHeight = () => {
 		return indicatorRef.value?.parentNode.getBoundingClientRect().height;
 	};
+
+	onActivated(() => startTimer());
+	onDeactivated(() => stopTimer());
 
 	// STATES
 	const indicatorRef = ref();
 
 	// COMPUTED
 	const topOffset = computed(() => (secondsSinceMidnightInPercentage.value * getTimelineHeight()) / HUNDRED_PERCENT);
-	const { secondsSinceMidnightInPercentage } = useSecondsSinceMidnight();
 </script>
