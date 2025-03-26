@@ -7,16 +7,13 @@
 </template>
 
 <script setup lang="ts">
-	import { ref, computed, onActivated, onDeactivated } from 'vue';
+	import { ref, computed } from 'vue';
 	import { HUNDRED_PERCENT } from '@/constants/percentages';
-	import { secondsSinceMidnightInPercentage, startTimer, stopTimer } from '@/composables/time';
+	import { secondsSinceMidnightInPercentage } from '@/composables/time';
 
 	const getTimelineHeight = () => {
 		return indicatorRef.value?.parentNode.getBoundingClientRect().height;
 	};
-
-	onActivated(() => startTimer());
-	onDeactivated(() => stopTimer());
 
 	// STATES
 	const indicatorRef = ref();
