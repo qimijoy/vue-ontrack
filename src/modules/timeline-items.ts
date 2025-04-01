@@ -1,5 +1,5 @@
-import type { timelineItemType } from '@/types/timeline';
-import type { ActivityItemType } from '@/types/activity';
+import type { StateType, TimelineItemType } from '@/types';
+import type { ActivityType } from '@/types';
 
 import { ref, computed, watch } from 'vue';
 
@@ -7,24 +7,17 @@ import { HOURS_IN_DAY, MIDNIGHT_HOUR } from '@/constants/time';
 import { endOfHour, isToday, now, toSeconds, today } from '@/modules/time';
 import { stopTimelineItemTimer } from '@/modules/timeline-item-timer';
 
-const generateTimelineItems = (): timelineItemType[] => {
-	return [...Array(HOURS_IN_DAY).keys()].map((hour) => ({
-		hour,
-		activityId: null,
-		activitySeconds: 0,
-		isActive: false,
-	}));
-};
-
 // STATES
-export const timelineItems = ref([]);
-export const timelineItemRefs = ref([]);
+export const timelineItems = ref<TimelineItemType[]>([]);
+export const timelineItemRefs = ref<any>([]);
 
 // COMPUTED
-export const activeTimelineItem = computed(() => timelineItems.value.find(({ isActive }) => isActive));
+export const activeTimelineItem = computed((): TimelineItemType | undefined =>
+	timelineItems.value.find(({ isActive }): boolean => isActive),
+);
 
 // WATCHERS
-watch(now, (after, before) => {
+watch<Date>(now, (after, before): void => {
 	if (activeTimelineItem.value && activeTimelineItem.value.hour !== after.getHours()) {
 		stopTimelineItemTimer();
 	}
@@ -35,7 +28,7 @@ watch(now, (after, before) => {
 });
 
 // FUNCTIONS
-export const initializeTimelineItems = (state) => {
+export const initializeTimelineItems = (state: StateType): void => {
 	const lastActiveAt = new Date(state.lastActiveAt);
 
 	timelineItems.value = state.timelineItems ?? generateTimelineItems();
@@ -47,58 +40,79 @@ export const initializeTimelineItems = (state) => {
 	}
 };
 
-export const updateTimelineItem = (timelineItem: timelineItemType, fields) => {
-	Object.assign(timelineItem, fields);
+export const updateTimelineItem = (
+	timelineItem: TimelineItemType,
+	fields: Partial<TimelineItemType>,
+): TimelineItemType => {
+	return Object.assign(timelineItem, fields);
 };
 
-const resetTimelineItems = () => {
-	timelineItems.value.forEach((timelineItem) =>
+export const resetTimelineItemActivities = (timelineItems: TimelineItemType[], activity: ActivityType): void => {
+	filterTimelineItemsByActivity(timelineItems, activity).forEach((timelineItem: TimelineItemType): void => {
 		updateTimelineItem(timelineItem, {
+			activityId: null,
+			timelineItem: timelineItem.hour === today().getHours() ? timelineItem.activitySeconds : 0,
+		});
+
+		return;
+	});
+};
+
+export const calculateTrackedActivitySeconds = (timelineItems: TimelineItemType[], activity: ActivityType): number => {
+	return filterTimelineItemsByActivity(timelineItems, activity)
+		.map(({ activitySeconds }: TimelineItemType): number => activitySeconds)
+		.reduce((total: number, seconds: number): number => Math.round(total + seconds), 0);
+};
+
+export const scrollToCurrentHour = (isSmooth: boolean = false): void => {
+	scrollToHour(today().getHours(), isSmooth);
+};
+
+export const scrollToHour = (hour: number, isSmooth: boolean = true): void => {
+	const el: any = hour === MIDNIGHT_HOUR ? document.body : timelineItemRefs.value[hour - 1].$el;
+
+	el.scrollIntoView({ behavior: isSmooth ? 'smooth' : 'instant' });
+};
+
+const resetTimelineItems = (): void => {
+	timelineItems.value.forEach((timelineItem): void => {
+		updateTimelineItem(timelineItem, {
+			activitySeconds: 0,
+			isActive: false,
+		});
+
+		return;
+	});
+};
+
+const syncIdleSeconds = (lastActiveAt: Date): void => {
+	updateTimelineItem(activeTimelineItem.value as any, {
+		activitySeconds: (activeTimelineItem.value as any).activitySeconds + calculateIdleSeconds(lastActiveAt),
+	});
+
+	return;
+};
+
+const calculateIdleSeconds = (lastActiveAt: Date): number => {
+	return lastActiveAt.getHours() === today().getHours()
+		? toSeconds((today() as any) - (lastActiveAt as any))
+		: toSeconds((endOfHour(lastActiveAt) as any) - (lastActiveAt as any));
+};
+
+const filterTimelineItemsByActivity = (timelineItems: TimelineItemType[], { id }: ActivityType): TimelineItemType[] => {
+	return timelineItems.filter(({ activityId }): boolean => activityId === id);
+};
+
+/**
+ * @returns Timeline items fro each hour of a day
+ */
+function generateTimelineItems(): TimelineItemType[] {
+	return [...Array(HOURS_IN_DAY).keys()].map(
+		(hour): TimelineItemType => ({
+			hour,
+			activityId: null,
 			activitySeconds: 0,
 			isActive: false,
 		}),
 	);
-};
-
-const syncIdleSeconds = (lastActiveAt: Date) => {
-	updateTimelineItem(activeTimelineItem.value, {
-		activitySeconds: activeTimelineItem.value.activitySeconds + calculateIdleSeconds(lastActiveAt),
-	});
-};
-
-const calculateIdleSeconds = (lastActiveAt: Date) => {
-	return lastActiveAt.getHours() === today().getHours()
-		? toSeconds(today() - lastActiveAt)
-		: toSeconds(endOfHour(lastActiveAt) - lastActiveAt);
-};
-
-const filterTimelineItemsByActivity = (timelineItems: timelineItemType[], { id }: ActivityItemType) => {
-	return timelineItems.filter(({ activityId }) => activityId === id);
-};
-
-export const resetTimelineItemActivities = (timelineItems: timelineItemType[], activity: ActivityItemType) => {
-	filterTimelineItemsByActivity(timelineItems, activity).forEach((timelineItem) =>
-		updateTimelineItem(timelineItem, {
-			activityId: null,
-			timelineItem: timelineItem.hour === today().getHours() ? timelineItem.activitySeconds : 0,
-		}),
-	);
-};
-
-export const calculateTrackedActivitySeconds = (timelineItems: timelineItemType[], activity: ActivityItemType) => {
-	return filterTimelineItemsByActivity(timelineItems, activity)
-		.map(({ activitySeconds }) => activitySeconds)
-		.reduce((total, seconds) => Math.round(total + seconds), 0);
-};
-
-export const scrollToCurrentHour = (isSmooth: boolean = false) => {
-	scrollToHour(today().getHours(), isSmooth);
-};
-
-export const scrollToHour = (hour: number, isSmooth: boolean = true) => {
-	const el = hour === MIDNIGHT_HOUR ? document.body : timelineItemRefs.value[hour - 1].$el;
-
-	el.scrollIntoView({
-		behavior: isSmooth ? 'smooth' : 'instant',
-	});
-};
+}

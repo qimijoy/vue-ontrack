@@ -3,34 +3,35 @@ import { ref, computed } from 'vue';
 import { HUNDRED_PERCENT } from '@/constants/percentages';
 import { SECONDS_IN_DAY, MILLISECONDS_IN_SECOND, SECONDS_IN_HOUR } from '@/constants/time';
 
-export const today = () => {
-	return new Date();
-};
-
 // STATE
 export const now = ref(today());
 
 // COMPUTED
 export const secondsSinceMidnightInPercentage = computed(
-	() => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
+	(): number => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
 );
 
-const secondsSinceMidnight = computed(() => (now.value - midnight.value) / MILLISECONDS_IN_SECOND);
+const secondsSinceMidnight = computed((): number => ((now.value as any) - midnight.value) / MILLISECONDS_IN_SECOND);
 
-const midnight = computed(() => new Date(now.value).setHours(0, 0, 0, 0));
+const midnight = computed((): number => new Date(now.value).setHours(0, 0, 0, 0));
 
 // FUNCTIONS
-const currentDateTimer = null;
+export const startCurrentDateTimer = (): void => {
+	setInterval((): void => {
+		now.value = today();
 
-export const startCurrentDateTimer = () => {
-	setInterval(() => (now.value = today()), MILLISECONDS_IN_SECOND);
+		return;
+	}, MILLISECONDS_IN_SECOND);
 };
 
-export const stopCurrentDateTimer = () => {
-	clearInterval(currentDateTimer);
-};
+/**
+ * @returns Today's date
+ */
+export function today(): Date {
+	return new Date();
+}
 
-export const tomorrow = () => {
+export const tomorrow = (): Date => {
 	const tomorrow = today();
 
 	tomorrow.setDate(tomorrow.getDate() + 1);
@@ -38,11 +39,7 @@ export const tomorrow = () => {
 	return tomorrow;
 };
 
-export const isToday = (date: Date) => {
-	return date.toDateString() === today().toDateString();
-};
-
-export const endOfHour = (date: Date) => {
+export const endOfHour = (date: Date): Date => {
 	const endOfHour = new Date(date);
 
 	endOfHour.setTime(endOfHour.getTime() + SECONDS_IN_HOUR * MILLISECONDS_IN_SECOND);
@@ -52,6 +49,10 @@ export const endOfHour = (date: Date) => {
 	return endOfHour;
 };
 
-export const toSeconds = (milliseconds) => {
+export const isToday = (date: Date): boolean => {
+	return date.toDateString() === today().toDateString();
+};
+
+export const toSeconds = (milliseconds: number): number => {
 	return Math.round(milliseconds / MILLISECONDS_IN_SECOND);
 };

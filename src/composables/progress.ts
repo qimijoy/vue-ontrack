@@ -1,13 +1,12 @@
-import type { ActivityItemType } from '@/types/activity';
+import type { ActivityType } from '@/types';
 
 import { computed } from 'vue';
 
 import { calculateActivityCompletionPercentage } from '@/modules/activities';
 import { timelineItems, calculateTrackedActivitySeconds } from '@/modules/timeline-items';
+import { getProgressColorClass } from '@/utils/progress';
 
-import { LOW_PERCENT, MEDIUM_PERCENT, HUNDRED_PERCENT } from '@/constants/percentages';
-
-export const useProgress = (activity: ActivityItemType) => {
+export const useProgress = (activity: ActivityType) => {
 	const colorClass = computed(() => getProgressColorClass(percentage.value));
 
 	const percentage = computed(() => calculateActivityCompletionPercentage(activity, trackedActivitySeconds.value));
@@ -19,20 +18,4 @@ export const useProgress = (activity: ActivityItemType) => {
 		percentage,
 		colorClass,
 	};
-};
-
-export const getProgressColorClass = (percentage: number) => {
-	if (percentage < LOW_PERCENT) {
-		return 'bg-red-500';
-	}
-
-	if (percentage < MEDIUM_PERCENT) {
-		return 'bg-yellow-500';
-	}
-
-	if (percentage < HUNDRED_PERCENT) {
-		return 'bg-blue-500';
-	}
-
-	return 'bg-green-500';
 };

@@ -21,7 +21,7 @@
 
 <script setup lang="ts">
 	import type { PropType } from 'vue';
-	import type { ActivityItemType } from '@/types/activity';
+	import type { ActivityType } from '@/types';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
 	import BaseSelect from '@/components/base/BaseSelect.vue';
@@ -37,14 +37,14 @@
 
 	defineProps({
 		activity: {
-			type: Object as PropType<ActivityItemType>,
+			type: Object as PropType<ActivityType>,
 			required: true,
-			validator: (value: ActivityItemType) => isActivityValid(value),
+			validator: (value: ActivityType) => isActivityValid(value),
 		},
 	});
 
 	// FUNCTIONS
-	const deleteAndResetActivity = (activity: ActivityItemType) => {
+	const deleteAndResetActivity = (activity: ActivityType) => {
 		resetTimelineItemActivities(timelineItems.value, activity);
 		deleteActivity(activity);
 	};

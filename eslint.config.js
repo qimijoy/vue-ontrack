@@ -61,6 +61,7 @@ export default [
 		},
 		rules: {
 			...jsdoc.configs['flat/recommended-typescript'].rules,
+			'@typescript-eslint/no-explicit-any': 1,
 		},
 	},
 

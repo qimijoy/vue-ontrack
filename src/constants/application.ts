@@ -1,1 +1,1 @@
-export const APP_NAME = 'ontrack';
+export const LOCAL_STORAGE_KEY = 'ontrack';

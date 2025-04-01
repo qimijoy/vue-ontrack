@@ -19,7 +19,7 @@
 
 <script setup lang="ts">
 	import type { PropType } from 'vue';
-	import type { ActivityItemType } from '@/types/activity';
+	import type { ActivityType } from '@/types';
 
 	import { isActivityValid } from '@/utils/validators';
 	import { formatSeconds } from '@/utils/timelines';
@@ -29,9 +29,9 @@
 
 	const props = defineProps({
 		activity: {
-			type: Object as PropType<ActivityItemType>,
+			type: Object as PropType<ActivityType>,
 			required: true,
-			validator: (value: ActivityItemType) => isActivityValid(value),
+			validator: (value: ActivityType) => isActivityValid(value),
 		},
 	});
 

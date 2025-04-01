@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 	import type { PropType } from 'vue';
-	import type { selectItemType } from '@/types/select';
+	import type { SelectOptionType } from '@/types';
 
 	import { computed } from 'vue';
 
@@ -35,9 +35,9 @@
 			required: true,
 		},
 		options: {
-			type: Array as PropType<Array<selectItemType>>,
+			type: Array as PropType<Array<SelectOptionType>>,
 			required: true,
-			validator: (options: selectItemType[]) => isOptionsValid(options),
+			validator: (options: SelectOptionType[]) => isOptionsValid(options),
 		},
 		selected: {
 			type: [Number, String],

@@ -1,3 +1,5 @@
+import type { NavItemType } from '@/types';
+
 import { ICON_CHART_BAR, ICON_CLOCK, ICON_LIST_BULLET } from '@/modules/icons';
 
 // PAGES
@@ -7,7 +9,7 @@ export const PAGE_PROGRESS: string = 'progress';
 export const PAGE_DEFAULT: string = PAGE_TIMELINE;
 
 // NAVIGATION ITEMS
-export const NAV_ITEMS = [
+export const NAV_ITEMS: NavItemType[] = [
 	{ page: PAGE_TIMELINE, icon: ICON_CLOCK },
 	{ page: PAGE_ACTIVITIES, icon: ICON_LIST_BULLET },
 	{ page: PAGE_PROGRESS, icon: ICON_CHART_BAR },

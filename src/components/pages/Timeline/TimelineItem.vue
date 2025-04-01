@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 	import type { PropType } from 'vue';
-	import type { timelineItemType } from '@/types/timeline';
+	import type { TimelineItemType } from '@/types';
 
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
@@ -26,9 +26,9 @@
 
 	defineProps({
 		timelineItem: {
-			type: Object as PropType<timelineItemType>,
+			type: Object as PropType<TimelineItemType>,
 			required: true,
-			validator: (timelineItem: timelineItemType) => isTimelineItemValid(timelineItem),
+			validator: (timelineItem: TimelineItemType) => isTimelineItemValid(timelineItem),
 		},
 	});
 </script>

@@ -13,7 +13,7 @@ startCurrentDateTimer();
 syncState();
 
 // Unactive tab or closing the apllication
-document.addEventListener('visibilitychange', () => {
+document.addEventListener('visibilitychange', (): void => {
 	syncState(document.visibilityState === 'visible');
 });
 
