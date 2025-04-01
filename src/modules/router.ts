@@ -1,4 +1,3 @@
-import type { PageNameType } from '@/types';
 import type { Component } from 'vue';
 
 import { ref } from 'vue';
@@ -6,28 +5,27 @@ import { ref } from 'vue';
 import TheTimeline from '@/components/pages/Timeline/TheTimeline.vue';
 import TheActivities from '@/components/pages/Activities/TheActivities.vue';
 import TheProgress from '@/components/pages/Progress/TheProgress.vue';
-
-import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_DEFAULT } from '@/constants/pages';
-import { isPageValid } from '@/utils/validators';
+import { NAV_ITEMS } from '@/constants/pages';
+import { PageNameType } from '@/types';
 
 // CONSTANTS
 export const routes: Record<PageNameType, Component> = {
-	[PAGE_TIMELINE]: TheTimeline,
-	[PAGE_ACTIVITIES]: TheActivities,
-	[PAGE_PROGRESS]: TheProgress,
+	[PageNameType.TIMELINE]: TheTimeline,
+	[PageNameType.ACTIVITIES]: TheActivities,
+	[PageNameType.PROGRESS]: TheProgress,
 };
 
 export const normalizePageHash = (): PageNameType => {
 	const page = window.location.hash.slice(1);
 
-	if (isPageValid(page)) {
+	if (NAV_ITEMS.some((naItem): boolean => naItem.page === page)) {
 		return page as PageNameType;
 	}
 
 	// If page is undefined, navigate to default page
-	window.location.hash = PAGE_DEFAULT;
+	window.location.hash = PageNameType.TIMELINE;
 
-	return PAGE_DEFAULT;
+	return PageNameType.TIMELINE;
 };
 
 export const navigate = (page: PageNameType): void => {

@@ -1,8 +1,8 @@
 <template>
 	<li class="flex flex-col gap-2 p-4">
 		<div class="flex items-center gap-2">
-			<BaseButton :type="BUTTON_TYPE_DANGER" @click="deleteAndResetActivity(activity)">
-				<BaseIcon :name="ICON_TRASH" />
+			<BaseButton :type="ButtonType.DANGER" @click="deleteAndResetActivity(activity)">
+				<BaseIcon :name="IconNameType.TRASH" />
 			</BaseButton>
 			<span class="truncatey text-xl">{{ activity.name }}</span>
 		</div>
@@ -27,11 +27,10 @@
 	import BaseIcon from '@/components/base/BaseIcon.vue';
 	import RemainingActivitySeconds from '@/components/pages/Activities/RemainingActivitySeconds.vue';
 
-	import { BUTTON_TYPE_DANGER } from '@/constants/buttons';
+	import { IconNameType, ButtonType } from '@/types';
 	import { PERIOD_SELECT_OPTIONS } from '@/constants/time';
 	import { deleteActivity, updateActivity } from '@/modules/activities';
 	import { timelineItems, resetTimelineItemActivities } from '@/modules/timeline-items';
-	import { ICON_TRASH } from '@/modules/icons';
 
 	defineProps<{ activity: ActivityType }>();
 

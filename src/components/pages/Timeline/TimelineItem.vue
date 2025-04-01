@@ -12,23 +12,14 @@
 </template>
 
 <script setup lang="ts">
-	import type { PropType } from 'vue';
 	import type { TimelineItemType } from '@/types';
 
 	import BaseSelect from '@/components/base/BaseSelect.vue';
 	import TimelineHour from '@/components/pages/Timeline/TimelineHour.vue';
 	import TimelineStopwatch from '@/components/pages/Timeline/TimelineStopwatch.vue';
 
-	import { isTimelineItemValid } from '@/utils/validators';
-
 	import { updateTimelineItem } from '@/modules/timeline-items';
 	import { activitySelectOptions } from '@/modules/activities';
 
-	defineProps({
-		timelineItem: {
-			type: Object as PropType<TimelineItemType>,
-			required: true,
-			validator: (timelineItem: TimelineItemType) => isTimelineItemValid(timelineItem),
-		},
-	});
+	defineProps<{ timelineItem: TimelineItemType }>();
 </script>

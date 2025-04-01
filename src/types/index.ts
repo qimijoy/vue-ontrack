@@ -1,11 +1,13 @@
 // PAGES
-import { PAGE_TIMELINE, PAGE_ACTIVITIES, PAGE_PROGRESS } from '@/constants/pages';
-
-export type PageNameType = typeof PAGE_TIMELINE | typeof PAGE_ACTIVITIES | typeof PAGE_PROGRESS;
+export enum PageNameType {
+	TIMELINE = 'timeline',
+	ACTIVITIES = 'activities',
+	PROGRESS = 'progress',
+}
 
 export interface NavItemType {
 	page: PageNameType;
-	icon: string;
+	icon: IconNameType;
 }
 
 // ACTIVITY
@@ -15,13 +17,39 @@ export interface ActivityType {
 	secondsToComplete: number;
 }
 
-// TIMELINE ITEM
+// TIMELINE
 export interface TimelineItemType {
-	hour: number;
+	hour: HourType;
 	activityId: ActivityType['id'] | null;
 	activitySeconds: number;
 	isActive: boolean;
 }
+
+export type HourType =
+	| 0
+	| 1
+	| 2
+	| 3
+	| 4
+	| 5
+	| 6
+	| 7
+	| 8
+	| 9
+	| 10
+	| 11
+	| 12
+	| 13
+	| 14
+	| 15
+	| 16
+	| 17
+	| 18
+	| 19
+	| 20
+	| 21
+	| 22
+	| 23;
 
 // PROGRESS
 export enum ProgressColorClassType {
@@ -45,17 +73,24 @@ export interface SelectOptionType<T = string> {
 }
 
 // BUTTON
-import {
-	BUTTON_TYPE_PRIMARY,
-	BUTTON_TYPE_SUCCESS,
-	BUTTON_TYPE_WARNING,
-	BUTTON_TYPE_DANGER,
-	BUTTON_TYPE_NEUTRAL,
-} from '@/constants/buttons';
+export enum ButtonType {
+	PRIMARY = 'primary',
+	SUCCESS = 'success',
+	WARNING = 'warning',
+	DANGER = 'danger',
+	NEUTRAL = 'neutral',
+}
 
-export type ButtonType =
-	| typeof BUTTON_TYPE_PRIMARY
-	| typeof BUTTON_TYPE_SUCCESS
-	| typeof BUTTON_TYPE_WARNING
-	| typeof BUTTON_TYPE_DANGER
-	| typeof BUTTON_TYPE_NEUTRAL;
+// ICON
+export enum IconNameType {
+	CHECK_CIRCLE = 'CheckCircle',
+	LIST_BULLET = 'ListBullet',
+	ARROW_PATH = 'ArrowPath',
+	CHART_BAR = 'ChartBar',
+	CLOCK = 'Clock',
+	TRASH = 'Trash',
+	X_MARK = 'XMark',
+	PAUSE = 'Pause',
+	PLAY = 'Play',
+	PLUS = 'Plus',
+}

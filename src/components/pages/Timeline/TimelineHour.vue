@@ -3,22 +3,16 @@
 </template>
 
 <script setup lang="ts">
+	import { HourType } from '@/types';
 	import { computed } from 'vue';
 
-	import { isHourValid } from '@/utils/validators';
 	import { scrollToHour } from '@/modules/timeline-items';
 	import { now } from '@/modules/time';
 
-	const props = defineProps({
-		hour: {
-			type: Number,
-			required: true,
-			validator: (value) => isHourValid(value),
-		},
-	});
+	const props = defineProps<{ hour: HourType }>();
 
 	// CONSTANTS
-	const classes = computed(() => [
+	const classes = computed((): string[] => [
 		'absolute -top-4 left-1/2 -translate-x-1/2 rounded px-2 font-mono text-lg',
 		props.hour === now.value.getHours() ? 'bg-purple-900 font-black text-white' : 'bg-gray-100 text-gray-500',
 	]);

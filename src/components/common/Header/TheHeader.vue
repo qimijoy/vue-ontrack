@@ -1,5 +1,5 @@
 <template>
-	<header class="sticky top-0 z-20 flex items-center justify-between border-b bg-white p-3">
+	<header class="sticky top-0 z-20 flex items-center justify-between border-b border-gray-200 bg-white p-3">
 		<TheLogo />
 		<TheHeaderProgress />
 	</header>

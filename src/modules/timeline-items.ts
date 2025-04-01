@@ -1,4 +1,5 @@
-import type { StateType, TimelineItemType } from '@/types';
+import type { ComponentPublicInstance } from 'vue';
+import type { HourType, StateType, TimelineItemType } from '@/types';
 import type { ActivityType } from '@/types';
 
 import { ref, computed, watch } from 'vue';
@@ -9,7 +10,7 @@ import { stopTimelineItemTimer } from '@/modules/timeline-item-timer';
 
 // STATES
 export const timelineItems = ref<TimelineItemType[]>([]);
-export const timelineItemRefs = ref<any>([]);
+export const timelineItemRefs = ref<ComponentPublicInstance[] | null>(null);
 
 // COMPUTED
 export const activeTimelineItem = computed((): TimelineItemType | undefined =>
@@ -40,7 +41,10 @@ export const initializeTimelineItems = (state: StateType): void => {
 	}
 };
 
-export const updateTimelineItem = (timelineItem: TimelineItemType, fields: any): TimelineItemType => {
+export const updateTimelineItem = (
+	timelineItem: TimelineItemType,
+	fields: Partial<TimelineItemType>,
+): TimelineItemType => {
 	return Object.assign(timelineItem, fields);
 };
 
@@ -48,7 +52,7 @@ export const resetTimelineItemActivities = (timelineItems: TimelineItemType[], a
 	filterTimelineItemsByActivity(timelineItems, activity).forEach((timelineItem: TimelineItemType): void => {
 		updateTimelineItem(timelineItem, {
 			activityId: null,
-			timelineItem: timelineItem.hour === today().getHours() ? timelineItem.activitySeconds : 0,
+			activitySeconds: timelineItem.hour === today().getHours() ? timelineItem.activitySeconds : 0,
 		});
 	});
 };
@@ -60,11 +64,12 @@ export const calculateTrackedActivitySeconds = (timelineItems: TimelineItemType[
 };
 
 export const scrollToCurrentHour = (isSmooth: boolean = false): void => {
-	scrollToHour(today().getHours(), isSmooth);
+	scrollToHour(today().getHours() as HourType, isSmooth);
 };
 
-export const scrollToHour = (hour: number, isSmooth: boolean = true): void => {
-	const el: any = hour === MIDNIGHT_HOUR ? document.body : timelineItemRefs.value[hour - 1].$el;
+export const scrollToHour = (hour: HourType, isSmooth: boolean = true): void => {
+	const el: HTMLBodyElement | HTMLLIElement =
+		hour === MIDNIGHT_HOUR || !timelineItemRefs.value ? document.body : timelineItemRefs.value[hour - 1].$el;
 
 	el.scrollIntoView({ behavior: isSmooth ? 'smooth' : 'instant' });
 };
@@ -79,15 +84,19 @@ const resetTimelineItems = (): void => {
 };
 
 const syncIdleSeconds = (lastActiveAt: Date): void => {
-	updateTimelineItem(activeTimelineItem.value as any, {
-		activitySeconds: (activeTimelineItem.value as any).activitySeconds + calculateIdleSeconds(lastActiveAt),
+	if (!activeTimelineItem.value) {
+		return;
+	}
+
+	updateTimelineItem(activeTimelineItem.value, {
+		activitySeconds: activeTimelineItem.value.activitySeconds + calculateIdleSeconds(lastActiveAt),
 	});
 };
 
 const calculateIdleSeconds = (lastActiveAt: Date): number => {
 	return lastActiveAt.getHours() === today().getHours()
-		? toSeconds((today() as any) - (lastActiveAt as any))
-		: toSeconds((endOfHour(lastActiveAt) as any) - (lastActiveAt as any));
+		? toSeconds(today().getTime() - lastActiveAt.getTime())
+		: toSeconds(endOfHour(lastActiveAt).getTime() - lastActiveAt.getTime());
 };
 
 const filterTimelineItemsByActivity = (timelineItems: TimelineItemType[], { id }: ActivityType): TimelineItemType[] => {
@@ -98,7 +107,7 @@ const filterTimelineItemsByActivity = (timelineItems: TimelineItemType[], { id }
  * @returns Timeline items fro each hour of a day
  */
 function generateTimelineItems(): TimelineItemType[] {
-	return [...Array(HOURS_IN_DAY).keys()].map(
+	return ([...Array(HOURS_IN_DAY).keys()] as HourType[]).map(
 		(hour): TimelineItemType => ({
 			hour,
 			activityId: null,

@@ -11,13 +11,16 @@
 	import { HUNDRED_PERCENT } from '@/constants/percentages';
 	import { secondsSinceMidnightInPercentage } from '@/modules/time';
 
-	const getTimelineHeight = () => {
-		return indicatorRef.value?.parentNode.getBoundingClientRect().height;
-	};
-
 	// STATES
-	const indicatorRef = ref();
+	const indicatorRef = ref<HTMLHRElement | null>(null);
 
 	// COMPUTED
-	const topOffset = computed(() => (secondsSinceMidnightInPercentage.value * getTimelineHeight()) / HUNDRED_PERCENT);
+	const topOffset = computed(
+		(): number => (secondsSinceMidnightInPercentage.value * getTimelineHeight()) / HUNDRED_PERCENT,
+	);
+
+	// FUNCTIONS
+	const getTimelineHeight = (): number => {
+		return indicatorRef.value?.parentElement?.getBoundingClientRect().height ?? 0;
+	};
 </script>

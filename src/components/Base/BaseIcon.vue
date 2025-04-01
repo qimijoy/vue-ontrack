@@ -3,15 +3,9 @@
 </template>
 
 <script setup lang="ts">
-	import { isIconValid } from '@/utils/validators';
+	import type { IconNameType } from '@/types';
 
 	import { ICONS } from '@/modules/icons';
 
-	defineProps({
-		name: {
-			type: String,
-			required: true,
-			validator: (value: string) => isIconValid(value),
-		},
-	});
+	defineProps<{ name: IconNameType }>();
 </script>

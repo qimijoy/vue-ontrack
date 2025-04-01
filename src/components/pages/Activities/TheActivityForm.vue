@@ -2,7 +2,7 @@
 	<form class="sticky bottom-[57px] flex gap-2 border-t bg-white p-4" @submit.prevent="submit">
 		<input v-model="name" type="text" class="w-full rounded border px-4 text-xl" placeholder="Activity name" />
 		<BaseButton :disabled="name.trim() === ''">
-			<BaseIcon :name="ICON_PLUS" />
+			<BaseIcon :name="IconNameType.PLUS" />
 		</BaseButton>
 	</form>
 </template>
@@ -15,7 +15,7 @@
 
 	import { id } from '@/utils/generators';
 	import { createActivity } from '@/modules/activities';
-	import { ICON_PLUS } from '@/modules/icons';
+	import { IconNameType } from '@/types';
 
 	// STATES
 	const name = ref<string>('');

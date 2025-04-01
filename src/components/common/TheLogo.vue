@@ -1,6 +1,10 @@
 <template>
-	<a :href="`#${PAGE_DEFAULT}`" class="origin-left scale-125 rounded bg-black p-1 text-white" @click="handleClick">
-		<BaseIcon :name="ICON_CLOCK" class="h-5" />
+	<a
+		:href="`#${PageNameType.TIMELINE}`"
+		class="origin-left scale-125 rounded bg-black p-1 text-white"
+		@click="handleClick"
+	>
+		<BaseIcon :name="IconNameType.CLOCK" class="h-5" />
 	</a>
 </template>
 
@@ -9,10 +13,9 @@
 
 	import { currentPage, navigate } from '@/modules/router';
 	import { scrollToCurrentHour } from '@/modules/timeline-items';
-	import { ICON_CLOCK } from '@/modules/icons';
-	import { PAGE_DEFAULT, PAGE_TIMELINE } from '@/constants/pages';
+	import { PageNameType, IconNameType } from '@/types';
 
 	// FUNCTIONS
 	const handleClick = (): void =>
-		currentPage.value === PAGE_TIMELINE ? scrollToCurrentHour(true) : navigate(PAGE_DEFAULT);
+		currentPage.value === PageNameType.TIMELINE ? scrollToCurrentHour(true) : navigate(PageNameType.TIMELINE);
 </script>

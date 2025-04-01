@@ -1,5 +1,3 @@
-import { isNull } from '@/utils/validators';
-
-export const normalizeSelectValue = (value: any): any => {
-	return isNull(value) || isNaN(value) ? value : +value;
+export const normalizeSelectValue = (value: string | null): number | string | null => {
+	return value === null || isNaN(Number(value)) ? value : +value;
 };

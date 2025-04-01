@@ -1,13 +1,13 @@
 <template>
 	<div class="flex gap-2">
-		<BaseButton :type="BUTTON_TYPE_NEUTRAL" @click="select(null)">
-			<BaseIcon :name="ICON_X_MARK" />
+		<BaseButton :type="ButtonType.NEUTRAL" @click="select(null)">
+			<BaseIcon :name="IconNameType.X_MARK" />
 		</BaseButton>
 		<select
 			class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl"
 			@change="select(($event.target as HTMLSelectElement).value)"
 		>
-			<option :selected="isNotSelected" disabled value="">{{ placeholder }}</option>
+			<option :selected="selected === null" disabled value="">{{ placeholder }}</option>
 			<option v-for="{ value, label } of options" :key="value" :value="value" :selected="selected === value">
 				{{ label }}
 			</option>
@@ -18,17 +18,13 @@
 <script setup lang="ts" generic="T extends number | string">
 	import type { SelectOptionType } from '@/types';
 
-	import { computed } from 'vue';
-
 	import BaseButton from '@/components/base/BaseButton.vue';
 	import BaseIcon from '@/components/base/BaseIcon.vue';
 
-	import { isUndefinedOrNull } from '@/utils/validators';
 	import { normalizeSelectValue } from '@/utils/normalizeSelectValue';
-	import { BUTTON_TYPE_NEUTRAL } from '@/constants/buttons';
-	import { ICON_X_MARK } from '@/modules/icons';
+	import { IconNameType, ButtonType } from '@/types';
 
-	const props = defineProps<{
+	defineProps<{
 		options: SelectOptionType<T>[];
 		selected: T | null;
 		placeholder: string;
@@ -39,11 +35,8 @@
 		select: [value: T | null];
 	}>();
 
-	// COMPUTED
-	const isNotSelected = computed((): boolean => isUndefinedOrNull(props.selected));
-
 	// FUNCTIONS
 	const select = (value: string | null): void => {
-		emit('select', normalizeSelectValue(value));
+		emit('select', normalizeSelectValue(value) as T | null);
 	};
 </script>
