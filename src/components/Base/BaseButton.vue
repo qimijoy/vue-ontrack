@@ -5,14 +5,8 @@
 </template>
 
 <script setup lang="ts">
-	import { isButtonTypeValid } from '@/utils/validators';
-
-	const props = defineProps({
-		type: {
-			type: String,
-			default: BUTTON_TYPE_PRIMARY,
-			validator: (value) => isButtonTypeValid(value),
-		},
+	const props = withDefaults(defineProps<{ type?: ButtonType }>(), {
+		type: BUTTON_TYPE_PRIMARY,
 	});
 
 	// CONSTANTS
@@ -23,6 +17,8 @@
 </script>
 
 <script lang="ts">
+	import type { ButtonType } from '@/types';
+
 	// This logic is executed once
 	import {
 		BUTTON_TYPE_PRIMARY,
@@ -33,7 +29,7 @@
 	} from '@/constants/buttons';
 
 	// CONSTANTS
-	const typeClasses = {
+	const typeClasses: Record<ButtonType, string> = {
 		[BUTTON_TYPE_PRIMARY]: 'bg-purple-500 enabled:hover:bg-purple-600 text-white',
 		[BUTTON_TYPE_SUCCESS]: 'bg-green-500 enabled:hover:bg-green-600 text-white',
 		[BUTTON_TYPE_WARNING]: 'bg-yellow-500 enabled:hover:bg-yellow-600 text-white',

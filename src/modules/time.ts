@@ -19,8 +19,6 @@ const midnight = computed((): number => new Date(now.value).setHours(0, 0, 0, 0)
 export const startCurrentDateTimer = (): void => {
 	setInterval((): void => {
 		now.value = today();
-
-		return;
 	}, MILLISECONDS_IN_SECOND);
 };
 

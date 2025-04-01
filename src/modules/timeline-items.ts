@@ -40,10 +40,7 @@ export const initializeTimelineItems = (state: StateType): void => {
 	}
 };
 
-export const updateTimelineItem = (
-	timelineItem: TimelineItemType,
-	fields: Partial<TimelineItemType>,
-): TimelineItemType => {
+export const updateTimelineItem = (timelineItem: TimelineItemType, fields: any): TimelineItemType => {
 	return Object.assign(timelineItem, fields);
 };
 
@@ -53,8 +50,6 @@ export const resetTimelineItemActivities = (timelineItems: TimelineItemType[], a
 			activityId: null,
 			timelineItem: timelineItem.hour === today().getHours() ? timelineItem.activitySeconds : 0,
 		});
-
-		return;
 	});
 };
 
@@ -80,8 +75,6 @@ const resetTimelineItems = (): void => {
 			activitySeconds: 0,
 			isActive: false,
 		});
-
-		return;
 	});
 };
 
@@ -89,8 +82,6 @@ const syncIdleSeconds = (lastActiveAt: Date): void => {
 	updateTimelineItem(activeTimelineItem.value as any, {
 		activitySeconds: (activeTimelineItem.value as any).activitySeconds + calculateIdleSeconds(lastActiveAt),
 	});
-
-	return;
 };
 
 const calculateIdleSeconds = (lastActiveAt: Date): number => {

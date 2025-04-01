@@ -8,31 +8,26 @@
 </template>
 
 <script setup lang="ts">
+	import type { NavItemType } from '@/types';
+
 	import { computed } from 'vue';
 
 	import BaseIcon from '@/components/base/BaseIcon.vue';
 
 	import { navigate, currentPage } from '@/modules/router';
 	import { scrollToCurrentHour } from '@/modules/timeline-items';
-	import { isNavItemValid } from '@/utils/validators';
 	import { PAGE_TIMELINE } from '@/constants/pages';
 
-	const props = defineProps({
-		navItem: {
-			type: Object,
-			required: true,
-			validator: (value: object) => isNavItemValid(value),
-		},
-	});
+	const props = defineProps<{ navItem: NavItemType }>();
 
 	// COMPUTED
-	const classes = computed(() => [
+	const classes = computed((): string[] => [
 		'flex flex-col items-center p-2 text-xs capitalize',
 		props.navItem.page === currentPage.value ? 'bg-gray-200' : 'hover:bg-gray-100',
 	]);
 
 	// FUNCTIONS
-	const handleClick = () =>
+	const handleClick = (): void =>
 		currentPage.value === PAGE_TIMELINE && props.navItem.page === PAGE_TIMELINE
 			? scrollToCurrentHour(true)
 			: navigate(props.navItem.page);

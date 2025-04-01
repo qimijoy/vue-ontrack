@@ -20,7 +20,6 @@
 </template>
 
 <script setup lang="ts">
-	import type { PropType } from 'vue';
 	import type { ActivityType } from '@/types';
 
 	import BaseButton from '@/components/base/BaseButton.vue';
@@ -30,21 +29,14 @@
 
 	import { BUTTON_TYPE_DANGER } from '@/constants/buttons';
 	import { PERIOD_SELECT_OPTIONS } from '@/constants/time';
-	import { isActivityValid } from '@/utils/validators';
 	import { deleteActivity, updateActivity } from '@/modules/activities';
 	import { timelineItems, resetTimelineItemActivities } from '@/modules/timeline-items';
 	import { ICON_TRASH } from '@/modules/icons';
 
-	defineProps({
-		activity: {
-			type: Object as PropType<ActivityType>,
-			required: true,
-			validator: (value: ActivityType) => isActivityValid(value),
-		},
-	});
+	defineProps<{ activity: ActivityType }>();
 
 	// FUNCTIONS
-	const deleteAndResetActivity = (activity: ActivityType) => {
+	const deleteAndResetActivity = (activity: ActivityType): void => {
 		resetTimelineItemActivities(timelineItems.value, activity);
 		deleteActivity(activity);
 	};

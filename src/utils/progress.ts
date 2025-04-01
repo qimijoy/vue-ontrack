@@ -1,19 +1,19 @@
-import { ProgressColorClasstype } from '@/types';
+import { ProgressColorClassType } from '@/types';
 
 import { LOW_PERCENT, MEDIUM_PERCENT, HUNDRED_PERCENT } from '@/constants/percentages';
 
-export const getProgressColorClass = (percentage: number): ProgressColorClasstype => {
+export const getProgressColorClass = (percentage: number): ProgressColorClassType => {
 	if (percentage < LOW_PERCENT) {
-		return ProgressColorClasstype.RED;
+		return ProgressColorClassType.RED;
 	}
 
 	if (percentage < MEDIUM_PERCENT) {
-		return ProgressColorClasstype.YELLOW;
+		return ProgressColorClassType.YELLOW;
 	}
 
 	if (percentage < HUNDRED_PERCENT) {
-		return ProgressColorClasstype.BLUE;
+		return ProgressColorClassType.BLUE;
 	}
 
-	return ProgressColorClasstype.GREEN;
+	return ProgressColorClassType.GREEN;
 };

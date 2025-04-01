@@ -13,5 +13,6 @@
 	import { PAGE_DEFAULT, PAGE_TIMELINE } from '@/constants/pages';
 
 	// FUNCTIONS
-	const handleClick = () => (currentPage.value === PAGE_TIMELINE ? scrollToCurrentHour(true) : navigate(PAGE_DEFAULT));
+	const handleClick = (): void =>
+		currentPage.value === PAGE_TIMELINE ? scrollToCurrentHour(true) : navigate(PAGE_DEFAULT);
 </script>

@@ -24,7 +24,7 @@ export interface TimelineItemType {
 }
 
 // PROGRESS
-export enum ProgressColorClasstype {
+export enum ProgressColorClassType {
 	RED = 'bg-red-500',
 	YELLOW = 'bg-yellow-500',
 	BLUE = 'bg-blue-500',

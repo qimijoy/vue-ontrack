@@ -18,10 +18,10 @@
 	import { ICON_PLUS } from '@/modules/icons';
 
 	// STATES
-	const name = ref('');
+	const name = ref<string>('');
 
 	// FUNCTIONS
-	const submit = async () => {
+	const submit = async (): Promise<void> => {
 		createActivity({
 			id: id(),
 			name: name.value,

@@ -5,7 +5,7 @@
 		</BaseButton>
 		<select
 			class="w-full truncate rounded bg-gray-100 px-2 py-1 text-2xl"
-			@change="select(($event.target as HTMLInputElement).value)"
+			@change="select(($event.target as HTMLSelectElement).value)"
 		>
 			<option :selected="isNotSelected" disabled value="">{{ placeholder }}</option>
 			<option v-for="{ value, label } of options" :key="value" :value="value" :selected="selected === value">
@@ -15,8 +15,7 @@
 	</div>
 </template>
 
-<script setup lang="ts">
-	import type { PropType } from 'vue';
+<script setup lang="ts" generic="T extends number | string">
 	import type { SelectOptionType } from '@/types';
 
 	import { computed } from 'vue';
@@ -24,37 +23,27 @@
 	import BaseButton from '@/components/base/BaseButton.vue';
 	import BaseIcon from '@/components/base/BaseIcon.vue';
 
-	import { isOptionsValid, isUndefinedOrNull, isSelectValueValid } from '@/utils/validators';
+	import { isUndefinedOrNull } from '@/utils/validators';
 	import { normalizeSelectValue } from '@/utils/normalizeSelectValue';
 	import { BUTTON_TYPE_NEUTRAL } from '@/constants/buttons';
 	import { ICON_X_MARK } from '@/modules/icons';
 
-	const props = defineProps({
-		placeholder: {
-			type: String,
-			required: true,
-		},
-		options: {
-			type: Array as PropType<Array<SelectOptionType>>,
-			required: true,
-			validator: (options: SelectOptionType[]) => isOptionsValid(options),
-		},
-		selected: {
-			type: [Number, String],
-			default: null,
-		},
-	});
+	const props = defineProps<{
+		options: SelectOptionType<T>[];
+		selected: T | null;
+		placeholder: string;
+	}>();
 
 	// EMIT
-	const emit = defineEmits({
-		select: (value) => isSelectValueValid(value),
-	});
+	const emit = defineEmits<{
+		select: [value: T | null];
+	}>();
 
 	// COMPUTED
-	const isNotSelected = computed(() => isUndefinedOrNull(props.selected));
+	const isNotSelected = computed((): boolean => isUndefinedOrNull(props.selected));
 
 	// FUNCTIONS
-	const select = (value) => {
+	const select = (value: string | null): void => {
 		emit('select', normalizeSelectValue(value));
 	};
 </script>

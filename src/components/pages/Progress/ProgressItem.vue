@@ -18,22 +18,13 @@
 </template>
 
 <script setup lang="ts">
-	import type { PropType } from 'vue';
 	import type { ActivityType } from '@/types';
 
-	import { isActivityValid } from '@/utils/validators';
 	import { formatSeconds } from '@/utils/timelines';
-
 	import { useProgress } from '@/composables/progress';
 	import { HUNDRED_PERCENT } from '@/constants/percentages';
 
-	const props = defineProps({
-		activity: {
-			type: Object as PropType<ActivityType>,
-			required: true,
-			validator: (value: ActivityType) => isActivityValid(value),
-		},
-	});
+	const props = defineProps<{ activity: ActivityType }>();
 
 	// COMPUTED
 	const { colorClass, percentage, trackedActivitySeconds } = useProgress(props.activity);

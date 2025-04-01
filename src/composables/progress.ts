@@ -1,4 +1,4 @@
-import type { ActivityType } from '@/types';
+import type { ActivityType, ProgressColorClassType } from '@/types';
 
 import { computed } from 'vue';
 
@@ -7,11 +7,13 @@ import { timelineItems, calculateTrackedActivitySeconds } from '@/modules/timeli
 import { getProgressColorClass } from '@/utils/progress';
 
 export const useProgress = (activity: ActivityType) => {
-	const colorClass = computed(() => getProgressColorClass(percentage.value));
+	const colorClass = computed((): ProgressColorClassType => getProgressColorClass(percentage.value));
 
-	const percentage = computed(() => calculateActivityCompletionPercentage(activity, trackedActivitySeconds.value));
+	const percentage = computed((): number =>
+		calculateActivityCompletionPercentage(activity, trackedActivitySeconds.value),
+	);
 
-	const trackedActivitySeconds = computed(() => calculateTrackedActivitySeconds(timelineItems.value, activity));
+	const trackedActivitySeconds = computed((): number => calculateTrackedActivitySeconds(timelineItems.value, activity));
 
 	return {
 		trackedActivitySeconds,
