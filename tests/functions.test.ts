@@ -1,4 +1,4 @@
-import { it, expect, vi } from 'vitest';
+import { describe, it, test, expect, vi } from 'vitest';
 
 import { formatSeconds, formatSecondsWithSign } from '@/utils/timelines';
 import { normalizeSelectValue } from '@/utils/normalizeSelectValue';
@@ -6,46 +6,61 @@ import { getProgressColorClass } from '@/utils/progress';
 import { id } from '@/utils/generators';
 import { ProgressColorClassType } from '@/types';
 import { LOW_PERCENT, MEDIUM_PERCENT, HUNDRED_PERCENT } from '@/constants/percentages';
+import { SECONDS_IN_MINUTE, SECONDS_IN_HOUR, SECONDS_IN_DAY } from '@/constants/time';
 
-it('formats seconds', () => {
-	expect(formatSeconds(0)).toBe('00:00:00');
-	expect(formatSeconds(60)).toBe('00:01:00');
-	expect(formatSeconds(180)).toBe('00:03:00');
-	expect(formatSeconds(1800)).toBe('00:30:00');
-	expect(formatSeconds(3600)).toBe('01:00:00');
-	expect(formatSeconds(60 * 60 * 24)).toBe('00:00:00');
+test.each([
+	[SECONDS_IN_MINUTE * 0, '00:00:00'],
+	[SECONDS_IN_MINUTE * 1, '00:01:00'],
+	[SECONDS_IN_MINUTE * 3, '00:03:00'],
+	[SECONDS_IN_MINUTE * 30, '00:30:00'],
+	[SECONDS_IN_HOUR, '01:00:00'],
+	[SECONDS_IN_DAY, '00:00:00'],
+])('formatSeconds(%i) -> %o', (seconds: number, formattedSeconds: string) => {
+	expect(formatSeconds(seconds)).toBe(formattedSeconds);
 });
 
-it('formats seconds with sign', () => {
-	expect(formatSecondsWithSign(0)).toBe('+00:00:00');
-	expect(formatSecondsWithSign(60)).toBe('+00:01:00');
-	expect(formatSecondsWithSign(180)).toBe('+00:03:00');
-	expect(formatSecondsWithSign(1800)).toBe('+00:30:00');
-	expect(formatSecondsWithSign(3600)).toBe('+01:00:00');
-	expect(formatSecondsWithSign(60 * 60 * 24)).toBe('+00:00:00');
+describe('formatSecondsWithSign', () => {
+	test.each([
+		[SECONDS_IN_MINUTE * 0, '+00:00:00'],
+		[SECONDS_IN_MINUTE * 1, '+00:01:00'],
+		[SECONDS_IN_MINUTE * 3, '+00:03:00'],
+		[SECONDS_IN_MINUTE * 30, '+00:30:00'],
+		[SECONDS_IN_HOUR, '+01:00:00'],
+		[SECONDS_IN_DAY, '+00:00:00'],
+	])('positive: formatSecondsWithSign(%i) -> %o', (seconds: number, formattedSeconds: string) => {
+		expect(formatSecondsWithSign(seconds)).toBe(formattedSeconds);
+	});
 
-	expect(formatSecondsWithSign(-0)).toBe('+00:00:00');
-	expect(formatSecondsWithSign(-60)).toBe('-00:01:00');
-	expect(formatSecondsWithSign(-180)).toBe('-00:03:00');
-	expect(formatSecondsWithSign(-1800)).toBe('-00:30:00');
-	expect(formatSecondsWithSign(-3600)).toBe('-01:00:00');
-	expect(formatSecondsWithSign(-60 * 60 * 24)).toBe('-00:00:00');
+	test.each([
+		[-SECONDS_IN_MINUTE * 0, '+00:00:00'],
+		[-SECONDS_IN_MINUTE * 1, '-00:01:00'],
+		[-SECONDS_IN_MINUTE * 3, '-00:03:00'],
+		[-SECONDS_IN_MINUTE * 30, '-00:30:00'],
+		[-SECONDS_IN_HOUR, '-01:00:00'],
+		[-SECONDS_IN_DAY, '-00:00:00'],
+	])('negative: formatSecondsWithSign(%i) -> %o', (seconds: number, formattedSeconds: string) => {
+		expect(formatSecondsWithSign(seconds)).toBe(formattedSeconds);
+	});
 });
 
-it('normalizes select value', () => {
-	expect(normalizeSelectValue('random-string')).toBe('random-string');
-	expect(normalizeSelectValue(null)).toBe(null);
-	expect(normalizeSelectValue('1')).toBe(1);
+test.each([
+	['random-string', 'random-string'],
+	[null, null],
+	['1', 1],
+])('normalizeSelectValue(%o) -> %o', (value: string | null, normalizedValue: number | string | null) => {
+	expect(normalizeSelectValue(value)).toBe(normalizedValue);
 });
 
-it('gets progress color class', () => {
-	expect(getProgressColorClass(0)).toBe(ProgressColorClassType.RED);
-	expect(getProgressColorClass(LOW_PERCENT - 1)).toBe(ProgressColorClassType.RED);
-	expect(getProgressColorClass(LOW_PERCENT)).toBe(ProgressColorClassType.YELLOW);
-	expect(getProgressColorClass(MEDIUM_PERCENT - 1)).toBe(ProgressColorClassType.YELLOW);
-	expect(getProgressColorClass(MEDIUM_PERCENT)).toBe(ProgressColorClassType.BLUE);
-	expect(getProgressColorClass(HUNDRED_PERCENT - 1)).toBe(ProgressColorClassType.BLUE);
-	expect(getProgressColorClass(HUNDRED_PERCENT)).toBe(ProgressColorClassType.GREEN);
+test.each([
+	[0, ProgressColorClassType.RED],
+	[LOW_PERCENT - 1, ProgressColorClassType.RED],
+	[LOW_PERCENT, ProgressColorClassType.YELLOW],
+	[MEDIUM_PERCENT - 1, ProgressColorClassType.YELLOW],
+	[MEDIUM_PERCENT, ProgressColorClassType.BLUE],
+	[HUNDRED_PERCENT - 1, ProgressColorClassType.BLUE],
+	[HUNDRED_PERCENT, ProgressColorClassType.GREEN],
+])('getProgressColorClass(%i) -> %o', (percentage: number, progressColorClass: ProgressColorClassType) => {
+	expect(getProgressColorClass(percentage)).toBe(progressColorClass);
 });
 
 it('generates id', () => {

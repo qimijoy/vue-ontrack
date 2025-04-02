@@ -1,134 +1,120 @@
-import { it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import { TimelineItemType, ActivityType, HourType } from '@/types';
+import { TimelineItemType, ActivityType } from '@/types';
 import {
 	calculateTrackedActivitySeconds,
 	resetTimelineItemActivities,
 	updateTimelineItem,
 } from '@/modules/timeline-items';
+import { SECONDS_IN_HOUR } from '@/constants/time';
 
-it('updates timiline item', () => {
-	const timelineItem: TimelineItemType = {
-		hour: 1,
-		activityId: '1',
-		activitySeconds: 0,
-		isActive: false,
-	};
-
+describe('updateTimelineItem', () => {
 	const updatedFields: TimelineItemType = {
 		hour: 2,
 		activityId: '2',
-		activitySeconds: 3600,
+		activitySeconds: SECONDS_IN_HOUR * 1,
 		isActive: true,
 	};
 
-	const updatedActivity = updateTimelineItem(timelineItem, updatedFields);
+	it('updates original timeline item', () => {
+		const timelineItem: TimelineItemType = {
+			hour: 1,
+			activityId: '1',
+			activitySeconds: SECONDS_IN_HOUR * 0,
+			isActive: false,
+		};
 
-	expect(timelineItem).toEqual(updatedFields);
-	expect(updatedActivity).toEqual(updatedFields);
+		updateTimelineItem(timelineItem, updatedFields);
+
+		expect(timelineItem).toEqual(updatedFields);
+	});
+
+	it('returns updated timeline item', () => {
+		const timelineItem: TimelineItemType = {
+			hour: 1,
+			activityId: '1',
+			activitySeconds: SECONDS_IN_HOUR * 0,
+			isActive: false,
+		};
+
+		expect(updateTimelineItem(timelineItem, updatedFields)).toEqual(updatedFields);
+	});
 });
 
-it('resets timiline item activities', () => {
-	const date = new Date('2024-02-01T02:00:00');
-
-	vi.setSystemTime(date);
-
+describe('timeline itams', () => {
 	const trainingActivity: ActivityType = {
 		id: '1',
 		name: 'Training',
-		secondsToComplete: 3600,
+		secondsToComplete: SECONDS_IN_HOUR * 1,
 	};
 
 	const readingActivity: ActivityType = {
 		id: '2',
 		name: 'Reading',
-		secondsToComplete: 7200,
+		secondsToComplete: SECONDS_IN_HOUR * 2,
 	};
 
-	const timilineItems: TimelineItemType[] = [
-		{
-			hour: 1,
-			activityId: trainingActivity.id,
-			activitySeconds: 1800,
-			isActive: false,
-		},
-		{
-			hour: date.getHours() as HourType,
-			activityId: trainingActivity.id,
-			activitySeconds: 3600,
-			isActive: false,
-		},
-		{
-			hour: 2,
-			activityId: readingActivity.id,
-			activitySeconds: 3600,
-			isActive: true,
-		},
-	];
+	let timilineItems: TimelineItemType[];
 
-	resetTimelineItemActivities(timilineItems, trainingActivity);
+	beforeEach(() => {
+		timilineItems = [
+			{
+				hour: 1,
+				activityId: trainingActivity.id,
+				activitySeconds: SECONDS_IN_HOUR * 0.5,
+				isActive: false,
+			},
+			{
+				hour: 2,
+				activityId: trainingActivity.id,
+				activitySeconds: SECONDS_IN_HOUR * 1,
+				isActive: false,
+			},
+			{
+				hour: 3,
+				activityId: readingActivity.id,
+				activitySeconds: SECONDS_IN_HOUR * 1,
+				isActive: true,
+			},
+		];
+	});
 
-	expect(timilineItems).toEqual([
-		{
-			hour: 1,
-			activityId: null,
-			activitySeconds: 0,
-			isActive: false,
-		},
-		{
-			hour: date.getHours(),
-			activityId: null,
-			activitySeconds: 3600,
-			isActive: false,
-		},
-		{
-			hour: 2,
-			activityId: readingActivity.id,
-			activitySeconds: 3600,
-			isActive: true,
-		},
-	]);
+	it('resets timeline item activities', () => {
+		const date = new Date('2024-02-01T02:00:00');
 
-	vi.useRealTimers();
-});
+		vi.setSystemTime(date);
 
-it('calculates tracked activity seconds', () => {
-	const trainingActivity: ActivityType = {
-		id: '1',
-		name: 'Training',
-		secondsToComplete: 3600,
-	};
+		resetTimelineItemActivities(timilineItems, trainingActivity);
 
-	const readingActivity: ActivityType = {
-		id: '2',
-		name: 'Reading',
-		secondsToComplete: 7200,
-	};
+		expect(timilineItems).toEqual([
+			{
+				hour: 1,
+				activityId: null,
+				activitySeconds: SECONDS_IN_HOUR * 0,
+				isActive: false,
+			},
+			{
+				hour: date.getHours(),
+				activityId: null,
+				activitySeconds: SECONDS_IN_HOUR * 1,
+				isActive: false,
+			},
+			{
+				hour: 3,
+				activityId: readingActivity.id,
+				activitySeconds: SECONDS_IN_HOUR * 1,
+				isActive: true,
+			},
+		]);
 
-	const timilineItems: TimelineItemType[] = [
-		{
-			hour: 1,
-			activityId: trainingActivity.id,
-			activitySeconds: 1800,
-			isActive: false,
-		},
-		{
-			hour: 2,
-			activityId: trainingActivity.id,
-			activitySeconds: 3600,
-			isActive: false,
-		},
-		{
-			hour: 2,
-			activityId: readingActivity.id,
-			activitySeconds: 3600,
-			isActive: true,
-		},
-	];
+		vi.useRealTimers();
+	});
 
-	const trackedReadingActivitySeconds = calculateTrackedActivitySeconds(timilineItems, readingActivity);
-	const trackedTrainingActivitySeconds = calculateTrackedActivitySeconds(timilineItems, trainingActivity);
+	it('calculates tracked activity seconds', () => {
+		const trackedReadingActivitySeconds = calculateTrackedActivitySeconds(timilineItems, readingActivity);
+		const trackedTrainingActivitySeconds = calculateTrackedActivitySeconds(timilineItems, trainingActivity);
 
-	expect(trackedReadingActivitySeconds).toBe(3600);
-	expect(trackedTrainingActivitySeconds).toBe(5400);
+		expect(trackedReadingActivitySeconds).toBe(SECONDS_IN_HOUR * 1);
+		expect(trackedTrainingActivitySeconds).toBe(SECONDS_IN_HOUR * 1.5);
+	});
 });

@@ -1,16 +1,14 @@
 // @vitest-environment happy-dom
 
-import { it, expect } from 'vitest';
+import { it, expect, test } from 'vitest';
 
 import { normalizePageHash } from '@/modules/router';
 import { PageName } from '@/types';
 
-it('normalizes valid page hash', () => {
-	Object.values(PageName).forEach((page) => {
-		window.location.hash = page;
-		expect(normalizePageHash()).toBe(page);
-		expect(window.location.hash).toBe(`#${page}`);
-	});
+test.each(Object.values(PageName))('normalizes valid page hash: %s', (page) => {
+	window.location.hash = page;
+	expect(normalizePageHash()).toBe(page);
+	expect(window.location.hash).toBe(`#${page}`);
 });
 
 it('normalizes invalid page hash', () => {

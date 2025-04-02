@@ -1,59 +1,38 @@
-import { it, expect, vi } from 'vitest';
+import { it, expect, vi, test } from 'vitest';
 
 import { today, tomorrow, endOfHour, isToday, toSeconds } from '@/modules/time';
+import { MILLISECONDS_IN_SECOND } from '@/constants/time';
 
-it('gets current date', () => {
-	const dateA = new Date('1990-01-01');
-	const dateB = new Date('2024-03-05');
-	const dateC = new Date('2025-04-02');
+test.each([
+	[new Date('1990-01-01'), new Date('1990-01-01')],
+	[new Date('2024-03-05'), new Date('2024-03-05')],
+	[new Date('2025-04-02'), new Date('2025-04-02')],
+])('today(%o) -> %o', (date: Date, expectedDate: Date) => {
+	vi.setSystemTime(date);
 
-	vi.setSystemTime(dateA);
-	expect(today()).toEqual(dateA);
-
-	vi.setSystemTime(dateB);
-	expect(today()).toEqual(dateB);
-
-	vi.setSystemTime(dateC);
-	expect(today()).toEqual(dateC);
+	expect(today()).toEqual(expectedDate);
 
 	vi.useRealTimers();
 });
 
-it('gets tomorrow date', () => {
-	const dateA = new Date('1990-01-01');
-	const tomorrowDateA = new Date('1990-01-02');
+test.each([
+	[new Date('1990-01-01'), new Date('1990-01-02')],
+	[new Date('2024-03-05'), new Date('2024-03-06')],
+	[new Date('2025-04-02'), new Date('2025-04-03')],
+])('tomorrow(%o) -> %o', (date: Date, expectedDate: Date) => {
+	vi.setSystemTime(date);
 
-	const dateB = new Date('2024-03-05');
-	const tomorrowDateB = new Date('2024-03-06');
-
-	const dateC = new Date('2025-04-02');
-	const tomorrowDateC = new Date('2025-04-03');
-
-	vi.setSystemTime(dateA);
-	expect(tomorrow()).toEqual(tomorrowDateA);
-
-	vi.setSystemTime(dateB);
-	expect(tomorrow()).toEqual(tomorrowDateB);
-
-	vi.setSystemTime(dateC);
-	expect(tomorrow()).toEqual(tomorrowDateC);
+	expect(tomorrow()).toEqual(expectedDate);
 
 	vi.useRealTimers();
 });
 
-it('gets end of hour date', () => {
-	const dateA = new Date('2025-04-02T10:15:00');
-	const endOfHourDateA = new Date('2025-04-02T11:00:00');
-
-	const dateB = new Date('2025-04-02T20:00:00');
-	const endOfHourDateB = new Date('2025-04-02T21:00:00');
-
-	const dateC = new Date('2025-04-02T12:59:00');
-	const endOfHourDateC = new Date('2025-04-02T13:00:00');
-
-	expect(endOfHour(dateA)).toEqual(endOfHourDateA);
-	expect(endOfHour(dateB)).toEqual(endOfHourDateB);
-	expect(endOfHour(dateC)).toEqual(endOfHourDateC);
+test.each([
+	[new Date('2025-04-02T10:15:00'), new Date('2025-04-02T11:00:00')],
+	[new Date('2025-04-02T20:00:00'), new Date('2025-04-02T21:00:00')],
+	[new Date('2025-04-02T12:59:00'), new Date('2025-04-02T13:00:00')],
+])('endOfHour(%o) -> %o', (date: Date, expectedDate: Date) => {
+	expect(endOfHour(date)).toEqual(expectedDate);
 });
 
 it('checks if passed date is today', () => {
@@ -71,10 +50,12 @@ it('checks if passed date is today', () => {
 	vi.useRealTimers();
 });
 
-it('converts milliseconds to seconds', () => {
-	expect(toSeconds(-10000)).toBe(-10);
-	expect(toSeconds(-1000)).toBe(-1);
-	expect(toSeconds(0)).toBe(0);
-	expect(toSeconds(1000)).toBe(1);
-	expect(toSeconds(10000)).toBe(10);
+test.each([
+	[-MILLISECONDS_IN_SECOND * 10, -10],
+	[-MILLISECONDS_IN_SECOND * 1, -1],
+	[MILLISECONDS_IN_SECOND * 0, 0],
+	[MILLISECONDS_IN_SECOND * 1, 1],
+	[MILLISECONDS_IN_SECOND * 10, 10],
+])('toSeconds(%i) -> %i', (milliseconds: number, seconds: number) => {
+	expect(toSeconds(milliseconds)).toBe(seconds);
 });
