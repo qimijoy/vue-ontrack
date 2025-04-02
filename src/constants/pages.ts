@@ -1,10 +1,10 @@
 import type { NavItemType } from '@/types';
 
-import { PageNameType, IconNameType } from '@/types';
+import { PageName, IconNameType } from '@/types';
 
 // NAVIGATION ITEMS
 export const NAV_ITEMS: NavItemType[] = [
-	{ page: PageNameType.TIMELINE, icon: IconNameType.CLOCK },
-	{ page: PageNameType.ACTIVITIES, icon: IconNameType.LIST_BULLET },
-	{ page: PageNameType.PROGRESS, icon: IconNameType.CHART_BAR },
+	{ page: PageName.TIMELINE, icon: IconNameType.CLOCK },
+	{ page: PageName.ACTIVITIES, icon: IconNameType.LIST_BULLET },
+	{ page: PageName.PROGRESS, icon: IconNameType.CHART_BAR },
 ];

@@ -1,12 +1,12 @@
 // PAGES
-export enum PageNameType {
+export enum PageName {
 	TIMELINE = 'timeline',
 	ACTIVITIES = 'activities',
 	PROGRESS = 'progress',
 }
 
 export interface NavItemType {
-	page: PageNameType;
+	page: PageName;
 	icon: IconNameType;
 }
 

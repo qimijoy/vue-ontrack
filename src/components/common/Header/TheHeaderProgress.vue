@@ -1,5 +1,5 @@
 <template>
-	<a :href="`#${PageNameType.PROGRESS}`" class="text-sm" @click="navigate(PageNameType.PROGRESS)">
+	<a :href="`#${PageName.PROGRESS}`" class="text-sm" @click="navigate(v.PROGRESS)">
 		<span v-if="percentage < HUNDRED_PERCENT" class="flex items-center gap-1">
 			Progress:
 			<span class="font-mono">{{ percentage }}%</span>
@@ -16,7 +16,7 @@
 	import BaseIcon from '@/components/base/BaseIcon.vue';
 
 	import { navigate } from '@/modules/router';
-	import { PageNameType, IconNameType } from '@/types';
+	import { PageName, IconNameType } from '@/types';
 	import { useTotalProgress } from '@/composables/total-progress';
 	import { HUNDRED_PERCENT } from '@/constants/percentages';
 

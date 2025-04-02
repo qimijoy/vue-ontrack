@@ -16,7 +16,7 @@
 
 	import { navigate, currentPage } from '@/modules/router';
 	import { scrollToCurrentHour } from '@/modules/timeline-items';
-	import { PageNameType } from '@/types';
+	import { PageName } from '@/types';
 
 	const props = defineProps<{ navItem: NavItemType }>();
 
@@ -28,7 +28,7 @@
 
 	// FUNCTIONS
 	const handleClick = (): void =>
-		currentPage.value === PageNameType.TIMELINE && props.navItem.page === PageNameType.TIMELINE
+		currentPage.value === PageName.TIMELINE && props.navItem.page === PageName.TIMELINE
 			? scrollToCurrentHour(true)
 			: navigate(props.navItem.page);
 </script>

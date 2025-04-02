@@ -4,7 +4,6 @@ import { updateActivity, calculateActivityCompletionPercentage } from '@/modules
 import { ActivityType } from '@/types';
 
 it('updates activity', () => {
-	// Preparations
 	const activity: ActivityType = {
 		id: '1',
 		name: 'Training',
@@ -17,10 +16,8 @@ it('updates activity', () => {
 		secondsToComplete: 7200,
 	};
 
-	// Actions
 	const updatedActivity = updateActivity(activity, updatedFields);
 
-	// Assertions
 	expect(activity).toEqual(updatedFields);
 	expect(updatedActivity).toEqual(updatedFields);
 });
