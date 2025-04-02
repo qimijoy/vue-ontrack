@@ -86,26 +86,7 @@ describe('timeline itams', () => {
 
 		resetTimelineItemActivities(timilineItems, trainingActivity);
 
-		expect(timilineItems).toEqual([
-			{
-				hour: 1,
-				activityId: null,
-				activitySeconds: SECONDS_IN_HOUR * 0,
-				isActive: false,
-			},
-			{
-				hour: date.getHours(),
-				activityId: null,
-				activitySeconds: SECONDS_IN_HOUR * 1,
-				isActive: false,
-			},
-			{
-				hour: 3,
-				activityId: readingActivity.id,
-				activitySeconds: SECONDS_IN_HOUR * 1,
-				isActive: true,
-			},
-		]);
+		expect(timilineItems).toMatchSnapshot();
 
 		vi.useRealTimers();
 	});
