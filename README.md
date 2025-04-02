@@ -31,6 +31,12 @@ npm run build
 npm run preview
 ```
 
+### Test via Vitest
+
+```sh
+npm run test
+```
+
 ### Lint with ESLint
 
 ```sh
