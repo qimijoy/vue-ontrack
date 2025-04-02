@@ -37,6 +37,12 @@ npm run preview
 npm run test
 ```
 
+### Tests coverage
+
+```sh
+npm run test:coverage
+```
+
 ### Test via Vitest UI
 
 ```sh

@@ -21,5 +21,9 @@ export default defineConfig({
 			junit: 'test-reports/test-report.xml',
 			html: 'test-reports/test-report.html',
 		},
+		coverage: {
+			enabled: true,
+			reporter: ['html', 'text'],
+		},
 	},
 });
