@@ -1,6 +1,7 @@
+import type { TimelineItemType, ActivityType } from '@/types';
+
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-import { TimelineItemType, ActivityType } from '@/types';
 import {
 	calculateTrackedActivitySeconds,
 	resetTimelineItemActivities,

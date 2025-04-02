@@ -1,4 +1,4 @@
-import { describe, it, test, expect, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 
 import { formatSeconds, formatSecondsWithSign } from '@/utils/timelines';
 import { normalizeSelectValue } from '@/utils/normalizeSelectValue';
@@ -8,7 +8,7 @@ import { ProgressColorClassType } from '@/types';
 import { LOW_PERCENT, MEDIUM_PERCENT, HUNDRED_PERCENT } from '@/constants/percentages';
 import { SECONDS_IN_MINUTE, SECONDS_IN_HOUR, SECONDS_IN_DAY } from '@/constants/time';
 
-test.each([
+it.each([
 	[SECONDS_IN_MINUTE * 0, '00:00:00'],
 	[SECONDS_IN_MINUTE * 1, '00:01:00'],
 	[SECONDS_IN_MINUTE * 3, '00:03:00'],
@@ -20,7 +20,7 @@ test.each([
 });
 
 describe('formatSecondsWithSign', () => {
-	test.each([
+	it.each([
 		[SECONDS_IN_MINUTE * 0, '+00:00:00'],
 		[SECONDS_IN_MINUTE * 1, '+00:01:00'],
 		[SECONDS_IN_MINUTE * 3, '+00:03:00'],
@@ -31,7 +31,7 @@ describe('formatSecondsWithSign', () => {
 		expect(formatSecondsWithSign(seconds)).toBe(formattedSeconds);
 	});
 
-	test.each([
+	it.each([
 		[-SECONDS_IN_MINUTE * 0, '+00:00:00'],
 		[-SECONDS_IN_MINUTE * 1, '-00:01:00'],
 		[-SECONDS_IN_MINUTE * 3, '-00:03:00'],
@@ -43,7 +43,7 @@ describe('formatSecondsWithSign', () => {
 	});
 });
 
-test.each([
+it.each([
 	['random-string', 'random-string'],
 	[null, null],
 	['1', 1],
@@ -51,7 +51,7 @@ test.each([
 	expect(normalizeSelectValue(value)).toBe(normalizedValue);
 });
 
-test.each([
+it.each([
 	[0, ProgressColorClassType.RED],
 	[LOW_PERCENT - 1, ProgressColorClassType.RED],
 	[LOW_PERCENT, ProgressColorClassType.YELLOW],
@@ -64,8 +64,11 @@ test.each([
 });
 
 it('generates id', () => {
-	vi.spyOn(Date, 'now').mockReturnValueOnce(1); // Always return 1 when Date.now() is called
-	vi.spyOn(Math, 'random').mockReturnValueOnce(10000); // Always return 10000 when Math.random() is called
+	const nowSpy = vi.spyOn(Date, 'now').mockReturnValueOnce(1); // Always return 1 when Date.now() is called
+	const randomSpy = vi.spyOn(Math, 'random').mockReturnValueOnce(10000); // Always return 10000 when Math.random() is called
 
 	expect(id()).toBe('1s');
+
+	expect(nowSpy).toHaveBeenCalledTimes(1);
+	expect(randomSpy).toHaveBeenCalledTimes(1);
 });
