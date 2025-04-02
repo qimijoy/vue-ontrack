@@ -14,4 +14,12 @@ export default defineConfig({
 			'@config': fileURLToPath(new URL('./config', import.meta.url)),
 		},
 	},
+	test: {
+		reporters: ['verbose', 'json', 'junit', 'html'],
+		outputFile: {
+			json: 'test-reports/test-report.json',
+			junit: 'test-reports/test-report.xml',
+			html: 'test-reports/test-report.html',
+		},
+	},
 });
