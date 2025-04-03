@@ -15,6 +15,14 @@ export default defineConfig({
 		},
 	},
 	test: {
+		workspace: [
+			{
+				extends: true,
+				test: {
+					environment: 'happy-dom',
+				},
+			},
+		],
 		reporters: ['verbose', 'json', 'junit', 'html'],
 		outputFile: {
 			json: 'test-reports/test-report.json',
