@@ -32,6 +32,8 @@ export default defineConfig({
 		coverage: {
 			enabled: true,
 			reporter: ['html', 'text'],
+			exclude: ['**/*.test.ts', '**/node_modules/**', 'src/App.vue', 'src/main.ts'],
+			include: ['src/**/'],
 		},
 	},
 });
