@@ -1,5 +1,5 @@
 <template>
-	<a :href="`#${PageName.PROGRESS}`" class="text-sm" @click="navigate(v.PROGRESS)">
+	<a :href="`#${PageName.PROGRESS}`" class="text-sm" @click="navigate(PageName.PROGRESS)">
 		<span v-if="percentage < HUNDRED_PERCENT" class="flex items-center gap-1">
 			Progress:
 			<span class="font-mono">{{ percentage }}%</span>
