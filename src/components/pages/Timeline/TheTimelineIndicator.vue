@@ -15,8 +15,8 @@
 	const indicatorRef = ref<HTMLHRElement | null>(null);
 
 	// COMPUTED
-	const topOffset = computed(
-		(): number => (secondsSinceMidnightInPercentage.value * getTimelineHeight()) / HUNDRED_PERCENT,
+	const topOffset = computed((): number =>
+		Math.round((secondsSinceMidnightInPercentage.value * getTimelineHeight()) / HUNDRED_PERCENT),
 	);
 
 	// FUNCTIONS
